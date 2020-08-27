@@ -51,7 +51,7 @@ public class LevelManager {
 	}
 	
 	public static int getLevel(int xp) {
-		return (int) (Math.max(Math.exp(Math.log(xp/20)/1.1),0))+1;
+		return (int) (Math.max(Math.exp(Math.log(xp/20)/1.5),0))+1;
 	}
 	
 }
