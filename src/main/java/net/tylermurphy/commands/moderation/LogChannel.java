@@ -6,7 +6,6 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import net.tylermurphy.Cache;
 import net.tylermurphy.commands.ICommand;
 import net.tylermurphy.database.DatabaseManager;
 
@@ -26,7 +25,6 @@ public class LogChannel implements ICommand {
         	channel = event.getChannel();
         }else if(args.get(0).equals("remove")) {
         	DatabaseManager.GuildSettings.set(event.getGuild().getIdLong(), "logChannel", "");
-        	Cache.LOG_CHANNELS.remove(event.getGuild().getIdLong());
         	event.getChannel().sendMessage("Removed log channel!").queue();
         	return;
         }else {
@@ -40,7 +38,6 @@ public class LogChannel implements ICommand {
         }
         
         DatabaseManager.GuildSettings.set(event.getGuild().getIdLong(), "logChannel", String.valueOf(channel.getIdLong()));
-        Cache.LOG_CHANNELS.put(event.getGuild().getIdLong(), channel);
         event.getChannel().sendMessageFormat("Set log channel to %s", channel).queue();
     }
 

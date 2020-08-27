@@ -54,7 +54,7 @@ import net.tylermurphy.database.DatabaseManager;
 public class LogListener extends ListenerAdapter {
 
     public void onGuildMessageUpdate(@Nonnull GuildMessageUpdateEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
     			.setDescription(String.format(
@@ -65,7 +65,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onTextChannelDelete(@Nonnull TextChannelDeleteEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
     			.setDescription(String.format(
@@ -75,7 +75,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onTextChannelUpdateName(@Nonnull TextChannelUpdateNameEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
     			.setDescription(String.format(
@@ -87,7 +87,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onTextChannelUpdateTopic(@Nonnull TextChannelUpdateTopicEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
     			.setDescription(String.format(
@@ -99,7 +99,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onTextChannelUpdatePosition(@Nonnull TextChannelUpdatePositionEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
     			.setDescription(String.format(
@@ -111,7 +111,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onTextChannelUpdateNSFW(@Nonnull TextChannelUpdateNSFWEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
     			.setDescription(String.format(
@@ -122,7 +122,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onTextChannelUpdateParent(@Nonnull TextChannelUpdateParentEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
     			.setDescription(String.format(
@@ -133,7 +133,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onTextChannelUpdateSlowmode(@Nonnull TextChannelUpdateSlowmodeEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
     			.setDescription(String.format(
@@ -144,7 +144,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onTextChannelCreate(@Nonnull TextChannelCreateEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
     			.setDescription(String.format(
@@ -154,7 +154,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onVoiceChannelDelete(@Nonnull VoiceChannelDeleteEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
     			.setDescription(String.format(
@@ -164,7 +164,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onVoiceChannelUpdateName(@Nonnull VoiceChannelUpdateNameEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
     			.setDescription(String.format(
@@ -176,7 +176,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onVoiceChannelUpdatePosition(@Nonnull VoiceChannelUpdatePositionEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
     			.setDescription(String.format(
@@ -188,7 +188,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onVoiceChannelUpdateUserLimit(@Nonnull VoiceChannelUpdateUserLimitEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
     			.setDescription(String.format(
@@ -200,7 +200,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onVoiceChannelUpdateBitrate(@Nonnull VoiceChannelUpdateBitrateEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
     			.setDescription(String.format(
@@ -212,7 +212,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onVoiceChannelUpdateParent(@Nonnull VoiceChannelUpdateParentEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
     			.setDescription(String.format(
@@ -223,7 +223,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onVoiceChannelCreate(@Nonnull VoiceChannelCreateEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
     			.setDescription(String.format(
@@ -233,7 +233,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onCategoryDelete(@Nonnull CategoryDeleteEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
     			.setDescription(String.format(
@@ -243,7 +243,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onCategoryUpdateName(@Nonnull CategoryUpdateNameEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
     			.setDescription(String.format(
@@ -255,7 +255,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onCategoryUpdatePosition(@Nonnull CategoryUpdatePositionEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
     			.setDescription(String.format(
@@ -267,7 +267,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onCategoryCreate(@Nonnull CategoryCreateEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
     			.setDescription(String.format(
@@ -277,7 +277,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onGuildBan(@Nonnull GuildBanEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
     			.setDescription(String.format(
@@ -287,7 +287,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onGuildUnban(@Nonnull GuildUnbanEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
     			.setDescription(String.format(
@@ -297,7 +297,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onGuildMemberRemove(@Nonnull GuildMemberRemoveEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
     			.setDescription(String.format(
@@ -307,7 +307,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onGuildMemberRoleAdd(@Nonnull GuildMemberRoleAddEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	String roles = "";
     	for(Role r : event.getRoles()) {
@@ -322,7 +322,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onGuildMemberRoleRemove(@Nonnull GuildMemberRoleRemoveEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	String roles = "";
     	for(Role r : event.getRoles()) {
@@ -337,7 +337,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onGuildUpdateAfkChannel(@Nonnull GuildUpdateAfkChannelEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
     			.setDescription(String.format(
@@ -347,7 +347,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onGuildUpdateSystemChannel(@Nonnull GuildUpdateSystemChannelEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
     			.setDescription(String.format(
@@ -357,7 +357,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onGuildUpdateAfkTimeout(@Nonnull GuildUpdateAfkTimeoutEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
     			.setDescription(String.format(
@@ -367,7 +367,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onGuildUpdateName(@Nonnull GuildUpdateNameEvent event){
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
     			.setDescription(String.format(
@@ -378,7 +378,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onGuildUpdateOwner(@Nonnull GuildUpdateOwnerEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
     			.setDescription(String.format(
@@ -388,7 +388,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onGuildInviteCreate(@Nonnull GuildInviteCreateEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
     			.setDescription(String.format(
@@ -398,7 +398,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onRoleCreate(@Nonnull RoleCreateEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
     			.setDescription(String.format(
@@ -408,7 +408,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onRoleDelete(@Nonnull RoleDeleteEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
     			.setDescription(String.format(
@@ -418,7 +418,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onRoleUpdateColor(@Nonnull RoleUpdateColorEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
     			.setDescription(String.format(
@@ -429,7 +429,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onRoleUpdateName(@Nonnull RoleUpdateNameEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
     			.setDescription(String.format(
@@ -440,7 +440,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onGuildVoiceJoin(@Nonnull GuildVoiceJoinEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
     			.setDescription(String.format(
@@ -452,7 +452,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onGuildVoiceLeave(@Nonnull GuildVoiceLeaveEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
     			.setDescription(String.format(
@@ -464,7 +464,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onGuildVoiceGuildMute(@Nonnull GuildVoiceGuildMuteEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
     			.setDescription(String.format(
@@ -474,7 +474,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onGuildVoiceGuildDeafen(@Nonnull GuildVoiceGuildDeafenEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
     			.setDescription(String.format(
@@ -484,7 +484,7 @@ public class LogListener extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onGuildMemberUpdateNickname(@Nonnull GuildMemberUpdateNicknameEvent event) {
-    	TextChannel channel; try { channel = Cache.LOG_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), k -> event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"))); } catch(Exception e) { return; }
+    	TextChannel channel = event.getJDA().getTextChannelById(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel"));
     	if(channel == null) return;
     	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
     			.setDescription(String.format(
