@@ -17,7 +17,7 @@ You have to create a bot_config.json file and put the required data in the follo
 >	"TENNOR_API_KEY": "",
 >	"DEFAULT_PREFIX": "Ken ",
 >	"DATABASE_HOST": "",
->	"DATABASE_PORT": "3366",
+>	"DATABASE_PORT": "",
 >	"DATABASE_USER": "",
 >	"DATABASE_PASSWORD": "",
 >	"DATABASE_NAME": ""
