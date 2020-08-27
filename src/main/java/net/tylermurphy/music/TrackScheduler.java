@@ -68,6 +68,8 @@ public class TrackScheduler extends AudioEventAdapter {
     		looping = false;
     		queueLooped = false;
     		return;
+    	}else {
+    		player.stopTrack();
     	}
     	play(lastTrack.makeClone(), false);
     	if(queueLooped)  queue.offer(lastTrack.makeClone());
