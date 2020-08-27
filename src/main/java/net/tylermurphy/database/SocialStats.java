@@ -21,7 +21,6 @@ public class SocialStats {
     					return resultSet.getInt("StatValue");
     				}
     			}
-    			insert(UserFromID, UserToID, statName, DefaultValue);
     		}
 		} catch (SQLException e) {
 			e.printStackTrace();

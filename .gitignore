@@ -4,3 +4,5 @@
 build
 # Ignore bin
 bin
+# Ignore private data
+bot_config.json

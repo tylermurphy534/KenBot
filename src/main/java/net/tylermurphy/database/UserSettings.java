@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserSettings {
-	
-	private String DefaultValue = "";
 
 	public String get(long userId, long guildId, String settingName) {
 		String sql = "SELECT * FROM UserSettings WHERE UserId = ? AND SettingName = ?";
@@ -23,12 +21,11 @@ public class UserSettings {
     					return resultSet.getString("SettingValue");
     				}
     			}
-    			insert(userId, guildId, settingName);
     		}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return DefaultValue;
+		return "";
 	}
 	
 	public List<String> getAll(long guildId, String settingName) {
@@ -51,13 +48,13 @@ public class UserSettings {
 		return new ArrayList<String>();
 	}
 	
-	private void insert(long userId, long guildId, String settingName) {
+	private void insert(long userId, long guildId, String settingName,String settingValue) {
 		String sql = "INSERT INTO UserSettings (UserId,GuildId,SettingName,SettingValue) VALUES (?,?,?,?)";
 		try( Connection connection = MariaDBConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ){
 			statement.setString(1, String.valueOf(userId));
 			statement.setString(2, String.valueOf(guildId));
 			statement.setString(3, settingName);
-			statement.setString(4, DefaultValue);
+			statement.setString(4, settingValue);
 			statement.execute();
 			connection.commit();
 		} catch (SQLException e) {
@@ -66,6 +63,7 @@ public class UserSettings {
 	}
 	
 	public void set(long userId, long guildId, String settingName, String settingValue) {
+		if(get(userId,guildId,settingName) == null) { insert(userId,guildId,settingName,settingValue); return;}
 		String sql = "UPDATE UserSettings SET SettingValue = ? WHERE UserId = ? AND GuildId = ? AND SettingName = ?";
 		try( Connection connection = MariaDBConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ){
 			statement.setString(1, settingValue);

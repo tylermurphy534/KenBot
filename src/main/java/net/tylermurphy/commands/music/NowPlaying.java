@@ -1,6 +1,5 @@
 package net.tylermurphy.commands.music;
 
-import java.awt.Color;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -31,9 +30,7 @@ public class NowPlaying implements ICommand {
 		AudioTrackInfo info = player.getPlayingTrack().getInfo();
 		
 		EmbedBuilder builder = EmbedUtils.getDefaultEmbed()
-				.setTitle("***Now Playing***")
-				.setColor(Color.YELLOW)
-				.setFooter("MurphyBot", null);
+				.setTitle("***Now Playing***");
 		
 		builder.appendDescription(info.title);
 		builder.appendDescription("\n");

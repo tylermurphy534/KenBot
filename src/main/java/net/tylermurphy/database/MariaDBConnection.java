@@ -90,6 +90,17 @@ public class MariaDBConnection {
 			e.printStackTrace();
 		}
 		
+		try(final Statement statement = getConnection().createStatement()){
+			statement.execute("CREATE TABLE IF NOT EXISTS WarnActions (" +
+					"GuildId VARCHAR(20) NOT NULL,"+
+					"WarnAmount INTEGER NULL,"+
+					"WarnAction VARCHAR(20) NOT NULL,"+
+					"INDEX compound(GuildId, WarnAmount)"+
+					");");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	private MariaDBConnection() {}

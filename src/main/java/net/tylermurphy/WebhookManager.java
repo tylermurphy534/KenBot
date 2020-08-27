@@ -2,7 +2,6 @@ package net.tylermurphy;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import club.minnced.discord.webhook.WebhookClient;
 import club.minnced.discord.webhook.WebhookClientBuilder;
@@ -28,10 +27,6 @@ public class WebhookManager {
 		HashMap<String,String> webhookData = DatabaseManager.Webhooks.get(guildId, prefix);
 		if(webhookData == null) return;
 		if (!event.getMember().hasPermission(Permission.ADMINISTRATOR)) {
-            event.getMessage().delete().queue();
-            channel.sendMessage(":x: You must be an administrator to send webhook messages").queue(m -> {
-				m.delete().queueAfter(5, TimeUnit.SECONDS);
-			});
             return;
         }
 		List<Webhook> webhooks = channel.retrieveWebhooks().complete();

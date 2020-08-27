@@ -51,6 +51,9 @@ public class Stop implements ICommand {
 			musicManager.player.stopTrack();
 			musicManager.player.setPaused(false);
 			channel.sendMessage("Stopped the music and cleared the song queue.").queue();
+			musicManager.scheduler.boundTextChannel = null;
+			musicManager.scheduler.unLoopQueue();
+			musicManager.scheduler.setLooped(false);
 		} else {
 			channel.sendMessage(":x: You must be the only person in the VC or have the `DJ` role to do this.").queue();
 		}

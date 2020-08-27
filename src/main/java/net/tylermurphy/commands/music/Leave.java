@@ -9,13 +9,17 @@ import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.managers.AudioManager;
 import net.tylermurphy.commands.ICommand;
+import net.tylermurphy.music.GuildMusicManager;
+import net.tylermurphy.music.PlayerManager;
 
 public class Leave implements ICommand {
 
 	public void handle(List<String> args, GuildMessageReceivedEvent event) {
         TextChannel channel = event.getChannel();
         AudioManager audioManager = event.getGuild().getAudioManager();
-
+        PlayerManager playerManager = PlayerManager.getInstance();
+        GuildMusicManager musicManager = playerManager.getGuildMusicManager(event.getGuild());
+        
         if (!audioManager.isConnected()) {
             channel.sendMessage(":x: I'm not connected to a voice channelyou bafoon.").queue();
             return;
@@ -31,6 +35,12 @@ public class Leave implements ICommand {
         List<Role> roles = event.getMember().getRoles();
 		for(Role role : roles) {
 			if(role.getName().equalsIgnoreCase("dj")) {
+				musicManager.scheduler.getQueue().clear();
+				musicManager.player.stopTrack();
+				musicManager.player.setPaused(false);
+				musicManager.scheduler.boundTextChannel = null;
+				musicManager.scheduler.unLoopQueue();
+				musicManager.scheduler.setLooped(false);
 				audioManager.closeAudioConnection();
 		        channel.sendMessage("Disconnected from your channel").queue();
 				return;

@@ -17,7 +17,7 @@ public class CreateWebhook implements ICommand {
 		
 		TextChannel channel = event.getChannel();
 		
-		String DefaultAvatarURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQmVio8fW8-ZmKTT_lGy0GJV3MabL0sG4HEAQ&usqp=CAU";
+		String DefaultAvatarURL = "";
 		
 		if (!event.getMember().hasPermission(Permission.ADMINISTRATOR)) {
             event.getChannel().sendMessage(":x: You must have the Administrator permission to use this command.").queue();

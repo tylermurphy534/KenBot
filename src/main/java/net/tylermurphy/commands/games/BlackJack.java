@@ -35,16 +35,16 @@ public class BlackJack extends ListenerAdapter implements ICommand {
 	
 	public void onGuildMessageReactionAdd(GuildMessageReactionAddEvent event) {
         MessageReaction reaction = event.getReaction();
-        String emote = reaction.getReactionEmote().getAsReactionCode();
+        String emote = reaction.getReactionEmote().getAsCodepoints();
         TextChannel channel = event.getChannel();
         String discriminator = event.getUser().getName()+event.getUser().getDiscriminator();
         BlackJackGame game = games.get(discriminator);
         if(game == null || game.channelId != channel.getIdLong() || !game.discriminator.equals(discriminator)) return;
-        if(emote.equals("U+1F6D1")) {
+        if(emote.equalsIgnoreCase("U+1F6D1")) {
         	game.end(channel);
-        }else if(emote.equals("U+27A1")) {
+        }else if(emote.equalsIgnoreCase("U+27A1")) {
         	game.hit(channel);
-        }else if(emote.equals("U+274C")) {
+        }else if(emote.equalsIgnoreCase("U+274C")) {
         	EmbedBuilder builder = EmbedUtils.getDefaultEmbed()
 					.setColor(Color.yellow)
 					.setDescription("You Canceled The Game");
@@ -96,8 +96,8 @@ public class BlackJack extends ListenerAdapter implements ICommand {
 					.setTitle("Hit or Stay?")
 					.setColor(Color.yellow)
 					.appendDescription(":octagonal_sign: Stay\n")
-					.appendDescription(":arrow_right:")
-					.appendDescription(":x:");
+					.appendDescription(":arrow_right: Hit\n")
+					.appendDescription(":x: Cancel Game");
 			Message sentMessage = channel.sendMessage(builder.build()).complete();
 			sentMessage.addReaction("U+1F6D1").queue();
 			sentMessage.addReaction("U+27A1").queue();

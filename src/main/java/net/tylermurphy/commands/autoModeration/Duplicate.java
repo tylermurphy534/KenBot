@@ -19,11 +19,12 @@ public class Duplicate implements ICommand {
             event.getChannel().sendMessage(":x: You must have the Manage Server permission to use this command.").queue();
             return;
         }
-		
+        String setting = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), dataBaseCollum);
+		if(setting == null) setting = "false";
 		if(args.isEmpty()) {
 			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
 					.setTitle("Automod DUPLICATE TEXT is set to")
-					.setDescription(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), dataBaseCollum));
+					.setDescription(setting);
 			event.getChannel().sendMessage(embed.build()).queue();
 		}
 		

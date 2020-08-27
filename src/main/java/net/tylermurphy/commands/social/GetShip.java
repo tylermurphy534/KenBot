@@ -44,8 +44,8 @@ public class GetShip implements ICommand{
 			int pw = weeks;
 			int pmo = months;
 			months -= (years*12);
-			weeks -= (pw*4);
-			days -= (pmo*7);
+			weeks -= (pmo*4);
+			days -= (pw*7);
 			hours -= (pd*24);
 			minutes -= (ph*60);
 			seconds -= (pm*60);

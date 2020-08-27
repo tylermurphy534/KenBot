@@ -102,6 +102,8 @@ public class CommandManager {
 		addCommand(new Tits());
 		addCommand(new LoopQueue());
 		addCommand(new Remove());
+		addCommand(new EightBall());
+		addCommand(new TrumpQuote());
 	}
 	
 	private void addCommand(ICommand command) {

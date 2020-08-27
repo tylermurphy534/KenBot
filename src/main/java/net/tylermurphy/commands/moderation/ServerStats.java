@@ -15,7 +15,6 @@ import net.tylermurphy.database.DatabaseManager;
 
 public class ServerStats extends ListenerAdapter implements ICommand {
 
-	@Override
 	public void handle(List<String> args, GuildMessageReceivedEvent event) {
 		Member member = event.getMember();
 
@@ -34,9 +33,6 @@ public class ServerStats extends ListenerAdapter implements ICommand {
 		VoiceChannel members = event.getGuild().createVoiceChannel("Server Members").complete();
 		VoiceChannel bots = event.getGuild().createVoiceChannel("Server Bots").complete();
 		VoiceChannel users = event.getGuild().createVoiceChannel("Server Users").complete();
-		DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "membersChannelId");
-		DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "botsChannelId");
-		DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "usersChannelId");
 		DatabaseManager.GuildSettings.set(event.getGuild().getIdLong(), "membersChannelId", String.valueOf(members.getIdLong()));
 		DatabaseManager.GuildSettings.set(event.getGuild().getIdLong(), "botsChannelId", String.valueOf(bots.getIdLong()));
 		DatabaseManager.GuildSettings.set(event.getGuild().getIdLong(), "usersChannelId", String.valueOf(users.getIdLong()));
@@ -59,15 +55,19 @@ public class ServerStats extends ListenerAdapter implements ICommand {
 	}
 	
 	private void disable(List<String> args, GuildMessageReceivedEvent event) {
-		event.getGuild().getVoiceChannelById(Long.parseLong(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "membersChannelId"))).delete().queue();
-		event.getGuild().getVoiceChannelById(Long.parseLong(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "botsChannelId"))).delete().queue();
-		event.getGuild().getVoiceChannelById(Long.parseLong(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "usersChannelId"))).delete().queue();
-		event.getGuild().getCategoryById(Long.parseLong(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "categoryId"))).delete().queue();
-		DatabaseManager.GuildSettings.set(event.getGuild().getIdLong(), "membersChannelId", "");
-		DatabaseManager.GuildSettings.set(event.getGuild().getIdLong(), "botsChannelId", "");
-		DatabaseManager.GuildSettings.set(event.getGuild().getIdLong(), "usersChannelId", "");
-		DatabaseManager.GuildSettings.set(event.getGuild().getIdLong(), "categoryId", "");
-		event.getChannel().sendMessage(":x: Disabled Server Stats").queue();
+		try {
+			event.getGuild().getVoiceChannelById(Long.parseLong(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "membersChannelId"))).delete().queue();
+			event.getGuild().getVoiceChannelById(Long.parseLong(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "botsChannelId"))).delete().queue();
+			event.getGuild().getVoiceChannelById(Long.parseLong(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "usersChannelId"))).delete().queue();
+			event.getGuild().getCategoryById(Long.parseLong(DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "categoryId"))).delete().queue();
+			DatabaseManager.GuildSettings.remove(event.getGuild().getIdLong(), "membersChannelId");
+			DatabaseManager.GuildSettings.remove(event.getGuild().getIdLong(), "botsChannelId");
+			DatabaseManager.GuildSettings.remove(event.getGuild().getIdLong(), "usersChannelId");
+			DatabaseManager.GuildSettings.remove(event.getGuild().getIdLong(), "categoryId");
+			event.getChannel().sendMessage(":x: Disabled Server Stats").queue();
+		}catch(NullPointerException e) {
+			event.getChannel().sendMessage(":x: An Unexpected Error Has Occured").queue();
+		}
 	}
 
 	public void onGuildMemberJoin(GuildMemberJoinEvent event) {

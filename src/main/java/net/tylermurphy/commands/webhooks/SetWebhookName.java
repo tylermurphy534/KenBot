@@ -32,11 +32,11 @@ public class SetWebhookName implements ICommand {
 			channel.sendMessage(":x: Webhook does not exist").queue();
 			return;
 		}
-		
-		DatabaseManager.Webhooks.set(event.getGuild().getIdLong(), webhook.get("AvatarURL"), args.get(1), args.get(0));
+		String name = String.join(" ", args.subList(1, args.size()));
+		DatabaseManager.Webhooks.set(event.getGuild().getIdLong(), webhook.get("AvatarURL"), name, args.get(0));
 		
 		EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
-				.setDescription("Set webhook name with prefix "+args.get(0)+" to\n`"+args.get(1)+"`");
+				.setDescription("Set webhook name with prefix "+args.get(0)+" to\n`"+name+"`");
 		channel.sendMessage(embed.build()).queue();
 		
 	}
