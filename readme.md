@@ -20,7 +20,7 @@ You have to create a bot_config.json file and put the required data in the follo
 >	"DATABASE_PORT": "",
 >	"DATABASE_USER": "",
 >	"DATABASE_PASSWORD": "",
->	"DATABASE_NAME": ""
+>	"DATABASE_NAME": "",
 >	"NSFW: false
 >}
 
