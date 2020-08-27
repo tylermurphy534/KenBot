@@ -104,6 +104,10 @@ public class CommandManager {
 		addCommand(new Remove());
 		addCommand(new EightBall());
 		addCommand(new TrumpQuote());
+		addCommand(new Warn());
+		addCommand(new Warns());
+		addCommand(new SetWarnAction());
+		addCommand(new ClearWarns());
 	}
 	
 	private void addCommand(ICommand command) {

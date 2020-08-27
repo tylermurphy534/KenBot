@@ -7,9 +7,8 @@ import java.sql.SQLException;
 
 public class WarnActions {
 	
-	public final String DefaultValue = "false";
 	public String get(long guildId, int warnAmount) {
-		String sql = "SELECT * FROM GuildSettings WHERE GuildId = ? AND WarnAmount = ?";
+		String sql = "SELECT * FROM WarnActions WHERE GuildId = ? AND WarnAmount = ?";
 		try( Connection connection = MariaDBConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ){
 			statement.setString(1, String.valueOf(guildId));
 			statement.setInt(2, warnAmount);
@@ -24,15 +23,15 @@ public class WarnActions {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return DefaultValue;
+		return null;
 	}
 	
-	public void insert(long guildId, int warnAmount) {
-		String sql = "INSERT INTO GuildSettings (GuildId,WarnAmount,WarnAction) VALUES (?,?,?)";
+	public void insert(long guildId, int warnAmount, String warnAction) {
+		String sql = "INSERT INTO WarnActions (GuildId,WarnAmount,WarnAction) VALUES (?,?,?)";
 		try( Connection connection = MariaDBConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ){
 			statement.setString(1, String.valueOf(guildId));
 			statement.setInt(2, warnAmount);
-			statement.setString(3, DefaultValue);
+			statement.setString(3, warnAction);
 			statement.execute();
 			connection.commit();
 		} catch (SQLException e) {
@@ -40,12 +39,25 @@ public class WarnActions {
 		}
 	}
 	
-	public void set(long guildId, String settingName, String settingValue) {
-		String sql = "UPDATE GuildSettings SET SettingValue = ? WHERE GuildId = ? AND SettingName = ?";
+	public void set(long guildId, int warnAmount, String warnAction) {
+		if(get(guildId,warnAmount) == null) { insert(guildId,warnAmount,warnAction); return; }
+		String sql = "UPDATE WarnActions SET WarnAction = ? WHERE GuildId = ? AND WarnAmount = ?";
 		try( Connection connection = MariaDBConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ){
-			statement.setString(1, settingValue);
+			statement.setString(1, warnAction);
 			statement.setString(2, String.valueOf(guildId));
-			statement.setString(3, settingName);
+			statement.setInt(3, warnAmount);
+			statement.execute();
+			connection.commit();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void remove(long guildId, int warnAmount) {
+		String sql = "DELETE FROM WarnActions WHERE GuildId = ? AND WarnAmount = ?";
+		try( Connection connection = MariaDBConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ){
+			statement.setString(1, String.valueOf(guildId));
+			statement.setInt(2, warnAmount);
 			statement.execute();
 			connection.commit();
 		} catch (SQLException e) {

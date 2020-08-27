@@ -77,20 +77,24 @@ public class Help implements ICommand {
 				"selfrole <channelId> <messageId> <roleId/roleMention/roleName> <emoji> | adds self role emoji toggle to specified message for the specified role\n"+
 				"delselfrole <channelId> <messageId> | removes all self roles on specified message\n"+
 				"logchannel <channelMention/remove> | sets log channel to mention or current channel if no args, removes log channel if arg passed is remove\n"+
-				"serverstats | toggles on and off server stats```\n"+
+				"serverstats | toggles on and off server stats\n"+
+				"warn <user> <reason> | warns a user\n"+
+				"warns <user> | shows a users warn amount\n"+
+				"clearwarns <user> | clears a users warns\n"+
+				"setwarnaction <warns> <action> | sets a <action> (kick,ban,mute) to occur on a user when they get so many <warns>```\n"+
 				":robot: **Webhooks**\n"+
 				"```createwebhook <prefix> | create a webhook with a chat prefix of <prefix>\n"+
 				"deletewebhook <prefix> | deleted the webhook with the prefix <prefix>\n"+
 				"setwebhookname <prefix> <name> | set the webhook name to <name> that has the prefix <prefix>\n"+
-				"setwebhookURL <prefix> <url> | set the webhook avatar url to <url> that has the prefix <prefix>```\n"+
+				"setwebhookURL <prefix> <url> | set the webhook avatar url to <url> that has the prefix <prefix>```\n";
+		String help3 =
 				":tools: **AutoMod**\n"+
 				"```allcaps <settings> | set allcaps automod settings \n"+
 				"duplicatetext <settings> | set duplicatetext automod settings \n"+
 				"emojispam <settings> | set emojispam automod settings \n"+
 				"mentionsspam <settings> | set mentionsspam automod settings \n"+
 				"messagespam <settings> | set messagespam automod settings \n"+
-				"AutoMod Settings: '' (Blank gets current setting), 'False' (Disable),'Warn','WarnAndDelete','Delete','Mute' (for 30 min),'Kick','Ban'```\n";
-		String help3 = 
+				"AutoMod Settings: '' (Blank gets current setting), 'False' (Disable),'Warn','WarnAndDelete','Delete','Mute' (for 30 min),'Kick','Ban'```\n"+
 				":octagonal_sign: **NSFW**\n"+
 				"```blowjob | posts a nsfw image of blow job\n"+
 				"boobs | posts a nsfw image of boobs\n"+

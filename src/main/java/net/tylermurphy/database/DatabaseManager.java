@@ -7,5 +7,6 @@ public class DatabaseManager {
 	public static SocialStats SocialStats = new SocialStats();
 	public static UserSettings UserSettings = new UserSettings();
 	public static Webhooks Webhooks = new Webhooks();
+	public static WarnActions WarnActions = new WarnActions();
 	
 }

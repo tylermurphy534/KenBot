@@ -12,6 +12,7 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.tylermurphy.commands.moderation.TempMute;
+import net.tylermurphy.commands.moderation.Warn;
 import net.tylermurphy.database.DatabaseManager;
 
 public class AutoModManager {
@@ -79,9 +80,13 @@ public class AutoModManager {
 		if(data.get(column).equals("false")) {
 			return;
 		} else if(data.get(column).equalsIgnoreCase("warn")) {
-			warn(event,column);
+			int warns = Integer.parseInt(DatabaseManager.UserSettings.get(event.getMember().getUser().getIdLong(), event.getGuild().getIdLong(), "Warns"));
+			warn(event,column,warns+1);
+			Warn.HandleWarn(event, event.getMember(), DatabaseManager.WarnActions.get(event.getGuild().getIdLong(), warns), names.get(column));
 		} else if(data.get(column).equalsIgnoreCase("warnanddelete")) {
-			warn(event,column);
+			int warns = Integer.parseInt(DatabaseManager.UserSettings.get(event.getMember().getUser().getIdLong(), event.getGuild().getIdLong(), "Warns"));
+			warn(event,column,warns+1);
+			Warn.HandleWarn(event, event.getMember(), DatabaseManager.WarnActions.get(event.getGuild().getIdLong(), warns), names.get(column));
 			event.getMessage().delete().queue();
 		} else if(data.get(column).equalsIgnoreCase("delete")) {
 			event.getMessage().delete().queue();
@@ -124,12 +129,13 @@ public class AutoModManager {
 		} 
 	}
 	
-	private void warn(GuildMessageReceivedEvent event, String column) {
+	private void warn(GuildMessageReceivedEvent event, String column, int warns) {
 		EmbedBuilder builder = new EmbedBuilder()
 				.setTitle("Warning")
 				.setColor(Color.yellow)
 				.setDescription(String.format("%s, you have been warned for %s",event.getAuthor(),names.get(column)));
 		event.getChannel().sendMessage(builder.build()).queue();
+		DatabaseManager.UserSettings.set(event.getMember().getUser().getIdLong(), event.getGuild().getIdLong(), "Warns", String.valueOf(warns));
 	}
 	
 }
