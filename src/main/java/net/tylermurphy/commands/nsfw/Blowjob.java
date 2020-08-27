@@ -6,6 +6,7 @@ import me.duncte123.botcommons.messaging.EmbedUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.tylermurphy.Config;
 import net.tylermurphy.apis.NekosLifeAPI;
 import net.tylermurphy.commands.ICommand;
 
@@ -16,6 +17,10 @@ public class Blowjob implements ICommand {
 		
 		if(!channel.isNSFW() && event.getGuild().getIdLong() != 740721864846082108L) {
 			channel.sendMessage(":x: You can only use this in a NSFW channel").queue();
+			return;
+		}
+		if(Config.NSFW == false) {
+			channel.sendMessage(":x: NSFW is disabled by the bot host").queue();
 			return;
 		}
 		String url = NekosLifeAPI.getUrlFromSearch("bj");

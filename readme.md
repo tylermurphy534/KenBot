@@ -21,6 +21,7 @@ You have to create a bot_config.json file and put the required data in the follo
 >	"DATABASE_USER": "",
 >	"DATABASE_PASSWORD": "",
 >	"DATABASE_NAME": ""
+>	"NSFW: false
 >}
 
 To build the bot go to the bot source code directory and run ./gradlew build in a lunix or powershell terminal or run gradlew.bat if on windows and without powershell. You will then have a runnable fat jar file in the ./build/libs/ directory. Copy that jar to where ever you want and run in a commandline java -jar "nameOfJar.jar".

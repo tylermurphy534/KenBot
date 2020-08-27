@@ -23,6 +23,7 @@ public class Config {
 			DATABASE_PASSWORD = (String) jsonObject.get("DATABASE_PASSWORD");
 			DATABASE_NAME = (String) jsonObject.get("DATABASE_NAME");
 			PREFIX = (String) jsonObject.get("DEFAULT_PREFIX");
+			NSFW = (boolean) jsonObject.get("NSFW");
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.exit(0);
@@ -39,5 +40,6 @@ public class Config {
 	public static String DATABASE_USER;
 	public static String DATABASE_PASSWORD;
 	public static String DATABASE_NAME;
+	public static boolean NSFW;
 	
 }
