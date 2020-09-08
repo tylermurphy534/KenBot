@@ -25,7 +25,6 @@ public class Bot {
 	private Bot() throws LoginException, InterruptedException, SQLException {
         
 		Config.loadConstants();
-//		SQLiteConnection.getConnection();
 		MariaDBConnection.getConnection();
 		EmbedUtils.setEmbedBuilder(
 				() -> new EmbedBuilder()

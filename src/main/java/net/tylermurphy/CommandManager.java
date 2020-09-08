@@ -108,6 +108,7 @@ public class CommandManager {
 		addCommand(new Warns());
 		addCommand(new SetWarnAction());
 		addCommand(new ClearWarns());
+		addCommand(new E261());
 	}
 	
 	private void addCommand(ICommand command) {
