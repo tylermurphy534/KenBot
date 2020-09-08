@@ -107,7 +107,9 @@ public class Help implements ICommand {
 				"pussy | posts a nsfw image of pussy\n"+
 				"smallboobs | posts a nsfw image of small boobs\n"+
 				"spank | posts a nsfw image of spank\n"+
-				"tits | posts a nsfw image of tits```\n";
+				"tits | posts a nsfw image of tits```\n"+
+				"e621 <tags...> | searches e621```\n"+
+				"rule34 <tags...> | searches rule34```\n";
 		user.openPrivateChannel().queue((channel) -> {
 			EmbedBuilder builder = EmbedUtils.getDefaultEmbed()
 					.setDescription(help);

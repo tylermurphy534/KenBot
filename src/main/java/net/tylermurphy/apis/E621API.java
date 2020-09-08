@@ -6,12 +6,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class e261API extends API {
+public class E621API extends API {
 
 	public static String getUrlFromSearch(String search) {
 		try {
 			JSONObject json = getSearchResults(search);
-			JSONArray results = (JSONArray) json.get("posts");
+			System.out.println(json.toString());
+			JSONArray results = json.getJSONArray("posts");
 			int choice = (int) (Math.random()*results.length()-1);
 			JSONObject post = (JSONObject) results.get(choice);
 			JSONObject file = post.getJSONObject("file");
@@ -26,8 +27,9 @@ public class e261API extends API {
 	 private static JSONObject getSearchResults(String searchTerm) {
 		 	
 	        final String url = String.format("https://e621.net/posts.json?tags=%s", searchTerm);
+	        System.out.println(url);
 	        try {
-	            return get(url);
+	            return getJson(url);
 	        } catch (JSONException | IOException ignored) {}
 	        return null;
 	    }

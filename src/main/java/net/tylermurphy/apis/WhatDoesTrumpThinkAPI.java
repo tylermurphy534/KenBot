@@ -9,7 +9,7 @@ public class WhatDoesTrumpThinkAPI extends API{
 	
 	public static String getQuote() {
 		try {
-			JSONObject json = get("https://api.whatdoestrumpthink.com/api/v1/quotes/random");
+			JSONObject json = getJson("https://api.whatdoestrumpthink.com/api/v1/quotes/random");
 			return json.getString("message");
 		} catch (JSONException | IOException e) {
 			e.printStackTrace();

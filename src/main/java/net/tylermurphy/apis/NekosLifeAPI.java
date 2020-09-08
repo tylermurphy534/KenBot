@@ -21,7 +21,7 @@ public class NekosLifeAPI extends API {
 
         final String url = String.format("https://nekos.life/api/v2/img/%s", searchTerm);
         try {
-            return get(url);
+            return getJson(url);
         } catch (JSONException | IOException ignored) {}
         return null;
     }

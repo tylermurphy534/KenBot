@@ -9,13 +9,47 @@ import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
 public abstract class API{
 
-	protected static JSONObject get(String url) throws IOException, JSONException {
-        HttpURLConnection connection = null;
+	protected static JSONObject getJson(String url) throws IOException, JSONException {
+        HttpURLConnection connection = getConnection(url);
+        try {
+            return parseJson(connection);
+        } catch (Exception ignored) {
+        	ignored.printStackTrace();
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+        return new JSONObject("");
+    }
+	
+	protected static Document getXML(String url) throws IOException, JSONException {
+        HttpURLConnection connection = getConnection(url);
+        try {
+            return parseXML(connection);
+        } catch (Exception ignored) {
+        	ignored.printStackTrace();
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+        return null;
+    }
+	
+	private static HttpURLConnection getConnection(String url) {
+		HttpURLConnection connection = null;
         try {
             connection = (HttpURLConnection) new URL(url).openConnection();
             connection.setDoInput(true);
@@ -31,19 +65,37 @@ public abstract class API{
                 String error = String.format("HTTP Code: '%1$s' from '%2$s'", statusCode, url);
                 throw new ConnectException(error);
             }
-
-            return parser(connection);
-        } catch (Exception ignored) {
+            
+            return connection;
+        } catch (Exception e) { 
+        	e.printStackTrace(); 
+        }
+        return null;
+	}
+	
+	private static Document parseXML(HttpURLConnection connection) throws ParserConfigurationException, SAXException {
+        InputStream stream = null;
+        try {
+            stream = new BufferedInputStream(connection.getInputStream());
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(stream);
+            doc.getDocumentElement().normalize();
+            return doc;
+        } catch (IOException ignored) {
         	ignored.printStackTrace();
         } finally {
-            if (connection != null) {
-                connection.disconnect();
+            if (stream != null) {
+                try {
+                    stream.close();
+                } catch (IOException ignored) {
+                }
             }
         }
-        return new JSONObject("");
-    }
+        return null;
+	}
     
-	protected static JSONObject parser(HttpURLConnection connection) throws JSONException {
+	private static JSONObject parseJson(HttpURLConnection connection) throws JSONException {
         char[] buffer = new char[1024 * 4];
         int n;
         InputStream stream = null;

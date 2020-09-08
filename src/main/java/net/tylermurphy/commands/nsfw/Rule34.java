@@ -7,10 +7,10 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.tylermurphy.Config;
-import net.tylermurphy.apis.e261API;
+import net.tylermurphy.apis.Rule34API;
 import net.tylermurphy.commands.ICommand;
 
-public class E261 implements ICommand {
+public class Rule34 implements ICommand {
 
 	public void handle(List<String> args, GuildMessageReceivedEvent event) {
 		TextChannel channel = event.getChannel();
@@ -24,7 +24,7 @@ public class E261 implements ICommand {
 		}
 		Thread newThread = new Thread(() -> {
 			String search = String.join(" ", args);
-			String url = e261API.getUrlFromSearch(search);
+			String url = Rule34API.getUrlFromSearch(search);
 			if(url == null) {
 				channel.sendMessage(":x: Unable to find post with seach: "+search).queue();
 				return;
@@ -38,7 +38,7 @@ public class E261 implements ICommand {
 	}
 
 	public String getInvoke() {
-		return "e261";
+		return "rule34";
 	}
 
 }
