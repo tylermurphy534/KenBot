@@ -15,6 +15,7 @@ public class Rule34API extends API {
 			Document doc = getSearchResults(search);
 			NodeList nList = doc.getElementsByTagName("post");
 			int choice = (int) (Math.random()*nList.getLength()-1);
+			if(choice < 0) return null;
 			Node node = nList.item(choice);
 			Element element = (Element) node;
 			return element.getAttribute("file_url");
