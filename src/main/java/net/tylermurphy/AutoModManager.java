@@ -77,7 +77,7 @@ public class AutoModManager {
 	}
 	
 	private void handleAction(GuildMessageReceivedEvent event, String column, HashMap<String,String> data) {
-		if(data.get(column).equals("false")) {
+		if(data.get(column) == null || data.get(column).equals("false")) {
 			return;
 		} else if(data.get(column).equalsIgnoreCase("warn")) {
 			int warns = Integer.parseInt(DatabaseManager.UserSettings.get(event.getMember().getUser().getIdLong(), event.getGuild().getIdLong(), "Warns"));

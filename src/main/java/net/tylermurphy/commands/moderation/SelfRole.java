@@ -1,12 +1,16 @@
 package net.tylermurphy.commands.moderation;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import com.vdurmont.emoji.EmojiParser;
 
 import me.duncte123.botcommons.messaging.EmbedUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.MessageReaction.ReactionEmote;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -19,6 +23,7 @@ import net.tylermurphy.database.DatabaseManager;
 public class SelfRole extends ListenerAdapter implements ICommand {
 
 	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+		System.out.println(args.get(3));
 		TextChannel channel = event.getChannel();
 		Member member = event.getMember();
 		Member selfMember = event.getGuild().getSelfMember();
@@ -39,7 +44,7 @@ public class SelfRole extends ListenerAdapter implements ICommand {
 		}
 		long guildId = event.getGuild().getIdLong();
 		long channelId,messageId,roleId;
-		String reaction;
+		
 		
 		try { channelId = Long.parseLong(args.get(0)); } 
 		catch (Exception e) {
@@ -68,11 +73,29 @@ public class SelfRole extends ListenerAdapter implements ICommand {
 			return;
 		}
 		
+		String reaction;
 		try {
-			reaction = ReactionEmote.fromUnicode(args.get(3), event.getJDA()).getName();
+			Message message = event.getMessage();
+			String content = message.getContentRaw();
+			List<String> emojis = EmojiParser.extractEmojis(content);
+			List<String> customEmoji = message.getEmotes().stream()
+			        .map((emote) -> emote.getName() + ":" + emote.getId())
+			        .collect(Collectors.toList());
+			List<String> merged = new ArrayList<>();
+			merged.addAll(emojis);
+			merged.addAll(customEmoji);
+			if(merged.size() > 1) {
+				channel.sendMessage(":x: The message can only have one standard or custom discord emote.").queue();
+				return;
+			}
+			if(merged.size() < 1) {
+				channel.sendMessage(":x: The message must have one standard or custom discord emote.").queue();
+				return;
+			}
+			reaction = merged.get(0);
 		}catch (Exception e) {
 			e.printStackTrace();
-			channel.sendMessage(":x: The reaction argument must be a valid emote as a discord emote.").queue();
+			channel.sendMessage(":x: Argument 3 is not a standard or custom discord emote.").queue();
 			return;
 		}
 		

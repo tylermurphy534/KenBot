@@ -35,7 +35,12 @@ public class BlackJack extends ListenerAdapter implements ICommand {
 	
 	public void onGuildMessageReactionAdd(GuildMessageReactionAddEvent event) {
         MessageReaction reaction = event.getReaction();
-        String emote = reaction.getReactionEmote().getAsCodepoints();
+        String emote;
+		try {
+			 emote = reaction.getReactionEmote().getAsCodepoints();
+		} catch (Exception e) {
+			return;
+		}
         TextChannel channel = event.getChannel();
         String discriminator = event.getUser().getName()+event.getUser().getDiscriminator();
         BlackJackGame game = games.get(discriminator);

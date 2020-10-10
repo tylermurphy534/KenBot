@@ -23,9 +23,13 @@ public class ServerStats extends ListenerAdapter implements ICommand {
             return;
         }
 		
-		boolean enabled = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "categoryId").equals("") ? false : true;
-		if(enabled) disable(args,event);
-		else enable(args,event);
+		try {
+			boolean enabled = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "categoryId").equals("") ? false : true;
+			if(enabled) disable(args,event);
+			else enable(args,event);
+		} catch (Exception e){
+			enable(args,event);
+		}
 	}
 	
 	private void enable(List<String> args, GuildMessageReceivedEvent event) {

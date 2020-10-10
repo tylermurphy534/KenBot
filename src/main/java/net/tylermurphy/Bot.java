@@ -22,13 +22,14 @@ import net.tylermurphy.database.MariaDBConnection;
 
 public class Bot {
 
-	private Bot() throws LoginException, InterruptedException, SQLException {
+	private Bot() throws LoginException, InterruptedException, SQLException, SecurityException {
         
 		Config.loadConstants();
 		MariaDBConnection.getConnection();
+		
 		EmbedUtils.setEmbedBuilder(
 				() -> new EmbedBuilder()
-                	.setColor(Color.YELLOW)
+                	.setColor(Color.MAGENTA)
         );
 			
 		JDABuilder.createDefault(Config.TOKEN)
@@ -40,9 +41,12 @@ public class Bot {
 		    .build()
 		   	.awaitReady();
 		
+		
+		
+		
 	}
 	
-	public static void main(String[] args) throws LoginException, InterruptedException, SQLException {
-        new Bot();
+	public static void main(String[] args) throws LoginException, InterruptedException, SQLException, SecurityException {
+		new Bot();
     }
 }

@@ -53,7 +53,12 @@ public class Nunchi extends ListenerAdapter implements ICommand {
 	
 	public void onGuildMessageReactionAdd(GuildMessageReactionAddEvent event) {
         MessageReaction reaction = event.getReaction();
-        String emote = reaction.getReactionEmote().getAsCodepoints();
+        String emote;
+		try {
+			 emote = reaction.getReactionEmote().getAsCodepoints();
+		} catch (Exception e) {
+			return;
+		}
         TextChannel channel = event.getChannel();
         String pointer = event.getUser().getName() + "#" + event.getUser().getDiscriminator();
         if(event.getMember().getUser().isBot()) return;

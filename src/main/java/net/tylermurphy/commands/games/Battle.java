@@ -174,7 +174,12 @@ public class Battle extends ListenerAdapter implements ICommand {
 	public void onGuildMessageReactionAdd(GuildMessageReactionAddEvent event) {
 		if(event.getMember().getUser().isBot()) return;
 		MessageReaction reaction = event.getReaction();
-	    String emote = reaction.getReactionEmote().getAsCodepoints();
+		String emote;
+		try {
+			 emote = reaction.getReactionEmote().getAsCodepoints();
+		} catch (Exception e) {
+			return;
+		}
 	    TextChannel channel = event.getChannel();
 	    Match match = null;
 	    for(Match temp : matches) {

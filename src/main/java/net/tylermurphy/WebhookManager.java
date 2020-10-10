@@ -37,7 +37,7 @@ public class WebhookManager {
 			webhook = webhooks.get(0);
 		}
 		String url = webhook.getUrl();
-		WebhookClient client = clients.computeIfAbsent(guildId, k -> createClient(url));
+		WebhookClient client = clients.computeIfAbsent(channel.getIdLong(), k -> createClient(url));
 		WebhookMessageBuilder builder = new WebhookMessageBuilder();
 		builder.setUsername(webhookData.get("Name"));
 		builder.setAvatarUrl(webhookData.get("AvatarURL"));
