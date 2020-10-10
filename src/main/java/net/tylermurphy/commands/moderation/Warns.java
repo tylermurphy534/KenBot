@@ -19,7 +19,10 @@ public class Warns implements ICommand {
 		List<Member> metionedMembers = event.getMessage().getMentionedMembers();
 		
 		if(metionedMembers.isEmpty()) {
-			channel.sendMessage(":x: Missing Arguments").queue();
+			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
+					.appendDescription("**:x: Incorrect Command Usage**\n")
+					.appendDescription(getUsage() +"\n"+ getDescription());
+			channel.sendMessage(embed.build()).queue();
 			return;
 		}
 		
@@ -49,6 +52,14 @@ public class Warns implements ICommand {
 
 	public String getInvoke() {
 		return "warns";
+	}
+	
+	public String getUsage() {
+		return "Warns <@User>";
+	}
+	
+	public String getDescription() {
+		return "See how many warns a user has";
 	}
 
 }

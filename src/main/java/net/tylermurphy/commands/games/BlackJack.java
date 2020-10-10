@@ -192,5 +192,13 @@ public class BlackJack extends ListenerAdapter implements ICommand {
 			this.suit = suit;
 		}
 	}
+	
+	public String getUsage() {
+		return "";
+	}
+	
+	public String getDescription() {
+		return "Play blackjack";
+	}
 
 }

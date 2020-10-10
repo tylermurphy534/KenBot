@@ -58,5 +58,13 @@ public class Loop implements ICommand {
 	public String getInvoke() {
 		return "loop";
 	}
+	
+	public String getUsage() {
+		return "";
+	}
+	
+	public String getDescription() {
+		return "Loop current song";
+	}
 
 }

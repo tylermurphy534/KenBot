@@ -187,5 +187,13 @@ public class Nunchi extends ListenerAdapter implements ICommand {
 			
 		
 	}
+	
+	public String getUsage() {
+		return "";
+	}
+	
+	public String getDescription() {
+		return "Plays a game of nunchi";
+	}
 
 }

@@ -11,7 +11,10 @@ public class EightBall implements ICommand {
 
 	public void handle(List<String> args, GuildMessageReceivedEvent event) {
 		if(args.isEmpty()) {
-			event.getChannel().sendMessage(":x: Missing Arguments").queue();
+			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
+					.appendDescription("**:x: Incorrect Command Usage**\n")
+					.appendDescription(getUsage() +"\n"+ getDescription());
+			event.getChannel().sendMessage(embed.build()).queue();
 			return;
 		}
 		String url = "https://magic-8ball.com/assets/images/Our_magic_8_ball.png";
@@ -53,6 +56,14 @@ public class EightBall implements ICommand {
 	
 	public String getInvoke() {
 		return "8ball";
+	}
+	
+	public String getUsage() {
+		return "8ball <question>";
+	}
+	
+	public String getDescription() {
+		return "Rolls the 8ball to answer your question";
 	}
 
 }

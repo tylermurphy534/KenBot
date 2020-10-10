@@ -91,5 +91,13 @@ public class Skip implements ICommand {
 	public String getInvoke() {
 		return "skip";
 	}
-
+	
+	public String getUsage() {
+		return "";
+	}
+	
+	public String getDescription() {
+		return "Skip current playing song";
+	}
+	
 }

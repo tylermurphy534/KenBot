@@ -44,7 +44,10 @@ public class Battle extends ListenerAdapter implements ICommand {
 			}
 		}
 		if(members.isEmpty()) {
-			channel.sendMessage(":x: Please mention one opponent").queue();
+			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
+					.appendDescription("**:x: Incorrect Command Usage**\n")
+					.appendDescription(getUsage() +"\n"+ getDescription());
+			channel.sendMessage(embed.build()).queue();
 			return;
 		}
 		Member opponent = members.get(0);
@@ -353,6 +356,14 @@ public class Battle extends ListenerAdapter implements ICommand {
 		public int point = 40;
 		public int spot = 1;
 		public boolean done = false;
+	}
+	
+	public String getUsage() {
+		return "Battle <@User>";
+	}
+	
+	public String getDescription() {
+		return "Battle someone to the death! Run the command again to cancel battle request.";
 	}
 
 }

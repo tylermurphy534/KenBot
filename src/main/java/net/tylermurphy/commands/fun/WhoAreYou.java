@@ -12,10 +12,18 @@ public class WhoAreYou implements ICommand {
 		
 		MessageChannel channel = event.getChannel();
 		
-		channel.sendMessage("your mom.").queue();
+		channel.sendMessage("A very good discord bot owo").queue();
 		
 	}
 	
 	public String getInvoke() { return "whoareyou"; }
+	
+	public String getUsage() {
+		return "";
+	}
+	
+	public String getDescription() {
+		return "Who am i?";
+	}
 	
 }

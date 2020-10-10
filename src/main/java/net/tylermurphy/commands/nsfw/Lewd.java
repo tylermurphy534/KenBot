@@ -31,4 +31,12 @@ public class Lewd implements ICommand {
 		return "lewd";
 	}
 	
+	public String getUsage() {
+		return "";
+	}
+
+	public String getDescription() {
+		return "A NSFW Command";
+	}
+	
 }

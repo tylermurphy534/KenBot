@@ -31,4 +31,12 @@ public class LewdKemo implements ICommand {
 		return "lewdkemo";
 	}
 	
+	public String getUsage() {
+		return "";
+	}
+	
+	public String getDescription() {
+		return "A NSFW Command";
+	}
+	
 }

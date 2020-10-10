@@ -54,5 +54,13 @@ public class Queue implements ICommand {
 	public String getInvoke() {
 		return "queue";
 	}
+	
+	public String getUsage() {
+		return "";
+	}
+	
+	public String getDescription() {
+		return "See current song queue";
+	}
 
 }

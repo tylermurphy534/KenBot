@@ -15,7 +15,10 @@ public class MultiDice implements ICommand {
 		TextChannel channel = event.getChannel();
 		
 		if(args.isEmpty() || args.size() < 2) {
-			channel.sendMessage(":x: Missing Arguments").queue();
+			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
+					.appendDescription("**:x: Incorrect Command Usage**\n")
+					.appendDescription(getUsage() +"\n"+ getDescription());
+			channel.sendMessage(embed.build()).queue();
 			return;
 		}
 		
@@ -79,6 +82,14 @@ public class MultiDice implements ICommand {
 
 	public String getInvoke() {
 		return "multidice";
+	}
+	
+	public String getUsage() {
+		return "Multidice <sides> <dice>";
+	}
+	
+	public String getDescription() {
+		return "Rolls many dice";
 	}
 
 }

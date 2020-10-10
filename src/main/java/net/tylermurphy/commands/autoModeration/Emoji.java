@@ -53,5 +53,13 @@ public class Emoji implements ICommand {
 	public String getInvoke() {
 		return "emojispam";
 	}
+	
+	public String getUsage() {
+		return "EmojiSpam <empty for current setting,false,warn,delete,mute (30 min), kick, ban>";
+	}
+	
+	public String getDescription() {
+		return "Set automod action for when a user spamms emojis";
+	}
 
 }

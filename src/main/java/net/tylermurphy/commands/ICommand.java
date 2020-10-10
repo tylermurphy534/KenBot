@@ -10,4 +10,8 @@ public interface ICommand {
 	
 	public String getInvoke();
 	
+	public String getUsage();
+	
+	public String getDescription();
+	
 }

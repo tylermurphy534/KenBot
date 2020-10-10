@@ -37,5 +37,13 @@ public class SetPrefix implements ICommand {
 	public String getInvoke() {
 		return "setprefix";
 	}
+	
+	public String getUsage() {
+		return "SetPrefix <empty to reset, prefix>";
+	}
+	
+	public String getDescription() {
+		return "Set Bot Prefix";
+	}
 
 }

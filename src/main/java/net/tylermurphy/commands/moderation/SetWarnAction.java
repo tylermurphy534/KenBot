@@ -2,6 +2,8 @@ package net.tylermurphy.commands.moderation;
 
 import java.util.List;
 
+import me.duncte123.botcommons.messaging.EmbedUtils;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.tylermurphy.commands.ICommand;
@@ -17,7 +19,10 @@ public class SetWarnAction implements ICommand {
         }
         
         if(args.isEmpty() || args.size() < 2) {
-        	event.getChannel().sendMessage(":x: Missing Arguments").queue();
+        	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
+					.appendDescription("**:x: Incorrect Command Usage**\n")
+					.appendDescription(getUsage() +"\n"+ getDescription());
+			event.getChannel().sendMessage(embed.build()).queue();
             return;
         }
         
@@ -52,6 +57,14 @@ public class SetWarnAction implements ICommand {
 
 	public String getInvoke() {
 		return "SetWarnAction";
+	}
+	
+	public String getUsage() {
+		return "SetWarnAction <warns> <kick/ban/mute>";
+	}
+	
+	public String getDescription() {
+		return "Set what happens when a user get so many warns";
 	}
 
 }

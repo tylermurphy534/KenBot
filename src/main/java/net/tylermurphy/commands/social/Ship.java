@@ -134,5 +134,13 @@ public class Ship implements ICommand {
 	public String getInvoke() {
 		return "ship";
 	}
+	
+	public String getUsage() {
+		return "Ship <leave empty to get current, \"remove\" to remove, @User>";
+	}
+	
+	public String getDescription() {
+		return "Set your love stats / ship yourself with someone";
+	}
 
 }

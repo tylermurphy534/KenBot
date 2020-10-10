@@ -23,13 +23,15 @@ import net.tylermurphy.database.DatabaseManager;
 public class SelfRole extends ListenerAdapter implements ICommand {
 
 	public void handle(List<String> args, GuildMessageReceivedEvent event) {
-		System.out.println(args.get(3));
 		TextChannel channel = event.getChannel();
 		Member member = event.getMember();
 		Member selfMember = event.getGuild().getSelfMember();
 		
 		if(args.isEmpty() || args.size() < 4) {
-			channel.sendMessage(":x: Missing Arguments.").queue();
+			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
+					.appendDescription("**:x: Incorrect Command Usage**\n")
+					.appendDescription(getUsage() +"\n"+ getDescription());
+			channel.sendMessage(embed.build()).queue();
 			return;
 		}
 		
@@ -164,6 +166,14 @@ public class SelfRole extends ListenerAdapter implements ICommand {
 
 	public String getInvoke() {
 		return "selfrole";
+	}
+	
+	public String getUsage() {
+		return "SelfRole <channelid> <messageid> <roleid,@Role,roleName> <emoji>";
+	}
+	
+	public String getDescription() {
+		return "Create a self role / role reaction toggle";
 	}
 
 }

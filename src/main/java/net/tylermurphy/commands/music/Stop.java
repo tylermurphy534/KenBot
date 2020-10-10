@@ -63,6 +63,12 @@ public class Stop implements ICommand {
 		return "stop";
 	}
 
+	public String getUsage() {
+		return "";
+	}
 	
+	public String getDescription() {
+		return "Stop current playing songs and clear queue";
+	}
 	
 }

@@ -18,7 +18,10 @@ public class GetShip implements ICommand{
 		TextChannel channel = event.getChannel();
 		List<Member> mentionedMembers = event.getMessage().getMentionedMembers();
 		if(mentionedMembers.isEmpty()) {
-			channel.sendMessage(":x: Please mention someone in this server.").queue();
+			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
+					.appendDescription("**:x: Incorrect Command Usage**\n")
+					.appendDescription(getUsage() +"\n"+ getDescription());
+			channel.sendMessage(embed.build()).queue();
 			return;
 		}
 		long userId = mentionedMembers.get(0).getUser().getIdLong();
@@ -115,6 +118,14 @@ public class GetShip implements ICommand{
 
 	public String getInvoke() {
 		return "getship";
+	}
+	
+	public String getUsage() {
+		return "GetShip <@User>";
+	}
+	
+	public String getDescription() {
+		return "Get someones love / ship status";
 	}
 
 }

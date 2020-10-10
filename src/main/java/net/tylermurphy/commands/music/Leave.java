@@ -64,5 +64,13 @@ public class Leave implements ICommand {
     public String getInvoke() {
         return "leave";
     }
+    
+    public String getUsage() {
+		return "";
+	}
+    
+    public String getDescription() {
+		return "Remove Ken from the VC";
+	}
 	
 }

@@ -34,5 +34,13 @@ public class Meme implements ICommand {
 	public String getInvoke() {
 		return "meme";
 	}
+	
+	public String getUsage() {
+		return "";
+	}
+	
+	public String getDescription() {
+		return "Sends a funny meme";
+	}
 
 }

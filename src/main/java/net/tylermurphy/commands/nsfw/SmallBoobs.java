@@ -31,4 +31,12 @@ public class SmallBoobs implements ICommand {
 		return "smallboobs";
 	}
 	
+	public String getUsage() {
+		return "";
+	}
+	
+	public String getDescription() {
+		return "A NSFW Command";
+	}
+	
 }

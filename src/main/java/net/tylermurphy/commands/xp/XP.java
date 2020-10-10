@@ -20,5 +20,13 @@ public class XP implements ICommand {
 	public String getInvoke() {
 		return "xp";
 	}
+	
+	public String getUsage() {
+		return "";
+	}
+	
+	public String getDescription() {
+		return "Get current amount of xp";
+	}
 
 }

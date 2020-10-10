@@ -40,5 +40,13 @@ public class E621 implements ICommand {
 	public String getInvoke() {
 		return "e621";
 	}
+	
+	public String getUsage() {
+		return "e621 <search>";
+	}
+	
+	public String getDescription() {
+		return "A NSFW Command";
+	}
 
 }

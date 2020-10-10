@@ -13,6 +13,8 @@ import net.tylermurphy.commands.ICommand;
 
 import java.util.stream.Collectors;
 
+import me.duncte123.botcommons.messaging.EmbedUtils;
+
 public class Unban implements ICommand {
 
 	public void handle(List<String> args, GuildMessageReceivedEvent event) {
@@ -29,7 +31,10 @@ public class Unban implements ICommand {
 		}
 		
 		if(args.isEmpty()) {
-			channel.sendMessage(":x: Missing Arguments").queue();;
+			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
+					.appendDescription("**:x: Incorrect Command Usage**\n")
+					.appendDescription(getUsage() +"\n"+ getDescription());
+			channel.sendMessage(embed.build()).queue();
 			return;
 		}
 		
@@ -74,6 +79,14 @@ public class Unban implements ICommand {
 		User bannedUser = ban.getUser();
 		
 		return bannedUser.getName().equalsIgnoreCase(arg) || bannedUser.getId().equals(arg) || String.format("%#s", bannedUser).equalsIgnoreCase(arg);
+	}
+	
+	public String getUsage() {
+		return "Unban <@User>";
+	}
+	
+	public String getDescription() {
+		return "Unban a user";
 	}
 	
 }

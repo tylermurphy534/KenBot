@@ -107,5 +107,13 @@ public class ServerStats extends ListenerAdapter implements ICommand {
 	public String getInvoke() {
 		return "serverstats";
 	}
+	
+	public String getUsage() {
+		return "";
+	}
+	
+	public String getDescription() {
+		return "Enable / Disable Server Stats";
+	}
 
 }

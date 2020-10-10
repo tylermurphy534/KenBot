@@ -31,4 +31,12 @@ public class Pussy implements ICommand {
 		return "pussy";
 	}
 	
+	public String getUsage() {
+		return "";
+	}
+	
+	public String getDescription() {
+		return "A NSFW Command";
+	}
+	
 }

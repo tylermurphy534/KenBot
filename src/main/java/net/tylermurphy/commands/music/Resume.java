@@ -60,4 +60,12 @@ public class Resume implements ICommand {
 		return "resume";
 	}
 	
+	public String getUsage() {
+		return "";
+	}
+	
+	public String getDescription() {
+		return "Resume current track";
+	}
+	
 }

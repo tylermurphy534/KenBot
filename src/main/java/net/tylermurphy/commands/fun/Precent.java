@@ -21,7 +21,10 @@ public class Precent implements ICommand {
 		MessageChannel channel = message.getChannel();
 
 		if(args.size() < 2) {
-			channel.sendMessage(":x: Missing Arguments").queue();
+			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
+					.appendDescription("**:x: Incorrect Command Usage**\n")
+					.appendDescription(getUsage() +"\n"+ getDescription());
+			channel.sendMessage(embed.build()).queue();
 			return;
 		}
 		int percent;
@@ -40,5 +43,13 @@ public class Precent implements ICommand {
 	}
 	
 	public String getInvoke() { return "percent"; }
+	
+	public String getUsage() {
+		return "Percent <@User> <% Of What>";
+	}
+	
+	public String getDescription() {
+		return "Tells you how much % of something a user is";
+	}
 	
 }

@@ -125,4 +125,12 @@ public class Help implements ICommand {
 	
 	public String getInvoke() { return "help"; }
 	
+	public String getUsage() {
+		return "";
+	}
+	
+	public String getDescription() {
+		return "";
+	}
+	
 }

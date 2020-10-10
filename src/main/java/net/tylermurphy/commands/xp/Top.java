@@ -82,5 +82,13 @@ public class Top implements ICommand {
 	public String getInvoke() {
 		return "top";
 	}
+	
+	public String getUsage() {
+		return "";
+	}
+	
+	public String getDescription() {
+		return "Get Top Users by Level in server";
+	}
 
 }

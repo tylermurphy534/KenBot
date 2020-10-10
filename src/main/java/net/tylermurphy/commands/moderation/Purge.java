@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import me.duncte123.botcommons.messaging.EmbedUtils;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
@@ -31,7 +33,10 @@ public class Purge implements ICommand {
 		}
 		
 		if(args.isEmpty()) {
-			channel.sendMessage(":x: Missing Arguments").queue();
+			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
+					.appendDescription("**:x: Incorrect Command Usage**\n")
+					.appendDescription(getUsage() +"\n"+ getDescription());
+			channel.sendMessage(embed.build()).queue();
 			return;
 		}
 		
@@ -83,6 +88,14 @@ public class Purge implements ICommand {
 
 	public String getInvoke() {
 		return "purge";
+	}
+	
+	public String getUsage() {
+		return "Purge <Amount>";
+	}
+	
+	public String getDescription() {
+		return "Purge messages in a text channel";
 	}
 
 }

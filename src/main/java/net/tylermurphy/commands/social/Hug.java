@@ -17,7 +17,10 @@ public class Hug implements ICommand {
 		TextChannel channel = event.getChannel();
 		List<Member> mentionedMembers = event.getMessage().getMentionedMembers();
 		if(mentionedMembers.isEmpty()) {
-			channel.sendMessage(":x: Please Mention Someone").queue();
+			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
+					.appendDescription("**:x: Incorrect Command Usage**\n")
+					.appendDescription(getUsage() +"\n"+ getDescription());
+			channel.sendMessage(embed.build()).queue();
 			return;
 		}
 		int hugs1 = DatabaseManager.SocialStats.get(event.getAuthor().getIdLong(), mentionedMembers.get(0).getUser().getIdLong(), "hug");
@@ -38,6 +41,14 @@ public class Hug implements ICommand {
 
 	public String getInvoke() {
 		return "hug";
+	}
+	
+	public String getUsage() {
+		return "Hug <@User>";
+	}
+	
+	public String getDescription() {
+		return "Hug someone";
 	}
 	
 }

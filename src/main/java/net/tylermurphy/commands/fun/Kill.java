@@ -28,7 +28,10 @@ public class Kill implements ICommand {
 		TextChannel channel = event.getChannel();
 		List<Member> mentionedMembers = event.getMessage().getMentionedMembers();
 		if(mentionedMembers.isEmpty()) {
-			channel.sendMessage(":x: Please Mention Someone").queue();
+			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
+					.appendDescription("**:x: Incorrect Command Usage**\n")
+					.appendDescription(getUsage() +"\n"+ getDescription());
+			channel.sendMessage(embed.build()).queue();
 			return;
 		}
 		if(event.getAuthor().getIdLong() == mentionedMembers.get(0).getIdLong()) {
@@ -45,6 +48,14 @@ public class Kill implements ICommand {
 
 	public String getInvoke() {
 		return "kill";
+	}
+	
+	public String getUsage() {
+		return "Kill <@User>";
+	}
+	
+	public String getDescription() {
+		return "Kills someone";
 	}
 	
 	

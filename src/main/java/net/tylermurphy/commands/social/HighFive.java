@@ -17,7 +17,10 @@ public class HighFive implements ICommand {
 		TextChannel channel = event.getChannel();
 		List<Member> mentionedMembers = event.getMessage().getMentionedMembers();
 		if(mentionedMembers.isEmpty()) {
-			channel.sendMessage(":x: Please Mention Someone").queue();
+			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
+					.appendDescription("**:x: Incorrect Command Usage**\n")
+					.appendDescription(getUsage() +"\n"+ getDescription());
+			channel.sendMessage(embed.build()).queue();
 			return;
 		}
 		int hugs1 = DatabaseManager.SocialStats.get(event.getAuthor().getIdLong(), mentionedMembers.get(0).getUser().getIdLong(), "highfive");
@@ -38,6 +41,14 @@ public class HighFive implements ICommand {
 
 	public String getInvoke() {
 		return "highfive";
+	}
+	
+	public String getUsage() {
+		return "HighFive <@User>";
+	}
+	
+	public String getDescription() {
+		return "Give someone a highfive";
 	}
 	
 }

@@ -53,5 +53,13 @@ public class Caps implements ICommand {
 	public String getInvoke() {
 		return "allcaps";
 	}
+	
+	public String getUsage() {
+		return "AllCaps <empty for current setting,false,warn,delete,mute (30 min), kick, ban>";
+	}
+	
+	public String getDescription() {
+		return "Set automod action for when a user spamms caps";
+	}
 
 }

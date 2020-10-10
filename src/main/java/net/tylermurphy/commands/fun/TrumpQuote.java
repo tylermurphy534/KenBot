@@ -20,5 +20,13 @@ public class TrumpQuote implements ICommand {
 	public String getInvoke() {
 		return "TrumpQuote";
 	}
+	
+	public String getUsage() {
+		return "";
+	}
+	
+	public String getDescription() {
+		return "Sends a Trump quote";
+	}
 
 }

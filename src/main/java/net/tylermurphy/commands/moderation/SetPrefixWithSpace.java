@@ -37,5 +37,13 @@ public class SetPrefixWithSpace implements ICommand {
 	public String getInvoke() {
 		return "setprefixwithspace";
 	}
+	
+	public String getUsage() {
+		return "SetPrefixWithSpace <empty to reset, prefix>";
+	}
+	
+	public String getDescription() {
+		return "Set Bot Prefix With Space After The End";
+	}
 
 }

@@ -6,6 +6,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
+import me.duncte123.botcommons.messaging.EmbedUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
@@ -23,7 +24,10 @@ public class TempMute implements ICommand {
 		List<Member> metionedMembers = event.getMessage().getMentionedMembers();
 		
 		if(metionedMembers.isEmpty() || args.size() < 3) {
-			channel.sendMessage(":x: Missing Arguments").queue();
+			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
+					.appendDescription("**:x: Incorrect Command Usage**\n")
+					.appendDescription(getUsage() +"\n"+ getDescription());
+			channel.sendMessage(embed.build()).queue();
 			return;
 		}
 		
@@ -164,6 +168,14 @@ public class TempMute implements ICommand {
 
 	public String getInvoke() {
 		return "tempmute";
+	}
+	
+	public String getUsage() {
+		return "TempMute <@User> <time> <reason>";
+	}
+	
+	public String getDescription() {
+		return "Temporarily mute someone for some time";
 	}
 	
 }

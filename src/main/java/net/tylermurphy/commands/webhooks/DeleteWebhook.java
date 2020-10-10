@@ -23,7 +23,10 @@ public class DeleteWebhook implements ICommand {
         }
 		
 		if(args.isEmpty()) {
-			channel.sendMessage(":x: Missing Arguments").queue();
+			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
+					.appendDescription("**:x: Incorrect Command Usage**\n")
+					.appendDescription(getUsage() +"\n"+ getDescription());
+			channel.sendMessage(embed.build()).queue();
 			return;
 		}
 		
@@ -41,6 +44,14 @@ public class DeleteWebhook implements ICommand {
 
 	public String getInvoke() {
 		return "deletewebhook";
+	}
+	
+	public String getUsage() {
+		return "DeleteWebhook <prefix>";
+	}
+	
+	public String getDescription() {
+		return "Deletes a webhook";
 	}
 
 }

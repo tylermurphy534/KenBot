@@ -36,5 +36,13 @@ public class Joke implements ICommand {
 	public String getInvoke() {
 		return "joke";
 	}
+	
+	public String getUsage() {
+		return "";
+	}
+	
+	public String getDescription() {
+		return "Tells a joke";
+	}
 
 }

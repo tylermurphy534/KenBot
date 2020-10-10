@@ -19,4 +19,12 @@ public class Ping implements ICommand {
 	
 	public String getInvoke() { return "ping"; }
 	
+	public String getUsage() {
+		return "";
+	}
+	
+	public String getDescription() {
+		return "Pings the bot";
+	}
+	
 }

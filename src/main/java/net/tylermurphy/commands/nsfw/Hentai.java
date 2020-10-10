@@ -31,4 +31,12 @@ public class Hentai implements ICommand {
 		return "hentai";
 	}
 	
+	public String getUsage() {
+		return "";
+	}
+	
+	public String getDescription() {
+		return "A NSFW Command";
+	}
+	
 }

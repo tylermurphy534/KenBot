@@ -21,5 +21,13 @@ public class Level implements ICommand {
 	public String getInvoke() {
 		return "level";
 	}
+	
+	public String getUsage() {
+		return "";
+	}
 
+	public String getDescription() {
+		return "Get current level";
+	}
+	
 }

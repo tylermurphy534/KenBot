@@ -56,4 +56,12 @@ public class Join implements ICommand {
 		return "join";
 	}
 	
+	public String getUsage() {
+		return "";
+	}
+	
+	public String getDescription() {
+		return "Join Ken to the VC";
+	}
+	
 }

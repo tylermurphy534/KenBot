@@ -68,5 +68,13 @@ public class Phone extends ListenerAdapter implements ICommand {
 	public String getInvoke() {
 		return "phone";
 	}
+	
+	public String getUsage() {
+		return "";
+	}
+	
+	public String getDescription() {
+		return "When two channels in any servers use the phone command, a text chat will open between them allowing them to talk to eachother. Run the command again to hang up.";
+	}
 
 }

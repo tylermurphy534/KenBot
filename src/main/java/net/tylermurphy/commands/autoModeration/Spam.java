@@ -54,4 +54,12 @@ public class Spam implements ICommand {
 		return "messagespam";
 	}
 
+	public String getUsage() {
+		return "MessageSpam <empty for current setting,false,warn,delete,mute (30 min), kick, ban>";
+	}
+	
+	public String getDescription() {
+		return "Set automod action for when a user spamms messages";
+	}
+
 }

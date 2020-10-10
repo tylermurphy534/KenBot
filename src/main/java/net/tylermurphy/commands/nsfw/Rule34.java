@@ -40,5 +40,13 @@ public class Rule34 implements ICommand {
 	public String getInvoke() {
 		return "rule34";
 	}
+	
+	public String getUsage() {
+		return "rule34 <search>";
+	}
+	
+	public String getDescription() {
+		return "A NSFW Command";
+	}
 
 }

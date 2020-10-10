@@ -31,4 +31,12 @@ public class HentaiGIF implements ICommand {
 		return "hentaigif";
 	}
 	
+	public String getUsage() {
+		return "";
+	}
+	
+	public String getDescription() {
+		return "A NSFW Command";
+	}
+	
 }

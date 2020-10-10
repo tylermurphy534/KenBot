@@ -8,6 +8,8 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.SearchResult;
 
+import me.duncte123.botcommons.messaging.EmbedUtils;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.entities.Member;
@@ -51,7 +53,10 @@ public class Play implements ICommand {
 		 AudioManager audioManager = event.getGuild().getAudioManager();
 		 
 		if(args.isEmpty()) {
-			channel.sendMessage(":x: Command is missing arguments.").queue();
+			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
+					.appendDescription("**:x: Incorrect Command Usage**\n")
+					.appendDescription(getUsage() +"\n"+ getDescription());
+			channel.sendMessage(embed.build()).queue();
 			return;
 		}
 		
@@ -136,6 +141,14 @@ public class Play implements ICommand {
 
 	public String getInvoke() {
 		return "play";
+	}
+	
+	public String getUsage() {
+		return "Play <video name or URL>";
+	}
+	
+	public String getDescription() {
+		return "Play a song on Ken";
 	}
 
 }

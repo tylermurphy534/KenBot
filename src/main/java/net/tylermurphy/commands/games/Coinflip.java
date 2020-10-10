@@ -21,5 +21,13 @@ public class Coinflip implements ICommand {
 	public String getInvoke() {
 		return "coinflip";
 	}
+	
+	public String getUsage() {
+		return "";
+	}
+	
+	public String getDescription() {
+		return "Flips a coin";
+	}
 
 }

@@ -2,6 +2,8 @@ package net.tylermurphy.commands.moderation;
 
 import java.util.List;
 
+import me.duncte123.botcommons.messaging.EmbedUtils;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageReaction;
@@ -18,7 +20,10 @@ public class DelSelfRole implements ICommand {
 		Member selfMember = event.getGuild().getSelfMember();
 		
 		if(args.isEmpty() || args.size() < 2) {
-			channel.sendMessage(":x: Missing Arguments.").queue();
+			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
+					.appendDescription("**:x: Incorrect Command Usage**\n")
+					.appendDescription(getUsage() +"\n"+ getDescription());
+			channel.sendMessage(embed.build()).queue();
 			return;
 		}
 		
@@ -65,6 +70,14 @@ public class DelSelfRole implements ICommand {
 
 	public String getInvoke() {
 		return "delselfrole";
+	}
+	
+	public String getUsage() {
+		return "DelSelfRole <channelid> <messageid>";
+	}
+	
+	public String getDescription() {
+		return "Delete a self role / role reaction toggle";
 	}
 
 }

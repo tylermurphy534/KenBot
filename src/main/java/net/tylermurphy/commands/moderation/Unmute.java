@@ -3,6 +3,7 @@ package net.tylermurphy.commands.moderation;
 import java.awt.Color;
 import java.util.List;
 
+import me.duncte123.botcommons.messaging.EmbedUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
@@ -20,7 +21,10 @@ public class Unmute implements ICommand {
 		List<Member> metionedMembers = event.getMessage().getMentionedMembers();
 		
 		if(metionedMembers.isEmpty()) {
-			channel.sendMessage(":x: Missing Arguments").queue();
+			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
+					.appendDescription("**:x: Incorrect Command Usage**\n")
+					.appendDescription(getUsage() +"\n"+ getDescription());
+			channel.sendMessage(embed.build()).queue();
 			return;
 		}
 		
@@ -80,6 +84,14 @@ public class Unmute implements ICommand {
 
 	public String getInvoke() {
 		return "unmute";
+	}
+	
+	public String getUsage() {
+		return "Unmute <@User>";
+	}
+	
+	public String getDescription() {
+		return "Unmute a user";
 	}
 	
 }

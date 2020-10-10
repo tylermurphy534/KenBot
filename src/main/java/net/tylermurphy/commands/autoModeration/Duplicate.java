@@ -53,5 +53,13 @@ public class Duplicate implements ICommand {
 	public String getInvoke() {
 		return "duplicatetext";
 	}
+	
+	public String getUsage() {
+		return "DuplicateText <empty for current setting,false,warn,delete,mute (30 min), kick, ban>";
+	}
+	
+	public String getDescription() {
+		return "Set automod action for when a user spamms duplicate messages";
+	}
 
 }

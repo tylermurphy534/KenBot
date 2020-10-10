@@ -17,7 +17,10 @@ public class Gift implements ICommand {
 		TextChannel channel = event.getChannel();
 		List<Member> mentionedMembers = event.getMessage().getMentionedMembers();
 		if(mentionedMembers.isEmpty()) {
-			channel.sendMessage(":x: Please Mention Someone").queue();
+			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
+					.appendDescription("**:x: Incorrect Command Usage**\n")
+					.appendDescription(getUsage() +"\n"+ getDescription());
+			channel.sendMessage(embed.build()).queue();
 			return;
 		}
 		int hugs1 = DatabaseManager.SocialStats.get(event.getAuthor().getIdLong(), mentionedMembers.get(0).getUser().getIdLong(), "gift");
@@ -38,6 +41,14 @@ public class Gift implements ICommand {
 
 	public String getInvoke() {
 		return "gift";
+	}
+	
+	public String getUsage() {
+		return "Gift <@User>";
+	}
+	
+	public String getDescription() {
+		return "Give someone a gift";
 	}
 	
 }

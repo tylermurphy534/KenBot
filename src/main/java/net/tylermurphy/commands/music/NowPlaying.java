@@ -57,5 +57,13 @@ public class NowPlaying implements ICommand {
 		
 		return String.format("%02d:%02d:%02d", hours, minutes, seconeds);
 	}
+	
+	public String getUsage() {
+		return "";
+	}
+	
+	public String getDescription() {
+		return "See what is currently playing in VC";
+	}
 
 }

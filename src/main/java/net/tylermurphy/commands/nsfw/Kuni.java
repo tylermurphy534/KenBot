@@ -31,4 +31,13 @@ public class Kuni implements ICommand {
 		return "kuni";
 	}
 	
+	public String getUsage() {
+		return "";
+	}
+
+	public String getDescription() {
+		return "A NSFW Command";
+	}
+	
 }
+

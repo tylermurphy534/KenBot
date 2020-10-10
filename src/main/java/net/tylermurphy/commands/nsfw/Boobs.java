@@ -31,4 +31,12 @@ public class Boobs implements ICommand {
 		return "boobs";
 	}
 	
+	public String getUsage() {
+		return "";
+	}
+	
+	public String getDescription() {
+		return "A NSFW Command";
+	}
+	
 }

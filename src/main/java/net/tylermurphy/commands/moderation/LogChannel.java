@@ -44,5 +44,13 @@ public class LogChannel implements ICommand {
 	public String getInvoke() {
 		return "logchannel";
 	}
+	
+	public String getUsage() {
+		return "logchannel <empty to set current channel, #channel, \"remove\" to remove log channel>";
+	}
+	
+	public String getDescription() {
+		return "Set the channel for Ken bot and server logs";
+	}
 
 }

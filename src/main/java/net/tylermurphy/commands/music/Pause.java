@@ -60,4 +60,12 @@ public class Pause implements ICommand {
 		return "pause";
 	}
 	
+	public String getUsage() {
+		return "";
+	}
+	
+	public String getDescription() {
+		return "Pause current track";
+	}
+	
 }

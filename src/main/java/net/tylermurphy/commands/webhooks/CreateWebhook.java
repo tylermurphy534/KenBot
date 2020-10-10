@@ -25,7 +25,10 @@ public class CreateWebhook implements ICommand {
         }
 		
 		if(args.isEmpty()) {
-			channel.sendMessage(":x: Missing Arguments").queue();
+			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
+					.appendDescription("**:x: Incorrect Command Usage**\n")
+					.appendDescription(getUsage() +"\n"+ getDescription());
+			channel.sendMessage(embed.build()).queue();
 			return;
 		}
 		
@@ -44,6 +47,14 @@ public class CreateWebhook implements ICommand {
 
 	public String getInvoke() {
 		return "createwebhook";
+	}
+	
+	public String getUsage() {
+		return "CreateWebhook <prefix>";
+	}
+	
+	public String getDescription() {
+		return "Create a webhook that when a message is said in chat starting with its prefix, is sends the message as if the webhook was sending it using the webhooks Name and Avatar URL";
 	}
 
 }

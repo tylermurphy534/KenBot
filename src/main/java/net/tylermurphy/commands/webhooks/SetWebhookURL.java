@@ -24,7 +24,10 @@ public class SetWebhookURL implements ICommand {
         }
 		
 		if(args.isEmpty()) {
-			channel.sendMessage(":x: Missing Arguments").queue();
+			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
+					.appendDescription("**:x: Incorrect Command Usage**\n")
+					.appendDescription(getUsage() +"\n"+ getDescription());
+			channel.sendMessage(embed.build()).queue();
 			return;
 		}
 		
@@ -58,6 +61,14 @@ public class SetWebhookURL implements ICommand {
 		} catch (Exception e) {
 			return false;
 		}
+	}
+	
+	public String getUsage() {
+		return "SetWebhookURL <prefix> <URL>";
+	}
+	
+	public String getDescription() {
+		return "Set a webhooks avatar url";
 	}
 
 }

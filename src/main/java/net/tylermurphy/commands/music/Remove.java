@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 
+import me.duncte123.botcommons.messaging.EmbedUtils;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -25,12 +27,15 @@ public class Remove implements ICommand {
 		VoiceChannel voiceChannel = audioManager.getConnectedChannel();
 		
 		if (player.getPlayingTrack() == null) {
-			channel.sendMessage(":x: Nothing is playing currently you bafoon.").queue();
+			channel.sendMessage(":x: Nothing is currently playing in VC.").queue();
 			return;
 		}
 		
 		if (args.isEmpty()) {
-			channel.sendMessage(":x: Missing arguments").queue();
+			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
+					.appendDescription("**:x: Incorrect Command Usage**\n")
+					.appendDescription(getUsage() +"\n"+ getDescription());
+			channel.sendMessage(embed.build()).queue();
 			return;
 		}
 		
@@ -66,6 +71,14 @@ public class Remove implements ICommand {
 
 	public String getInvoke() {
 		return "remove";
+	}
+	
+	public String getUsage() {
+		return "Remove <position in queue>";
+	}
+	
+	public String getDescription() {
+		return "Remove song in queue";
 	}
 
 }

@@ -63,4 +63,12 @@ public class LoopQueue implements ICommand {
 		return "loopqueue";
 	}
 
+	public String getUsage() {
+		return "";
+	}
+	
+	public String getDescription() {
+		return "Loop entire music queue, also locks queue";
+	}
+	
 }
