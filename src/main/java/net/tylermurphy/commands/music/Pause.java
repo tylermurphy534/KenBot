@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -16,7 +17,7 @@ import net.tylermurphy.music.PlayerManager;
 
 public class Pause implements ICommand {
 
-	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		TextChannel channel = event.getChannel();
 		PlayerManager playerManager = PlayerManager.getInstance();
 		GuildMusicManager musicManager = playerManager.getGuildMusicManager(event.getGuild());
@@ -66,6 +67,10 @@ public class Pause implements ICommand {
 	
 	public String getDescription() {
 		return "Pause current track";
+	}
+	
+	public Permission requiredPermission() {
+		return null;
 	}
 	
 }

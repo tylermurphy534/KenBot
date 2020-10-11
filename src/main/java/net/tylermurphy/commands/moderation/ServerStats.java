@@ -15,7 +15,7 @@ import net.tylermurphy.database.DatabaseManager;
 
 public class ServerStats extends ListenerAdapter implements ICommand {
 
-	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		Member member = event.getMember();
 
 		if (!member.hasPermission(Permission.MANAGE_SERVER)) {
@@ -114,6 +114,10 @@ public class ServerStats extends ListenerAdapter implements ICommand {
 	
 	public String getDescription() {
 		return "Enable / Disable Server Stats";
+	}
+	
+	public Permission requiredPermission() {
+		return Permission.ADMINISTRATOR;
 	}
 
 }

@@ -12,6 +12,8 @@ import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
+import net.tylermurphy.commands.CommandRegister;
+import net.tylermurphy.commands.CommandResponder;
 import net.tylermurphy.commands.fun.Phone;
 import net.tylermurphy.commands.games.Battle;
 import net.tylermurphy.commands.games.BlackJack;
@@ -19,6 +21,7 @@ import net.tylermurphy.commands.games.Nunchi;
 import net.tylermurphy.commands.moderation.SelfRole;
 import net.tylermurphy.commands.moderation.ServerStats;
 import net.tylermurphy.database.MariaDBConnection;
+import net.tylermurphy.managers.LogManager;
 
 public class Bot {
 
@@ -26,6 +29,7 @@ public class Bot {
         
 		Config.loadConstants();
 		MariaDBConnection.getConnection();
+		CommandRegister.registerCommands();
 		
 		EmbedUtils.setEmbedBuilder(
 				() -> new EmbedBuilder()
@@ -37,12 +41,9 @@ public class Bot {
 			.setMemberCachePolicy(MemberCachePolicy.ALL)
 			.enableIntents((GatewayIntent.GUILD_MEMBERS))
 			.setActivity(Activity.playing("Use "+Config.PREFIX+"help"))
-		    .addEventListeners(new Listener(), new BlackJack(), new Nunchi(), new Phone(), new Battle(), new SelfRole(), new LogListener(), new ServerStats())
+		    .addEventListeners(new CommandResponder(), new BlackJack(), new Nunchi(), new Phone(), new Battle(), new SelfRole(), new LogManager(), new ServerStats())
 		    .build()
 		   	.awaitReady();
-		
-		
-		
 		
 	}
 	

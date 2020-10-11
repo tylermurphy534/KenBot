@@ -14,7 +14,7 @@ import net.tylermurphy.commands.ICommand;
 
 public class Unmute implements ICommand {
 	
-	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		TextChannel channel = event.getChannel();
 		Member member = event.getMember();
 		Member selfMember = event.getGuild().getSelfMember();
@@ -92,6 +92,10 @@ public class Unmute implements ICommand {
 	
 	public String getDescription() {
 		return "Unmute a user";
+	}
+	
+	public Permission requiredPermission() {
+		return Permission.KICK_MEMBERS;
 	}
 	
 }

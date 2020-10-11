@@ -13,7 +13,7 @@ import net.tylermurphy.database.DatabaseManager;
 
 public class Warns implements ICommand {
 
-	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		TextChannel channel = event.getChannel();
 		Member member = event.getMember();
 		List<Member> metionedMembers = event.getMessage().getMentionedMembers();
@@ -60,6 +60,10 @@ public class Warns implements ICommand {
 	
 	public String getDescription() {
 		return "See how many warns a user has";
+	}
+	
+	public Permission requiredPermission() {
+		return Permission.KICK_MEMBERS;
 	}
 
 }

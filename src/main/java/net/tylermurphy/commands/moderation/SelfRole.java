@@ -22,7 +22,7 @@ import net.tylermurphy.database.DatabaseManager;
 
 public class SelfRole extends ListenerAdapter implements ICommand {
 
-	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		TextChannel channel = event.getChannel();
 		Member member = event.getMember();
 		Member selfMember = event.getGuild().getSelfMember();
@@ -174,6 +174,10 @@ public class SelfRole extends ListenerAdapter implements ICommand {
 	
 	public String getDescription() {
 		return "Create a self role / role reaction toggle";
+	}
+	
+	public Permission requiredPermission() {
+		return Permission.ADMINISTRATOR;
 	}
 
 }

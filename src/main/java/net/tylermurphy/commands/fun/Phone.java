@@ -6,6 +6,7 @@ import java.util.List;
 
 import me.duncte123.botcommons.messaging.EmbedUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -16,7 +17,7 @@ public class Phone extends ListenerAdapter implements ICommand {
 	private static List<TextChannel> waitingCalls = new ArrayList<TextChannel>(); 
 	private static HashMap<TextChannel,TextChannel> currentCalls = new HashMap<TextChannel,TextChannel>();
 	
-	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		TextChannel channel = event.getChannel();
 		if(currentCalls.containsKey(channel)) {
 			TextChannel callerChannel = currentCalls.get(channel);
@@ -77,4 +78,8 @@ public class Phone extends ListenerAdapter implements ICommand {
 		return "When two channels in any servers use the phone command, a text chat will open between them allowing them to talk to eachother. Run the command again to hang up.";
 	}
 
+	public Permission requiredPermission() {
+		return null;
+	}
+	
 }

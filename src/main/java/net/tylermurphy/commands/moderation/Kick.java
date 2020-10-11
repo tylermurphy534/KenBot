@@ -13,7 +13,7 @@ import net.tylermurphy.commands.ICommand;
 
 public class Kick implements ICommand {
 
-	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		TextChannel channel = event.getChannel();
 		Member member = event.getMember();
 		Member selfMember = event.getGuild().getSelfMember();
@@ -69,6 +69,10 @@ public class Kick implements ICommand {
 	
 	public String getDescription() {
 		return "Kick a user";
+	}
+	
+	public Permission requiredPermission() {
+		return Permission.KICK_MEMBERS;
 	}
 
 }

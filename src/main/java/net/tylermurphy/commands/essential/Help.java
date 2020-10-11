@@ -4,6 +4,7 @@ import java.util.List;
 
 import me.duncte123.botcommons.messaging.EmbedUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -11,7 +12,7 @@ import net.tylermurphy.commands.ICommand;
 
 public class Help implements ICommand {
 
-	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		
 		Message message = event.getMessage();
 		User user = message.getAuthor();
@@ -51,6 +52,10 @@ public class Help implements ICommand {
 	
 	public String getDescription() {
 		return "";
+	}
+	
+	public Permission requiredPermission() {
+		return null;
 	}
 	
 }

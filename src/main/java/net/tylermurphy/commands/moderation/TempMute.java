@@ -17,7 +17,7 @@ import net.tylermurphy.commands.ICommand;
 
 public class TempMute implements ICommand {
 
-	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		TextChannel channel = event.getChannel();
 		Member member = event.getMember();
 		Member selfMember = event.getGuild().getSelfMember();
@@ -176,6 +176,10 @@ public class TempMute implements ICommand {
 	
 	public String getDescription() {
 		return "Temporarily mute someone for some time";
+	}
+	
+	public Permission requiredPermission() {
+		return Permission.KICK_MEMBERS;
 	}
 	
 }

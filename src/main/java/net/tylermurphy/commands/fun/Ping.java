@@ -2,6 +2,7 @@ package net.tylermurphy.commands.fun;
 
 import java.util.List;
 
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -9,7 +10,7 @@ import net.tylermurphy.commands.ICommand;
 
 public class Ping implements ICommand {
 
-	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		
 		Message message = event.getMessage();
 		MessageChannel channel = event.getChannel();
@@ -25,6 +26,10 @@ public class Ping implements ICommand {
 	
 	public String getDescription() {
 		return "Pings the bot";
+	}
+	
+	public Permission requiredPermission() {
+		return null;
 	}
 	
 }

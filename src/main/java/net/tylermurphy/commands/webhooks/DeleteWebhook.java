@@ -13,7 +13,7 @@ import net.tylermurphy.database.DatabaseManager;
 
 public class DeleteWebhook implements ICommand {
 
-	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		
 		TextChannel channel = event.getChannel();
 		
@@ -52,6 +52,10 @@ public class DeleteWebhook implements ICommand {
 	
 	public String getDescription() {
 		return "Deletes a webhook";
+	}
+	
+	public Permission requiredPermission() {
+		return Permission.ADMINISTRATOR;
 	}
 
 }

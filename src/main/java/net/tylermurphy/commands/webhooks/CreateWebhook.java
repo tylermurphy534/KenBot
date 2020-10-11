@@ -13,7 +13,7 @@ import net.tylermurphy.database.DatabaseManager;
 
 public class CreateWebhook implements ICommand {
 
-	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		
 		TextChannel channel = event.getChannel();
 		
@@ -55,6 +55,10 @@ public class CreateWebhook implements ICommand {
 	
 	public String getDescription() {
 		return "Create a webhook that when a message is said in chat starting with its prefix, is sends the message as if the webhook was sending it using the webhooks Name and Avatar URL";
+	}
+	
+	public Permission requiredPermission() {
+		return Permission.ADMINISTRATOR;
 	}
 
 }

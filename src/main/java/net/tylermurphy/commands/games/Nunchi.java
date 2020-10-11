@@ -5,6 +5,7 @@ import java.util.List;
 
 import me.duncte123.botcommons.messaging.EmbedUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageReaction;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -17,7 +18,7 @@ public class Nunchi extends ListenerAdapter implements ICommand {
 
 	private static List<NunchiGame> games = new ArrayList<NunchiGame>();
 	
-	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		TextChannel channel = event.getChannel();
 		String pointer = event.getAuthor().getName() + "#" + event.getAuthor().getDiscriminator();
 		for(NunchiGame game : games) {
@@ -194,6 +195,10 @@ public class Nunchi extends ListenerAdapter implements ICommand {
 	
 	public String getDescription() {
 		return "Plays a game of nunchi";
+	}
+	
+	public Permission requiredPermission() {
+		return null;
 	}
 
 }

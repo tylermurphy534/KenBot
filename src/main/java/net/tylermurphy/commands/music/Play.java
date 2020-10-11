@@ -47,7 +47,7 @@ public class Play implements ICommand {
 		youtube = temp;
 	}
 
-	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		
 		TextChannel channel = event.getChannel();
 		 AudioManager audioManager = event.getGuild().getAudioManager();
@@ -149,6 +149,10 @@ public class Play implements ICommand {
 	
 	public String getDescription() {
 		return "Play a song on Ken";
+	}
+	
+	public Permission requiredPermission() {
+		return null;
 	}
 
 }

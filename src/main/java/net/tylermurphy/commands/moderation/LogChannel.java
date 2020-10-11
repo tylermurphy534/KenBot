@@ -11,7 +11,7 @@ import net.tylermurphy.database.DatabaseManager;
 
 public class LogChannel implements ICommand {
 
-	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
         final Member member = event.getMember();
 
         if (!member.hasPermission(Permission.MANAGE_SERVER)) {
@@ -51,6 +51,10 @@ public class LogChannel implements ICommand {
 	
 	public String getDescription() {
 		return "Set the channel for Ken bot and server logs";
+	}
+	
+	public Permission requiredPermission() {
+		return Permission.ADMINISTRATOR;
 	}
 
 }

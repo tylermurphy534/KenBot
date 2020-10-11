@@ -1,4 +1,4 @@
-package net.tylermurphy;
+package net.tylermurphy.managers;
 
 import java.util.HashMap;
 import java.util.List;

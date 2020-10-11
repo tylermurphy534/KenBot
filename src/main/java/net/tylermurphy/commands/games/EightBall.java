@@ -4,12 +4,13 @@ import java.util.List;
 
 import me.duncte123.botcommons.messaging.EmbedUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.tylermurphy.commands.ICommand;
 
 public class EightBall implements ICommand {
 
-	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		if(args.isEmpty()) {
 			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
 					.appendDescription("**:x: Incorrect Command Usage**\n")
@@ -64,6 +65,10 @@ public class EightBall implements ICommand {
 	
 	public String getDescription() {
 		return "Rolls the 8ball to answer your question";
+	}
+	
+	public Permission requiredPermission() {
+		return null;
 	}
 
 }

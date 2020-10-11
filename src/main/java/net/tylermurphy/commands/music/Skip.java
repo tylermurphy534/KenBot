@@ -7,6 +7,7 @@ import java.util.List;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -22,7 +23,7 @@ public class Skip implements ICommand {
 	
 	HashMap<AudioTrack, List<String>> skips = new HashMap<AudioTrack, List<String>>();
 
-	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		TextChannel channel = event.getChannel();
 		PlayerManager playerManager = PlayerManager.getInstance();
 		GuildMusicManager musicManager = playerManager.getGuildMusicManager(event.getGuild());
@@ -98,6 +99,10 @@ public class Skip implements ICommand {
 	
 	public String getDescription() {
 		return "Skip current playing song";
+	}
+	
+	public Permission requiredPermission() {
+		return null;
 	}
 	
 }

@@ -2,6 +2,7 @@ package net.tylermurphy.commands.music;
 
 import java.util.List;
 
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -14,7 +15,7 @@ import net.tylermurphy.music.PlayerManager;
 
 public class Stop implements ICommand {
 
-	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		TextChannel channel = event.getChannel();
 		PlayerManager playerManager = PlayerManager.getInstance();
 		GuildMusicManager musicManager = playerManager.getGuildMusicManager(event.getGuild());
@@ -69,6 +70,10 @@ public class Stop implements ICommand {
 	
 	public String getDescription() {
 		return "Stop current playing songs and clear queue";
+	}
+	
+	public Permission requiredPermission() {
+		return null;
 	}
 	
 }

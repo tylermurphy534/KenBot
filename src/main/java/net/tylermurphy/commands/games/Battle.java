@@ -5,6 +5,7 @@ import java.util.List;
 
 import me.duncte123.botcommons.messaging.EmbedUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
@@ -21,7 +22,7 @@ public class Battle extends ListenerAdapter implements ICommand {
 
 	private static List<Match> matches = new ArrayList<Match>();
 	
-	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		TextChannel channel = event.getChannel();
 		List<Member> members = event.getMessage().getMentionedMembers();
 		for(Match match : matches) {
@@ -364,6 +365,10 @@ public class Battle extends ListenerAdapter implements ICommand {
 	
 	public String getDescription() {
 		return "Battle someone to the death! Run the command again to cancel battle request.";
+	}
+	
+	public Permission requiredPermission() {
+		return null;
 	}
 
 }

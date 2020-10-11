@@ -1,4 +1,4 @@
-package net.tylermurphy;
+package net.tylermurphy.managers;
 
 import java.util.Date;
 
@@ -51,7 +51,7 @@ import net.dv8tion.jda.api.events.role.update.RoleUpdateNameEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.tylermurphy.database.DatabaseManager;
 
-public class LogListener extends ListenerAdapter {
+public class LogManager extends ListenerAdapter {
 	
     public void onGuildMessageUpdate(@Nonnull GuildMessageUpdateEvent event) {
     	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");

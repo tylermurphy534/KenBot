@@ -11,7 +11,7 @@ import net.tylermurphy.database.DatabaseManager;
 
 public class SetWarnAction implements ICommand {
 
-	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 
         if (!event.getMember().hasPermission(Permission.MANAGE_SERVER)) {
             event.getChannel().sendMessage(":x: You must have the Manage Server permission to use this command.").queue();
@@ -65,6 +65,10 @@ public class SetWarnAction implements ICommand {
 	
 	public String getDescription() {
 		return "Set what happens when a user get so many warns";
+	}
+	
+	public Permission requiredPermission() {
+		return Permission.ADMINISTRATOR;
 	}
 
 }

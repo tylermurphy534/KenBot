@@ -14,7 +14,7 @@ import net.tylermurphy.commands.ICommand;
 
 public class Join implements ICommand {
 	
-	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		
 		TextChannel channel = event.getChannel();
         AudioManager audioManager = event.getGuild().getAudioManager();
@@ -62,6 +62,10 @@ public class Join implements ICommand {
 	
 	public String getDescription() {
 		return "Join Ken to the VC";
+	}
+	
+	public Permission requiredPermission() {
+		return null;
 	}
 	
 }

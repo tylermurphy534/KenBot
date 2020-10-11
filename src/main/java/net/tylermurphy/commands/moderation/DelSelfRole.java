@@ -14,7 +14,7 @@ import net.tylermurphy.database.DatabaseManager;
 
 public class DelSelfRole implements ICommand {
 
-	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		TextChannel channel = event.getChannel();
 		Member member = event.getMember();
 		Member selfMember = event.getGuild().getSelfMember();
@@ -78,6 +78,10 @@ public class DelSelfRole implements ICommand {
 	
 	public String getDescription() {
 		return "Delete a self role / role reaction toggle";
+	}
+	
+	public Permission requiredPermission() {
+		return Permission.ADMINISTRATOR;
 	}
 
 }

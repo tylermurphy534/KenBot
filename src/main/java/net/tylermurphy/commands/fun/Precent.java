@@ -5,6 +5,7 @@ import java.util.List;
 
 import me.duncte123.botcommons.messaging.EmbedUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
@@ -15,7 +16,7 @@ public class Precent implements ICommand {
 
 	private HashMap<Member,HashMap<String,Integer>> percents = new HashMap<Member,HashMap<String,Integer>>();
 	
-	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		
 		Message message = event.getMessage();
 		MessageChannel channel = message.getChannel();
@@ -25,6 +26,10 @@ public class Precent implements ICommand {
 					.appendDescription("**:x: Incorrect Command Usage**\n")
 					.appendDescription(getUsage() +"\n"+ getDescription());
 			channel.sendMessage(embed.build()).queue();
+			return;
+		}
+		if(event.getMessage().getMentionedMembers().size() < 1 || event.getMessage().getMentionedMembers().size() > 1) {
+			channel.sendMessage(":x: Please mention one server member").queue();
 			return;
 		}
 		int percent;
@@ -50,6 +55,10 @@ public class Precent implements ICommand {
 	
 	public String getDescription() {
 		return "Tells you how much % of something a user is";
+	}
+	
+	public Permission requiredPermission() {
+		return null;
 	}
 	
 }

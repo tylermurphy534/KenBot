@@ -17,7 +17,7 @@ import net.tylermurphy.commands.ICommand;
 
 public class Purge implements ICommand {
 
-	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		TextChannel channel = event.getChannel();
 		Member member = event.getMember();
 		Member selfMember = event.getGuild().getSelfMember();
@@ -96,6 +96,10 @@ public class Purge implements ICommand {
 	
 	public String getDescription() {
 		return "Purge messages in a text channel";
+	}
+	
+	public Permission requiredPermission() {
+		return Permission.MESSAGE_MANAGE;
 	}
 
 }

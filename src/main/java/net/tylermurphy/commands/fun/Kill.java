@@ -4,6 +4,7 @@ import java.util.List;
 
 import me.duncte123.botcommons.messaging.EmbedUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -24,7 +25,7 @@ public class Kill implements ICommand {
 			":watermelon: %s turns into a watermelon, they just do, deal with it"
 	};
 
-	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		TextChannel channel = event.getChannel();
 		List<Member> mentionedMembers = event.getMessage().getMentionedMembers();
 		if(mentionedMembers.isEmpty()) {
@@ -58,6 +59,8 @@ public class Kill implements ICommand {
 		return "Kills someone";
 	}
 	
-	
+	public Permission requiredPermission() {
+		return null;
+	}
 	
 }

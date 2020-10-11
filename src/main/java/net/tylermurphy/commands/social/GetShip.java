@@ -6,6 +6,7 @@ import java.util.List;
 
 import me.duncte123.botcommons.messaging.EmbedUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -14,7 +15,7 @@ import net.tylermurphy.database.DatabaseManager;
 
 public class GetShip implements ICommand{
 
-	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		TextChannel channel = event.getChannel();
 		List<Member> mentionedMembers = event.getMessage().getMentionedMembers();
 		if(mentionedMembers.isEmpty()) {
@@ -126,6 +127,10 @@ public class GetShip implements ICommand{
 	
 	public String getDescription() {
 		return "Get someones love / ship status";
+	}
+	
+	public Permission requiredPermission() {
+		return null;
 	}
 
 }

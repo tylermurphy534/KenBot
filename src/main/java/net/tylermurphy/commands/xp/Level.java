@@ -4,14 +4,15 @@ import java.util.List;
 
 import me.duncte123.botcommons.messaging.EmbedUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import net.tylermurphy.LevelManager;
 import net.tylermurphy.commands.ICommand;
 import net.tylermurphy.database.DatabaseManager;
+import net.tylermurphy.managers.LevelManager;
 
 public class Level implements ICommand {
 
-	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		int xp = Integer.parseInt(DatabaseManager.UserSettings.get(event.getAuthor().getIdLong(), event.getGuild().getIdLong(), "XP"));
 		EmbedBuilder builder = EmbedUtils.getDefaultEmbed()
 				.setDescription(String.format("You are level %s!", LevelManager.getLevel(xp)));
@@ -28,6 +29,10 @@ public class Level implements ICommand {
 
 	public String getDescription() {
 		return "Get current level";
+	}
+	
+	public Permission requiredPermission() {
+		return null;
 	}
 	
 }

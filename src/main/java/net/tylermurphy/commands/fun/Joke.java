@@ -7,13 +7,14 @@ import com.fasterxml.jackson.databind.JsonNode;
 import me.duncte123.botcommons.messaging.EmbedUtils;
 import me.duncte123.botcommons.web.WebUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.tylermurphy.commands.ICommand;
 
 public class Joke implements ICommand {
 
-	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		TextChannel channel = event.getChannel();
 		WebUtils.ins.getJSONObject("https://apis.duncte123.me/joke").async(json -> {
 			if(!json.get("success").asBoolean()) {
@@ -43,6 +44,10 @@ public class Joke implements ICommand {
 	
 	public String getDescription() {
 		return "Tells a joke";
+	}
+	
+	public Permission requiredPermission() {
+		return null;
 	}
 
 }

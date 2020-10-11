@@ -11,7 +11,7 @@ import net.tylermurphy.database.DatabaseManager;
 
 public class Duplicate implements ICommand {
 
-	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		
 		String dataBaseCollum = "autoModMDuplicate";
 		
@@ -60,6 +60,10 @@ public class Duplicate implements ICommand {
 	
 	public String getDescription() {
 		return "Set automod action for when a user spamms duplicate messages";
+	}
+	
+	public Permission requiredPermission() {
+		return Permission.ADMINISTRATOR;
 	}
 
 }

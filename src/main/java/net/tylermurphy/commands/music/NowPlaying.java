@@ -8,6 +8,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 
 import me.duncte123.botcommons.messaging.EmbedUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.tylermurphy.commands.ICommand;
@@ -16,7 +17,7 @@ import net.tylermurphy.music.PlayerManager;
 
 public class NowPlaying implements ICommand {
 
-	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		TextChannel channel = event.getChannel();
 		PlayerManager playerManager = PlayerManager.getInstance();
 		GuildMusicManager musicManager = playerManager.getGuildMusicManager(event.getGuild());
@@ -64,6 +65,10 @@ public class NowPlaying implements ICommand {
 	
 	public String getDescription() {
 		return "See what is currently playing in VC";
+	}
+	
+	public Permission requiredPermission() {
+		return null;
 	}
 
 }

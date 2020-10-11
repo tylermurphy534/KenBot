@@ -14,7 +14,7 @@ import net.tylermurphy.database.DatabaseManager;
 
 public class ClearWarns implements ICommand {
 
-	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		TextChannel channel = event.getChannel();
 		Member member = event.getMember();
 		List<Member> metionedMembers = event.getMessage().getMentionedMembers();
@@ -61,6 +61,10 @@ public class ClearWarns implements ICommand {
 	
 	public String getDescription() {
 		return "Clear a users warns";
+	}
+	
+	public Permission requiredPermission() {
+		return Permission.KICK_MEMBERS;
 	}
 
 }

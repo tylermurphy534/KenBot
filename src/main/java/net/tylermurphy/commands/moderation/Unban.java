@@ -17,7 +17,7 @@ import me.duncte123.botcommons.messaging.EmbedUtils;
 
 public class Unban implements ICommand {
 
-	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		TextChannel channel = event.getChannel();
 		
 		if (!event.getMember().hasPermission(Permission.BAN_MEMBERS)) {
@@ -87,6 +87,10 @@ public class Unban implements ICommand {
 	
 	public String getDescription() {
 		return "Unban a user";
+	}
+	
+	public Permission requiredPermission() {
+		return Permission.BAN_MEMBERS;
 	}
 	
 }

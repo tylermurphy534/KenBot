@@ -5,16 +5,17 @@ import java.util.List;
 
 import me.duncte123.botcommons.messaging.EmbedUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import net.tylermurphy.LevelManager;
 import net.tylermurphy.commands.ICommand;
 import net.tylermurphy.database.DatabaseManager;
+import net.tylermurphy.managers.LevelManager;
 
 public class Top implements ICommand {
 
-	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		TextChannel channel = event.getChannel();
 		List<String> data = DatabaseManager.UserSettings.getAll(event.getGuild().getIdLong(), "XP");
 		List<String> ids = new ArrayList<String>();
@@ -89,6 +90,10 @@ public class Top implements ICommand {
 	
 	public String getDescription() {
 		return "Get Top Users by Level in server";
+	}
+	
+	public Permission requiredPermission() {
+		return null;
 	}
 
 }

@@ -7,6 +7,7 @@ import java.util.List;
 
 import me.duncte123.botcommons.messaging.EmbedUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageReaction;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -19,7 +20,7 @@ public class BlackJack extends ListenerAdapter implements ICommand {
 
 	private static HashMap<String,BlackJackGame> games = new HashMap<String,BlackJackGame>();
 	
-	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		TextChannel channel = event.getChannel();
 		String discriminator = event.getAuthor().getName()+event.getAuthor().getDiscriminator();
 		System.out.println(discriminator);
@@ -199,6 +200,10 @@ public class BlackJack extends ListenerAdapter implements ICommand {
 	
 	public String getDescription() {
 		return "Play blackjack";
+	}
+	
+	public Permission requiredPermission() {
+		return null;
 	}
 
 }

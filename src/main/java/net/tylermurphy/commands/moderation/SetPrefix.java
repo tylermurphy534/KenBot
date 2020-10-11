@@ -6,14 +6,14 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import net.tylermurphy.Cache;
+import net.tylermurphy.Public;
 import net.tylermurphy.Config;
 import net.tylermurphy.commands.ICommand;
 import net.tylermurphy.database.DatabaseManager;
 
 public class SetPrefix implements ICommand {
 
-	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		final TextChannel channel = event.getChannel();
         final Member member = event.getMember();
 
@@ -30,7 +30,7 @@ public class SetPrefix implements ICommand {
 
         final String newPrefix = String.join("", args);
         DatabaseManager.GuildSettings.set(event.getGuild().getIdLong(), "prefix", newPrefix);
-        Cache.PREFIXES.put(event.getGuild().getIdLong(),newPrefix);
+        Public.PREFIXES.put(event.getGuild().getIdLong(),newPrefix);
         channel.sendMessageFormat("New prefix has been set to `%s`", newPrefix).queue();
     }
 
@@ -44,6 +44,10 @@ public class SetPrefix implements ICommand {
 	
 	public String getDescription() {
 		return "Set Bot Prefix";
+	}
+	
+	public Permission requiredPermission() {
+		return Permission.ADMINISTRATOR;
 	}
 
 }

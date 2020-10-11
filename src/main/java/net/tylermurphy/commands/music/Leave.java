@@ -2,6 +2,7 @@ package net.tylermurphy.commands.music;
 
 import java.util.List;
 
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -14,7 +15,7 @@ import net.tylermurphy.music.PlayerManager;
 
 public class Leave implements ICommand {
 
-	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
         TextChannel channel = event.getChannel();
         AudioManager audioManager = event.getGuild().getAudioManager();
         PlayerManager playerManager = PlayerManager.getInstance();
@@ -71,6 +72,10 @@ public class Leave implements ICommand {
     
     public String getDescription() {
 		return "Remove Ken from the VC";
+	}
+    
+    public Permission requiredPermission() {
+		return null;
 	}
 	
 }

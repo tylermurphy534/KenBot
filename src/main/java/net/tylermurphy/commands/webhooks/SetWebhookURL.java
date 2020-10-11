@@ -14,7 +14,7 @@ import net.tylermurphy.database.DatabaseManager;
 
 public class SetWebhookURL implements ICommand {
 
-	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		
 		TextChannel channel = event.getChannel();
 		
@@ -69,6 +69,10 @@ public class SetWebhookURL implements ICommand {
 	
 	public String getDescription() {
 		return "Set a webhooks avatar url";
+	}
+	
+	public Permission requiredPermission() {
+		return Permission.ADMINISTRATOR;
 	}
 
 }

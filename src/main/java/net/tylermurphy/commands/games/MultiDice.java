@@ -5,13 +5,14 @@ import java.util.List;
 
 import me.duncte123.botcommons.messaging.EmbedUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.tylermurphy.commands.ICommand;
 
 public class MultiDice implements ICommand {
 
-	public void handle(List<String> args, GuildMessageReceivedEvent event) {
+	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		TextChannel channel = event.getChannel();
 		
 		if(args.isEmpty() || args.size() < 2) {
@@ -90,6 +91,10 @@ public class MultiDice implements ICommand {
 	
 	public String getDescription() {
 		return "Rolls many dice";
+	}
+	
+	public Permission requiredPermission() {
+		return null;
 	}
 
 }
