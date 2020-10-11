@@ -15,7 +15,6 @@ public class Help implements ICommand {
 		
 		Message message = event.getMessage();
 		User user = message.getAuthor();
-		
 		String help = 
 				":white_check_mark: **Essential Commands**\n"+
 				"```help,description,usage```"+
@@ -24,7 +23,7 @@ public class Help implements ICommand {
 				":heartpulse: **Social Commands**\n"+
 				"```boop,cookie,getShip,gift,highFive,hug,kiss,lick,pet,punch,ship,slap,tickle```"+
 				":game_die: **Game Commands**\n"+
-				"```battle,blackjack,coinflip,dice,eightball,multiDice,nunchi```"+
+				"```battle,blackjack,coinflip,dice,8ball,multiDice,nunchi```"+
 				":musical_note: **Music Commands**\n"+
 				"```join,leave,loop,loopQueue,np,pause,play,queue,remove,resume,skip,stop```"+
 				":test_tube: XP or Level Commands\n"+

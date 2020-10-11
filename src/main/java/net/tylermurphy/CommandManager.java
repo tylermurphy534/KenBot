@@ -22,7 +22,7 @@ import net.tylermurphy.commands.xp.*;
 
 public class CommandManager {
 
-	private final Map<String, ICommand> commands = new HashMap<>();
+	public final static Map<String, ICommand> commands = new HashMap<>();
 	
 	CommandManager(){
 		addCommand(new Help());
@@ -110,6 +110,8 @@ public class CommandManager {
 		addCommand(new ClearWarns());
 		addCommand(new E621());
 		addCommand(new Rule34());
+		addCommand(new Usage());
+		addCommand(new Description());
 	}
 	
 	private void addCommand(ICommand command) {
