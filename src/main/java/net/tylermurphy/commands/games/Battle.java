@@ -2,6 +2,8 @@ package net.tylermurphy.commands.games;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import me.duncte123.botcommons.messaging.EmbedUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -31,6 +33,7 @@ public class Battle extends ListenerAdapter implements ICommand {
 						.setDescription("Canceled Match Request");
 				channel.sendMessage(embed.build()).queue();
 				matches.remove(match);
+				match.timeout.cancel();
 				return;
 			}
 			if(match.channel.getIdLong() == event.getChannel().getIdLong()) {
@@ -52,10 +55,15 @@ public class Battle extends ListenerAdapter implements ICommand {
 			return;
 		}
 		Member opponent = members.get(0);
+		if(event.getAuthor().getIdLong() == opponent.getUser().getIdLong()) {
+			channel.sendMessage(":x: You cant battle yourself").queue();
+			return;
+		}
 		EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
 				.setTitle(String.format("%s has challanged %s to a battle.", event.getAuthor().getName(), opponent.getUser().getName()))
 				.appendDescription("React with :white_check_mark: to accept\n")
-				.appendDescription("React with :x: to deny");
+				.appendDescription("React with :x: to deny\n")
+				.appendDescription("Run the Battle command to cancel");
 		Message message = channel.sendMessage(embed.build()).complete();
 		message.addReaction("U+2714").queue();
 		message.addReaction("U+274C").queue();
@@ -65,6 +73,8 @@ public class Battle extends ListenerAdapter implements ICommand {
 		match.user2.user = opponent.getUser();
 		match.channel = channel;
 		matches.add(match);
+		match.startTimeoutClock();
+		
 	}
 	
 	public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
@@ -213,6 +223,7 @@ public class Battle extends ListenerAdapter implements ICommand {
 	    				.appendDescription("You have "+finalMatch.user2.point+" skill points left.");
 	    		privateChannel.sendMessage(health.build()).queue();
 	    	});
+	    	match.task.currentPos++;
 	    }else if(emote.equals("U+274C")) {
 	    	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
 	    			.setDescription("The opponet has `denied` the match!");
@@ -225,12 +236,37 @@ public class Battle extends ListenerAdapter implements ICommand {
 		return "battle";
 	}
 	
+	private class Timeout extends TimerTask {
+
+		int lastPos = 0;
+		public int currentPos = 0;
+		int matchIndex;
+		
+		public Timeout(int matchIndex) {
+			this.matchIndex = matchIndex;
+		}
+		
+		public void run() {
+			if(lastPos >= currentPos) {
+				matches.get(matchIndex).channel.sendMessage("Battle timed out.").queue();
+				matches.remove(matchIndex);
+				this.cancel();
+			} else {
+				lastPos = currentPos;
+			}
+		}
+		
+	}
+	
 	private class Match {
 		TextChannel channel;
 		Stats user1 = new Stats();
 		Stats user2 = new Stats();
 		String status;
 		int going = 0;
+		
+		Timer timeout;
+		Timeout task;
 		
 		public void init() {
 			if(user1.speed > user2.speed)
@@ -239,7 +275,14 @@ public class Battle extends ListenerAdapter implements ICommand {
 				going = 2;
 		}
 		
+		public void startTimeoutClock() {
+			timeout = new Timer();
+			task = new Timeout(matches.indexOf(this));
+			timeout.schedule(task, 30 * 1000, 30 * 1000);
+		}
+
 		public void next() {
+			task.currentPos++;
 			if(user1.health < 1 || user2.health < 1) { end(); return;}
 			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
 					.setTitle("Battle Status")
@@ -267,6 +310,7 @@ public class Battle extends ListenerAdapter implements ICommand {
 					.appendDescription(String.format("`%s:` Health: %s\n", user1.user.getName(), user1.health))
 					.appendDescription(String.format("`%s:` Health: %s\n", user2.user.getName(), user2.health));
 			channel.sendMessage(embed.build()).queue();
+			timeout.cancel();
 			matches.remove(this);
 		}
 		

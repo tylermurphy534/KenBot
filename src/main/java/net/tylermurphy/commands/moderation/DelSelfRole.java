@@ -58,7 +58,7 @@ public class DelSelfRole implements ICommand {
 			targetChannel.retrieveMessageById(messageId).queue((message) -> {
 				List<MessageReaction> rcs = message.getReactions();
 				for(MessageReaction r : rcs) {
-					message.removeReaction(r.getReactionEmote().getName()).queue();
+					message.removeReaction(r.getReactionEmote().getAsReactionCode()).queue();
 				}
 			});
 			channel.sendMessage("Self Roles removes sucessfully.").queue();

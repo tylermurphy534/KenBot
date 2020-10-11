@@ -131,12 +131,11 @@ public class SelfRole extends ListenerAdapter implements ICommand {
 	
 	public void onGuildMessageReactionAdd(GuildMessageReactionAddEvent event) {
 		if(event.getUser().isBot()) return;
-		String emote = event.getReaction().getReactionEmote().getName();
+		String emote = event.getReaction().getReactionEmote().getAsReactionCode();
         long guildId = event.getGuild().getIdLong();
         long channelId = event.getChannel().getIdLong();
         long messageId = event.getMessageIdLong();
         String locationId = guildId+""+channelId+""+messageId;
-        System.out.println(locationId);
         String result = DatabaseManager.SelfRoles.get(locationId, emote);
         if(result == null) return;
         Role role = event.getJDA().getRoleById(Long.parseLong(result));
@@ -149,7 +148,7 @@ public class SelfRole extends ListenerAdapter implements ICommand {
 	
 	public void onGuildMessageReactionRemove(GuildMessageReactionRemoveEvent event) {
 		if(event.getUser().isBot()) return;
-		String emote = event.getReaction().getReactionEmote().getName();
+		String emote = event.getReaction().getReactionEmote().getAsReactionCode();
         long guildId = event.getGuild().getIdLong();
         long channelId = event.getChannel().getIdLong();
         long messageId = event.getMessageIdLong();
