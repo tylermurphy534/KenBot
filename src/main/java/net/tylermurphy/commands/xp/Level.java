@@ -13,7 +13,10 @@ import net.tylermurphy.managers.LevelManager;
 public class Level implements ICommand {
 
 	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
-		int xp = Integer.parseInt(DatabaseManager.UserSettings.get(event.getAuthor().getIdLong(), event.getGuild().getIdLong(), "XP"));
+		String unparsedXp = DatabaseManager.UserSettings.get(event.getAuthor().getIdLong(), event.getGuild().getIdLong(), "XP");
+		if(unparsedXp.equals(""))
+			unparsedXp = "0";
+		int xp = Integer.parseInt(unparsedXp);
 		EmbedBuilder builder = EmbedUtils.getDefaultEmbed()
 				.setDescription(String.format("You are level %s!", LevelManager.getLevel(xp)));
 		event.getChannel().sendMessage(builder.build()).queue();

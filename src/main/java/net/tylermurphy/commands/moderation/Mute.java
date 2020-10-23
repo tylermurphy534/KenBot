@@ -10,6 +10,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.exceptions.HierarchyException;
 import net.tylermurphy.commands.ICommand;
 
 public class Mute implements ICommand {
@@ -56,7 +57,12 @@ public class Mute implements ICommand {
 			return;
 		}
 		
+		try {
 		event.getGuild().addRoleToMember(target, mutedRole).queue();
+		}catch(HierarchyException e) {
+			channel.sendMessage(":x: I can't manage the Muted role, it is higher than my max role in the role list!").queue();
+		}
+		
 		channel.sendMessage(String.format("%s muted %s, for reason: `%s`",event.getAuthor(),target,reason)).queue();
 
 		EmbedBuilder builder = new EmbedBuilder()

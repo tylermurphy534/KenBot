@@ -44,10 +44,6 @@ public class Ban implements ICommand {
 			channel.sendMessage(":x: I can't ban that user or I don't have permission to ban members.").queue();
 			return;
 		}
-		
-		event.getGuild().ban(target, 1, String.format("Ban by %s, with reason: %s", 
-				event.getAuthor(), reason)).queue();;
-		channel.sendMessage(String.format("%s banned %s, for reason: `%s`",event.getAuthor(),target,reason)).queue();
 
 		EmbedBuilder builder = new EmbedBuilder()
 				.setTitle("Infraction Notice")
@@ -55,8 +51,13 @@ public class Ban implements ICommand {
 				.setDescription(String.format("%s banned you in %s, for reason: `%s`",event.getAuthor(),event.getGuild(),reason));
 		
 		target.getUser().openPrivateChannel().queue(privateChannel -> {
-			privateChannel.sendMessage(builder.build()).queue();
+			privateChannel.sendMessage(builder.build()).queue((message) -> {
+				event.getGuild().ban(target, 1, String.format("Ban by %s, with reason: %s", 
+				event.getAuthor(), reason)).queue();
+		channel.sendMessage(String.format("%s banned %s, for reason: `%s`",event.getAuthor(),target,reason)).queue();
+			});
 		});
+		
 	}
 
 	public String getInvoke() {

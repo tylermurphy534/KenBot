@@ -45,18 +45,19 @@ public class Kick implements ICommand {
 			return;
 		}
 		
-		event.getGuild().kick(target, String.format("Kick by %s, with reason: %s", 
-				event.getAuthor(), reason)).queue();;
-		channel.sendMessage(String.format("%s kicked %s, for reason: `%s`",event.getAuthor(),target,reason)).queue();
-
 		EmbedBuilder builder = new EmbedBuilder()
 				.setTitle("Infraction Notice")
 				.setColor(Color.yellow)
 				.setDescription(String.format("%s kicked you in %s, for reason: `%s`",event.getAuthor(),event.getGuild(),reason));
 		
 		target.getUser().openPrivateChannel().queue(privateChannel -> {
-			privateChannel.sendMessage(builder.build()).queue();
+			privateChannel.sendMessage(builder.build()).queue((message) -> {
+				event.getGuild().kick(target, String.format("Kick by %s, with reason: %s", 
+				event.getAuthor(), reason)).queue();;
+				channel.sendMessage(String.format("%s kicked %s, for reason: `%s`",event.getAuthor(),target,reason)).queue();
+			});
 		});
+
 	}
 
 	public String getInvoke() {

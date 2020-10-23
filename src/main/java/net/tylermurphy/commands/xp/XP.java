@@ -12,7 +12,10 @@ import net.tylermurphy.database.DatabaseManager;
 public class XP implements ICommand {
 
 	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
-		int xp = Integer.parseInt(DatabaseManager.UserSettings.get(event.getAuthor().getIdLong(), event.getGuild().getIdLong(), "XP"));
+		String textXp = DatabaseManager.UserSettings.get(event.getAuthor().getIdLong(), event.getGuild().getIdLong(), "XP");
+		if(textXp.equals(""))
+			textXp = "0";
+		int xp = Integer.parseInt(textXp);
 		EmbedBuilder builder = EmbedUtils.getDefaultEmbed()
 				.setDescription(String.format("You have %s xp!", xp));
 		event.getChannel().sendMessage(builder.build()).queue();
