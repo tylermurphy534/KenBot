@@ -41,11 +41,11 @@ public class WarnActions {
 	
 	public void set(long guildId, int warnAmount, String warnAction) {
 //		if(get(guildId,warnAmount) == null) { insert(guildId,warnAmount,warnAction); return; }
-		String sql = "REPLACE WarnActions SET WarnAction = ? WHERE GuildId = ? AND WarnAmount = ?";
+		String sql = "REPLACE INTO WarnActions (GuildId,WarnAmount,WarnAction) VALUES (?,?,?)";
 		try( Connection connection = MariaDBConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ){
-			statement.setString(1, warnAction);
-			statement.setString(2, String.valueOf(guildId));
-			statement.setInt(3, warnAmount);
+			statement.setString(1, String.valueOf(guildId));
+			statement.setInt(2, warnAmount);
+			statement.setString(3, warnAction);
 			statement.execute();
 			connection.commit();
 		} catch (SQLException e) {

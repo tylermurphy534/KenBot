@@ -64,12 +64,12 @@ public class UserSettings {
 	
 	public void set(long userId, long guildId, String settingName, String settingValue) {
 //		if(get(userId,guildId,settingName) == null) { insert(userId,guildId,settingName,settingValue); return;}
-		String sql = "REPLACE UserSettings SET SettingValue = ? WHERE UserId = ? AND GuildId = ? AND SettingName = ?";
+		String sql = "REPLACE INTO UserSettings (UserId,GuildId,SettingName,SettingValue) VALUES (?,?,?,?)";
 		try( Connection connection = MariaDBConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ){
-			statement.setString(1, settingValue);
-			statement.setString(2, String.valueOf(userId));
-			statement.setString(3, String.valueOf(guildId));
-			statement.setString(4, settingName);
+			statement.setString(1, String.valueOf(userId));
+			statement.setString(2, String.valueOf(guildId));
+			statement.setString(3, settingName);
+			statement.setString(4, settingValue);
 			statement.execute();
 			connection.commit();
 		} catch (SQLException e) {

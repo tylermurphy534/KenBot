@@ -61,12 +61,12 @@ public class SocialStats {
 //	}
 	
 	public void set(long UserFromID, long UserToID, String statName, int statValue) {
-		String sql = "REPLACE SocialStats SET StatValue = ? WHERE UserFromID = ? AND UserToID = ? AND StatName = ?";
+		String sql = "REPLACE INTO SocialStats (UserFromID,UserToID,StatName,StatValue) VALUES (?,?,?,?)";
 		try( Connection connection = MariaDBConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ){
-			statement.setInt(1, statValue);
-			statement.setString(2, String.valueOf(UserFromID));
-			statement.setString(3, String.valueOf(UserToID));
-			statement.setString(4, statName);
+			statement.setString(1, String.valueOf(UserFromID));
+			statement.setString(2, String.valueOf(UserToID));
+			statement.setString(3, statName);
+			statement.setInt(4, statValue);
 			statement.execute();
 			connection.commit();
 		} catch (SQLException e) {
