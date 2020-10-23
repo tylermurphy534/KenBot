@@ -26,22 +26,21 @@ public class GuildSettings {
 		return null;
 	}
 	
-	public void insert(long guildId, String settingName, String settingValue) {
-		String sql = "INSERT INTO GuildSettings (GuildId,SettingName,SettingValue) VALUES (?,?,?)";
-		try( Connection connection = MariaDBConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ){
-			statement.setString(1, String.valueOf(guildId));
-			statement.setString(2, settingName);
-			statement.setString(3, settingValue);
-			statement.execute();
-			connection.commit();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+//	public void insert(long guildId, String settingName, String settingValue) {
+//		String sql = "INSERT INTO GuildSettings (GuildId,SettingName,SettingValue) VALUES (?,?,?)";
+//		try( Connection connection = MariaDBConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ){
+//			statement.setString(1, String.valueOf(guildId));
+//			statement.setString(2, settingName);
+//			statement.setString(3, settingValue);
+//			statement.execute();
+//			connection.commit();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//	}
 	
 	public void set(long guildId, String settingName, String settingValue) {
-		if(get(guildId, settingName) == null) { insert(guildId,settingName,settingValue); return; }
-		String sql = "UPDATE GuildSettings SET SettingValue = ? WHERE GuildId = ? AND SettingName = ?";
+		String sql = "REPLACE GuildSettings SET SettingValue = ? WHERE GuildId = ? AND SettingName = ?";
 		try( Connection connection = MariaDBConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ){
 			statement.setString(1, settingValue);
 			statement.setString(2, String.valueOf(guildId));

@@ -26,22 +26,22 @@ public class WarnActions {
 		return null;
 	}
 	
-	public void insert(long guildId, int warnAmount, String warnAction) {
-		String sql = "INSERT INTO WarnActions (GuildId,WarnAmount,WarnAction) VALUES (?,?,?)";
-		try( Connection connection = MariaDBConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ){
-			statement.setString(1, String.valueOf(guildId));
-			statement.setInt(2, warnAmount);
-			statement.setString(3, warnAction);
-			statement.execute();
-			connection.commit();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+//	public void insert(long guildId, int warnAmount, String warnAction) {
+//		String sql = "INSERT INTO WarnActions (GuildId,WarnAmount,WarnAction) VALUES (?,?,?)";
+//		try( Connection connection = MariaDBConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ){
+//			statement.setString(1, String.valueOf(guildId));
+//			statement.setInt(2, warnAmount);
+//			statement.setString(3, warnAction);
+//			statement.execute();
+//			connection.commit();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//	}
 	
 	public void set(long guildId, int warnAmount, String warnAction) {
-		if(get(guildId,warnAmount) == null) { insert(guildId,warnAmount,warnAction); return; }
-		String sql = "UPDATE WarnActions SET WarnAction = ? WHERE GuildId = ? AND WarnAmount = ?";
+//		if(get(guildId,warnAmount) == null) { insert(guildId,warnAmount,warnAction); return; }
+		String sql = "REPLACE WarnActions SET WarnAction = ? WHERE GuildId = ? AND WarnAmount = ?";
 		try( Connection connection = MariaDBConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ){
 			statement.setString(1, warnAction);
 			statement.setString(2, String.valueOf(guildId));

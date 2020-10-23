@@ -29,19 +29,19 @@ public class Webhooks {
 		return null;
 	}
 	
-	public void insert(long guildId, String AvatarURL, String Name, String Prefix) {
-		String sql = "INSERT INTO Webhooks (GuildId,AvatarURL,Name,Prefix) VALUES (?,?,?,?)";
-		try( Connection connection = MariaDBConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ){
-			statement.setString(1, String.valueOf(guildId));
-			statement.setString(2, AvatarURL);
-			statement.setString(3, Name);
-			statement.setString(4, Prefix);
-			statement.execute();
-			connection.commit();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+//	public void insert(long guildId, String AvatarURL, String Name, String Prefix) {
+//		String sql = "INSERT INTO Webhooks (GuildId,AvatarURL,Name,Prefix) VALUES (?,?,?,?)";
+//		try( Connection connection = MariaDBConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ){
+//			statement.setString(1, String.valueOf(guildId));
+//			statement.setString(2, AvatarURL);
+//			statement.setString(3, Name);
+//			statement.setString(4, Prefix);
+//			statement.execute();
+//			connection.commit();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//	}
 	
 	public void del(long guildId, String Prefix) {
 		String sql = "DELETE FROM Webhooks WHERE Prefix = ? AND GuildId = ?";
@@ -56,7 +56,7 @@ public class Webhooks {
 	}
 	
 	public void set(long guildId, String AvatarURL, String Name, String Prefix) {
-		String sql = "UPDATE Webhooks SET AvatarURL = ?, Name = ? WHERE Prefix = ? AND GuildId = ?";
+		String sql = "REPLACE Webhooks SET AvatarURL = ?, Name = ? WHERE Prefix = ? AND GuildId = ?";
 		try( Connection connection = MariaDBConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ){
 			statement.setString(1, AvatarURL);
 			statement.setString(2, Name);

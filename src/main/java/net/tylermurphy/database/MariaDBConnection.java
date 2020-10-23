@@ -101,6 +101,7 @@ public class MariaDBConnection {
 			e.printStackTrace();
 		}
 		
+		
 	}
 	
 	private MariaDBConnection() {}

@@ -46,22 +46,22 @@ public class SocialStats {
 		return new HashMap<String,Integer>();
 	}
 	
-	public void insert(long UserFromID, long UserToID, String statName, int value) {
-		String sql = "INSERT INTO SocialStats (UserFromID,UserToID,StatName,StatValue) VALUES (?,?,?,?)";
-		try( Connection connection = MariaDBConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ){
-			statement.setString(1, String.valueOf(UserFromID));
-			statement.setString(2, String.valueOf(UserToID));
-			statement.setString(3, statName);
-			statement.setInt(4, value);
-			statement.execute();
-			connection.commit();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+//	public void insert(long UserFromID, long UserToID, String statName, int value) {
+//		String sql = "INSERT INTO SocialStats (UserFromID,UserToID,StatName,StatValue) VALUES (?,?,?,?)";
+//		try( Connection connection = MariaDBConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ){
+//			statement.setString(1, String.valueOf(UserFromID));
+//			statement.setString(2, String.valueOf(UserToID));
+//			statement.setString(3, statName);
+//			statement.setInt(4, value);
+//			statement.execute();
+//			connection.commit();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//	}
 	
 	public void set(long UserFromID, long UserToID, String statName, int statValue) {
-		String sql = "UPDATE SocialStats SET StatValue = ? WHERE UserFromID = ? AND UserToID = ? AND StatName = ?";
+		String sql = "REPLACE SocialStats SET StatValue = ? WHERE UserFromID = ? AND UserToID = ? AND StatName = ?";
 		try( Connection connection = MariaDBConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ){
 			statement.setInt(1, statValue);
 			statement.setString(2, String.valueOf(UserFromID));

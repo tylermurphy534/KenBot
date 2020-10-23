@@ -37,7 +37,7 @@ public class CreateWebhook implements ICommand {
 			event.getChannel().sendMessage(":x: This webhook already exists.").queue();
             return;
 		}else {
-			DatabaseManager.Webhooks.insert(event.getGuild().getIdLong(),DefaultAvatarURL,"Default Webhook", args.get(0));
+			DatabaseManager.Webhooks.set(event.getGuild().getIdLong(),DefaultAvatarURL,"Default Webhook", args.get(0));
 		}
 		
 		EmbedBuilder embed = EmbedUtils.getDefaultEmbed()

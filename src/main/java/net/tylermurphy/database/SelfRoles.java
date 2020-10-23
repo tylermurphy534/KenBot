@@ -46,7 +46,7 @@ public class SelfRoles {
 	}
 	
 	public void set(String locationId, long roleId, String reaction) {
-		String sql = "INSERT INTO SelfRoles (LocationId,RoleId,Reaction) VALUES (?,?,?)";
+		String sql = "REPLACE INTO SelfRoles (LocationId,RoleId,Reaction) VALUES (?,?,?)";
 		try( Connection connection = MariaDBConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ){
 			statement.setString(1, locationId);
 			statement.setString(2, String.valueOf(roleId));
