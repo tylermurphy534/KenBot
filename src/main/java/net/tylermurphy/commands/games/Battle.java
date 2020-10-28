@@ -207,7 +207,11 @@ public class Battle extends ListenerAdapter implements ICommand {
 	    if(emote.equals("U+2714")) {
 	    	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
 	    			.appendDescription("The opponet has `accepted` the match\n")
-	    			.appendDescription("Respond to the messages in your dms to set your stats");
+	    			.appendDescription("Respond to the messages in your dms to set your stats\n")
+	    			.appendDescription("\nHealth stat is how much health you get in the battle.\n")
+	    			.appendDescription("Defense stat is the chance (stat/20)% the opponet will miss.\n")
+	    			.appendDescription("Speed stat is the highest value will get the first turn.\n")
+	    			.appendDescription("Attack stat is that amount of damage you do > 3+stat/4.");
 	    	channel.sendMessage(embed.build()).queue();
 	    	match.status = "Stats";
 	    	final Match finalMatch = match;
@@ -314,35 +318,11 @@ public class Battle extends ListenerAdapter implements ICommand {
 			matches.remove(this);
 		}
 		
-		public int deductAttack(int attack) {
-			switch(attack) {
-			case 1: return -5;
-			case 2: return -4;
-			case 3: return -4;
-			case 4: return -3;
-			case 5: return -3;
-			case 6: return -2;
-			case 7: return -2;
-			case 8: return -1;
-			case 9: return -1;
-			case 10: return 0;
-			case 11: return 0;
-			case 12: return 1;
-			case 13: return 1;
-			case 14: return 2;
-			case 15: return 2;
-			case 16: return 3;
-			case 17: return 3;
-			case 18: return 4;
-			default: return 0;
-			}
-		}
-		
 		public void action(int choice) {
 			switch(choice) {
 				case 1:
 					if(going==1) {
-						int attack = rand(10) + deductAttack(user1.attack);
+						int attack = rand(10) + 3+user1.attack/4;
 						attack = Math.max(0, attack);
 						int successRoll = rand(20);
 						if(successRoll >= user2.defense) {
@@ -354,7 +334,7 @@ public class Battle extends ListenerAdapter implements ICommand {
 							channel.sendMessage(embed.build()).queue();
 						}
 					}else {
-						int attack = rand(10) + deductAttack(user2.attack);
+						int attack = rand(10) + 3+user2.attack/4;
 						attack = Math.max(0, attack);
 						int successRoll = rand(20);
 						if(successRoll >= user1.defense) {

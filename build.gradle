@@ -7,8 +7,6 @@ plugins {
 
 mainClassName = 'net.tylermurphy.Bot'
 
-version '1.0'
-
 sourceCompatibility = 1.8
 
 repositories {
@@ -33,5 +31,3 @@ dependencies {
 }
 
 compileJava.options.encoding = 'UTF-8'
-
-shadowJar { minimize() }

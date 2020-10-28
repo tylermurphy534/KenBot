@@ -9,18 +9,17 @@ import net.tylermurphy.database.DatabaseManager;
 
 public class LevelManager {
 	
-	Date date = new Date();
-	
 	public void handleMessage(GuildMessageReceivedEvent event) {
+		Date date = new Date();
 		String time = DatabaseManager.UserSettings.get(event.getAuthor().getIdLong(), event.getGuild().getIdLong(), "LVLTIME");
 		if(time == null || time.equals("") || date.getTime() - Long.parseLong(time) > 60 * 1000) {
-			handleMember(event);
+			handleMember(event,date);
 			return;
 		}
 		return;
 	}
 	
-	private void handleMember(GuildMessageReceivedEvent event) {
+	private void handleMember(GuildMessageReceivedEvent event, Date date) {
 		DatabaseManager.UserSettings.set(event.getAuthor().getIdLong(), event.getGuild().getIdLong(), "LVLTIME", String.valueOf(date.getTime()));
 		String unparsedXp = DatabaseManager.UserSettings.get(event.getAuthor().getIdLong(), event.getGuild().getIdLong(), "XP");
 		int xp = 0;
