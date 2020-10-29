@@ -15,6 +15,7 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.tylermurphy.commands.ICommand;
+import net.tylermurphy.commands.Timeout;
 
 public class BlackJack extends ListenerAdapter implements ICommand {
 
@@ -24,13 +25,14 @@ public class BlackJack extends ListenerAdapter implements ICommand {
 		TextChannel channel = event.getChannel();
 		String discriminator = event.getAuthor().getName()+event.getAuthor().getDiscriminator();
 		System.out.println(discriminator);
-		if(games.get(discriminator) != null) {
+		if(games.get(discriminator) != null && !games.get(discriminator).timeout.isTimedOut()) {
 			channel.sendMessage("You had a previous game in progress. Deleting previous instance and starting a new one.").queue();
 			games.remove(discriminator);
 		}
 		
 		BlackJackGame game = new BlackJackGame(discriminator,channel.getIdLong());
 		games.put(discriminator, game);
+		game.timeout.startTimeout(30, channel, "The blackjack game has timedout.");
 		game.hit(channel);
 	}
 	
@@ -45,6 +47,10 @@ public class BlackJack extends ListenerAdapter implements ICommand {
         TextChannel channel = event.getChannel();
         String discriminator = event.getUser().getName()+event.getUser().getDiscriminator();
         BlackJackGame game = games.get(discriminator);
+        if(game.timeout.isTimedOut()) {
+        	games.remove(game);
+        	return;
+        }
         if(game == null || game.channelId != channel.getIdLong() || !game.discriminator.equals(discriminator)) return;
         if(emote.equalsIgnoreCase("U+1F6D1")) {
         	game.end(channel);
@@ -65,6 +71,8 @@ public class BlackJack extends ListenerAdapter implements ICommand {
 	}
 	
 	private class BlackJackGame {
+		
+		public Timeout timeout = new Timeout();
 		
 		private List<Card> playedCards = new ArrayList<Card>();
 		private String discriminator;
@@ -98,6 +106,7 @@ public class BlackJack extends ListenerAdapter implements ICommand {
 		}
 		
 		public void next(TextChannel channel) {
+			timeout.refreshTimeout();
 			EmbedBuilder builder = EmbedUtils.getDefaultEmbed()
 					.setTitle("Hit or Stay?")
 					.setColor(Color.yellow)
@@ -143,6 +152,7 @@ public class BlackJack extends ListenerAdapter implements ICommand {
 		}
 		
 		public void end(TextChannel channel) {
+			timeout.stopTimeout();
 			String title, desc;
 			List<Card> dealersHand = new ArrayList<Card>();
 			int aces = 0;

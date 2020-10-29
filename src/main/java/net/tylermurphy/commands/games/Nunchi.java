@@ -11,8 +11,10 @@ import net.dv8tion.jda.api.entities.MessageReaction;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
+import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionRemoveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.tylermurphy.commands.ICommand;
+import net.tylermurphy.commands.Timeout;
 
 public class Nunchi extends ListenerAdapter implements ICommand {
 
@@ -22,6 +24,10 @@ public class Nunchi extends ListenerAdapter implements ICommand {
 		TextChannel channel = event.getChannel();
 		String pointer = event.getAuthor().getName() + "#" + event.getAuthor().getDiscriminator();
 		for(NunchiGame game : games) {
+			if(game.timeout.isTimedOut()) {
+				games.remove(game);
+				continue;
+			}
 			if(game.channelId == channel.getIdLong()) {
 				channel.sendMessage(":x: There is already a nunchi game in progress in this channel.").queue();
 				return;
@@ -49,7 +55,9 @@ public class Nunchi extends ListenerAdapter implements ICommand {
 		message.addReaction("U+2705").queue();
 		message.addReaction("U+25B6").queue();
 		message.addReaction("U+274C").queue();
-		games.add(new NunchiGame(channel.getIdLong(),event.getGuild().getIdLong(),pointer));
+		NunchiGame game = new NunchiGame(channel.getIdLong(),event.getGuild().getIdLong(),pointer);
+		games.add(game);
+		game.timeout.startTimeout(30, channel, "The Nunchi game has timed out.");
 	}
 	
 	public void onGuildMessageReactionAdd(GuildMessageReactionAddEvent event) {
@@ -65,6 +73,10 @@ public class Nunchi extends ListenerAdapter implements ICommand {
         if(event.getMember().getUser().isBot()) return;
         NunchiGame game = null;
         for(NunchiGame temp : games) {
+        	if(temp.timeout.isTimedOut()) {
+				games.remove(temp);
+				continue;
+			}
         	if(temp.channelId == channel.getIdLong()) {
         		game = temp;
         		break;
@@ -75,43 +87,57 @@ public class Nunchi extends ListenerAdapter implements ICommand {
         	if(game.users.contains(pointer)) return;
         	game.users.add(pointer);
         	channel.sendMessage(pointer + " has joined the game queue.").queue();
+        	game.timeout.refreshTimeout();
         } else if(emote.equals("U+25B6") && game.gameMaster.equals(pointer) && event.getGuild().getIdLong() == game.guildId) {
         	if(game.users.size() < 2) return;
         	game.status = "Game In Progress";
         	game.next(channel);
         } else if(emote.equals("U+274C") && game.gameMaster.equals(pointer) && event.getGuild().getIdLong() == game.guildId) {
         	games.remove(game);
+        	game.timeout.stopTimeout();
         	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
         			.setDescription("The Game Was Canceled.");
         	channel.sendMessage(embed.build()).queue();
         }
     }
 	
-//	public void onGuildMessageReactionRemove(GuildMessageReactionRemoveEvent event) {
-//        MessageReaction reaction = event.getReaction();
-//        String emote = reaction.getReactionEmote().getAsReactionCode();
-//        TextChannel channel = event.getChannel();
-//        System.out.println(event.getUser().getName());
-//        System.out.println(event.getUser());
-//        String pointer = event.getMember().getUser().getName() + event.getMember().getUser().getDiscriminator();
-//        NunchiGame game = null;
-//        for(NunchiGame temp : games) {
-//        	if(temp.channelId == channel.getIdLong()) {
-//        		game = temp;
-//        		break;
-//        	}
-//        }
-//        if(game == null || !game.status.equals("Joining Phase")) return;
-//        if(emote.equals("✅")) {
-//        	game.users.remove(pointer);
-//        	channel.sendMessage(pointer + " has left the game queue.").queue();
-//        }
-//    }
+	public void onGuildMessageReactionRemove(GuildMessageReactionRemoveEvent event) {
+		MessageReaction reaction = event.getReaction();
+        String emote;
+		try {
+			 emote = reaction.getReactionEmote().getAsCodepoints();
+		} catch (Exception e) {
+			return;
+		}
+        TextChannel channel = event.getChannel();
+        String pointer = event.getUser().getName() + "#" + event.getUser().getDiscriminator();
+        NunchiGame game = null;
+        for(NunchiGame temp : games) {
+        	if(temp.timeout.isTimedOut()) {
+				games.remove(temp);
+				continue;
+			}
+        	if(temp.channelId == channel.getIdLong()) {
+        		game = temp;
+        		break;
+        	}
+        }
+        if(game == null || !game.status.equals("Joining Phase")) return;
+        if(emote.equals("U+2705")) {
+        	game.users.remove(pointer);
+        	game.timeout.refreshTimeout();
+        	channel.sendMessage(pointer + " has left the game queue.").queue();
+        }
+    }
 	
 	public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 		TextChannel channel = event.getChannel();
 		NunchiGame game = null;
 		for(NunchiGame temp : games) {
+			if(temp.timeout.isTimedOut()) {
+				games.remove(temp);
+				continue;
+			}
         	if(temp.channelId == channel.getIdLong()) {
         		game = temp;
         		break;
@@ -122,6 +148,7 @@ public class Nunchi extends ListenerAdapter implements ICommand {
 		if(!game.users.contains(pointer)) return;
 		int check = game.check(event.getMessage().getContentRaw());
 		if(check == 1) {
+			game.timeout.refreshTimeout();
 			game.nextNumber++;
 		}else if(check == 2) {
 			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
@@ -137,6 +164,8 @@ public class Nunchi extends ListenerAdapter implements ICommand {
 	}
 	
 	private class NunchiGame {
+		
+		public Timeout timeout = new Timeout();
 		
 		long channelId;
 		long guildId;
@@ -155,7 +184,9 @@ public class Nunchi extends ListenerAdapter implements ICommand {
 		}
 		
 		public void next(TextChannel channel) {
+			timeout.refreshTimeout();
 			if(users.size() == 1) {
+				timeout.stopTimeout();
 				end(channel);
 				return;
 			}

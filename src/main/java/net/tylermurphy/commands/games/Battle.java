@@ -2,8 +2,6 @@ package net.tylermurphy.commands.games;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import me.duncte123.botcommons.messaging.EmbedUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -19,6 +17,7 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.tylermurphy.commands.ICommand;
+import net.tylermurphy.commands.Timeout;
 
 public class Battle extends ListenerAdapter implements ICommand {
 
@@ -28,12 +27,16 @@ public class Battle extends ListenerAdapter implements ICommand {
 		TextChannel channel = event.getChannel();
 		List<Member> members = event.getMessage().getMentionedMembers();
 		for(Match match : matches) {
+			if(match.timeout.isTimedOut()) {
+				matches.remove(match);
+				continue;
+			}
 			if(match.user1.user.getIdLong() == event.getAuthor().getIdLong() && match.status.equals("Challanged")) {
 				EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
 						.setDescription("Canceled Match Request");
 				channel.sendMessage(embed.build()).queue();
 				matches.remove(match);
-				match.timeout.cancel();
+				match.timeout.stopTimeout();
 				return;
 			}
 			if(match.channel.getIdLong() == event.getChannel().getIdLong()) {
@@ -73,13 +76,17 @@ public class Battle extends ListenerAdapter implements ICommand {
 		match.user2.user = opponent.getUser();
 		match.channel = channel;
 		matches.add(match);
-		match.startTimeoutClock();
+		match.timeout.startTimeout(30, channel, "The battle has timed out!");
 		
 	}
 	
 	public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 		Match match = null;
 		for(Match temp : matches) {
+			if(temp.timeout.isTimedOut()) {
+				matches.remove(match);
+				continue;
+			}
 			if(event.getAuthor().getIdLong() == temp.user1.user.getIdLong() || event.getAuthor().getIdLong() == temp.user2.user.getIdLong()) {
 				match = temp;
 				break;
@@ -105,6 +112,10 @@ public class Battle extends ListenerAdapter implements ICommand {
 		int p = 0;
 		Stats stats = null;
 	    for(Match temp : matches) {
+	    	if(temp.timeout.isTimedOut()) {
+				matches.remove(match);
+				continue;
+			}
 			if(event.getAuthor().getIdLong() == temp.user1.user.getIdLong()) {
 				match = temp;
 				p = 1;
@@ -197,6 +208,10 @@ public class Battle extends ListenerAdapter implements ICommand {
 	    TextChannel channel = event.getChannel();
 	    Match match = null;
 	    for(Match temp : matches) {
+	    	if(temp.timeout.isTimedOut()) {
+				matches.remove(match);
+				continue;
+			}
 			if(event.getMember().getUser().getIdLong() == temp.user2.user.getIdLong()) {
 				match = temp;
 				break;
@@ -227,7 +242,7 @@ public class Battle extends ListenerAdapter implements ICommand {
 	    				.appendDescription("You have "+finalMatch.user2.point+" skill points left.");
 	    		privateChannel.sendMessage(health.build()).queue();
 	    	});
-	    	match.task.currentPos++;
+	    	match.timeout.refreshTimeout();
 	    }else if(emote.equals("U+274C")) {
 	    	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
 	    			.setDescription("The opponet has `denied` the match!");
@@ -240,28 +255,6 @@ public class Battle extends ListenerAdapter implements ICommand {
 		return "battle";
 	}
 	
-	private class Timeout extends TimerTask {
-
-		int lastPos = 0;
-		public int currentPos = 0;
-		int matchIndex;
-		
-		public Timeout(int matchIndex) {
-			this.matchIndex = matchIndex;
-		}
-		
-		public void run() {
-			if(lastPos >= currentPos) {
-				matches.get(matchIndex).channel.sendMessage("Battle timed out.").queue();
-				matches.remove(matchIndex);
-				this.cancel();
-			} else {
-				lastPos = currentPos;
-			}
-		}
-		
-	}
-	
 	private class Match {
 		TextChannel channel;
 		Stats user1 = new Stats();
@@ -269,8 +262,7 @@ public class Battle extends ListenerAdapter implements ICommand {
 		String status;
 		int going = 0;
 		
-		Timer timeout;
-		Timeout task;
+		public Timeout timeout = new Timeout();
 		
 		public void init() {
 			if(user1.speed > user2.speed)
@@ -278,15 +270,9 @@ public class Battle extends ListenerAdapter implements ICommand {
 			else 
 				going = 2;
 		}
-		
-		public void startTimeoutClock() {
-			timeout = new Timer();
-			task = new Timeout(matches.indexOf(this));
-			timeout.schedule(task, 30 * 1000, 30 * 1000);
-		}
 
 		public void next() {
-			task.currentPos++;
+			timeout.refreshTimeout();
 			if(user1.health < 1 || user2.health < 1) { end(); return;}
 			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
 					.setTitle("Battle Status")
@@ -314,7 +300,7 @@ public class Battle extends ListenerAdapter implements ICommand {
 					.appendDescription(String.format("`%s:` Health: %s\n", user1.user.getName(), user1.health))
 					.appendDescription(String.format("`%s:` Health: %s\n", user2.user.getName(), user2.health));
 			channel.sendMessage(embed.build()).queue();
-			timeout.cancel();
+			timeout.stopTimeout();
 			matches.remove(this);
 		}
 		
