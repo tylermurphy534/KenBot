@@ -47,7 +47,7 @@ public class BlackJack extends ListenerAdapter implements ICommand {
         TextChannel channel = event.getChannel();
         String discriminator = event.getUser().getName()+event.getUser().getDiscriminator();
         BlackJackGame game = games.get(discriminator);
-        if(game != null || game.timeout.isTimedOut()) {
+        if(game != null && game.timeout.isTimedOut()) {
         	games.remove(game);
         	return;
         }
