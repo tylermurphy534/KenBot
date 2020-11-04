@@ -6,7 +6,6 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import net.tylermurphy.Public;
 import net.tylermurphy.Config;
 import net.tylermurphy.commands.ICommand;
 import net.tylermurphy.database.DatabaseManager;
@@ -30,7 +29,6 @@ public class SetPrefix implements ICommand {
 
         final String newPrefix = String.join("", args);
         DatabaseManager.GuildSettings.set(event.getGuild().getIdLong(), "prefix", newPrefix);
-        Public.PREFIXES.put(event.getGuild().getIdLong(),newPrefix);
         channel.sendMessageFormat("New prefix has been set to `%s`", newPrefix).queue();
     }
 
