@@ -2,7 +2,6 @@ package net.tylermurphy;
 
 import java.awt.Color;
 import java.sql.SQLException;
-import java.util.Date;
 
 import javax.security.auth.login.LoginException;
 

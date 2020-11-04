@@ -1,6 +1,10 @@
 package net.tylermurphy.managers;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import me.duncte123.botcommons.messaging.EmbedUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -9,10 +13,23 @@ import net.tylermurphy.database.DatabaseManager;
 
 public class LevelManager {
 	
+	private static List<Long> blockedIds;
+	
+	static {
+		blockedIds = new ArrayList<Long>();
+		Timer timer = new Timer();
+		TimerTask task = new TimerTask() {
+			public void run() {
+				blockedIds.clear();
+			}
+		};
+		timer.schedule(task, 1000 * 60, 1000 * 60);
+	}
+	
 	public void handleMessage(GuildMessageReceivedEvent event) {
 		Date date = new Date();
-		String time = DatabaseManager.UserSettings.get(event.getAuthor().getIdLong(), event.getGuild().getIdLong(), "LVLTIME");
-		if(time == null || time.equals("") || date.getTime() - Long.parseLong(time) > 60 * 1000) {
+		if(!blockedIds.contains(event.getAuthor().getIdLong())) {
+			blockedIds.add(event.getAuthor().getIdLong());
 			handleMember(event,date);
 			return;
 		}
@@ -20,7 +37,6 @@ public class LevelManager {
 	}
 	
 	private void handleMember(GuildMessageReceivedEvent event, Date date) {
-		DatabaseManager.UserSettings.set(event.getAuthor().getIdLong(), event.getGuild().getIdLong(), "LVLTIME", String.valueOf(date.getTime()));
 		String unparsedXp = DatabaseManager.UserSettings.get(event.getAuthor().getIdLong(), event.getGuild().getIdLong(), "XP");
 		int xp = 0;
 		if(!unparsedXp.equals("")) xp = Integer.parseInt(unparsedXp);
