@@ -27,16 +27,15 @@ public class LevelManager {
 	}
 	
 	public void handleMessage(GuildMessageReceivedEvent event) {
-		Date date = new Date();
 		if(!blockedIds.contains(event.getAuthor().getIdLong())) {
 			blockedIds.add(event.getAuthor().getIdLong());
-			handleMember(event,date);
+			handleMember(event);
 			return;
 		}
 		return;
 	}
 	
-	private void handleMember(GuildMessageReceivedEvent event, Date date) {
+	private void handleMember(GuildMessageReceivedEvent event) {
 		String unparsedXp = DatabaseManager.UserSettings.get(event.getAuthor().getIdLong(), event.getGuild().getIdLong(), "XP");
 		int xp = 0;
 		if(!unparsedXp.equals("")) xp = Integer.parseInt(unparsedXp);
