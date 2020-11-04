@@ -5,14 +5,13 @@ import java.util.List;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.managers.AudioManager;
 import net.tylermurphy.commands.ICommand;
 import net.tylermurphy.music.GuildMusicManager;
+import net.tylermurphy.music.MusicPermissions;
 import net.tylermurphy.music.PlayerManager;
 
 public class Resume implements ICommand {
@@ -35,21 +34,9 @@ public class Resume implements ICommand {
 			return;
 		}
 		
-		boolean hasDJRole = false;
-		List<Role> roles = event.getMember().getRoles();
-		for(Role role : roles) {
-			if(role.getName().equalsIgnoreCase("dj")) {
-				hasDJRole = true;
-				break;
-			}
-		}
-		List<Member> members = voiceChannel.getMembers();
-		int people = 0;
-		for(Member member : members) {
-			if(!member.getUser().isBot())
-				people++;
-		}
-		if(people == 1 || hasDJRole) {
+		boolean allowed = MusicPermissions.hasDJ(event.getMember().getRoles(), voiceChannel);
+		
+		if(allowed) {
 			player.setPaused(false);
 			channel.sendMessage(":arrow_forward: Resumed current track.").queue();
 		} else {
