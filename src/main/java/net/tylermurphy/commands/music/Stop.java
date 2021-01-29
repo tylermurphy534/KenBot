@@ -30,26 +30,26 @@ public class Stop implements ICommand {
             channel.sendMessage(":x: You have to be in the same voice channel as me to use this").queue();
             return;
         }
-		
+        	
         boolean allowed = MusicPermissions.hasDJ(event.getMember().getRoles(), voiceChannel);
-		
+        	
 		if(allowed) {
 			musicManager.scheduler.getQueue().clear();
 			musicManager.player.stopTrack();
 			musicManager.player.setPaused(false);
 			channel.sendMessage("Stopped the music and cleared the song queue.").queue();
-			musicManager.scheduler.boundTextChannel = null;
 			musicManager.scheduler.unLoopQueue();
 			musicManager.scheduler.setLooped(false);
+			musicManager.autoLeaveManager.startTimeout(event.getGuild());
 		} else {
 			channel.sendMessage(":x: You must be the only person in the VC or have the `DJ` role to do this.").queue();
 		}
 	}
-
+	
 	public String getInvoke() {
 		return "stop";
 	}
-
+	
 	public String getUsage() {
 		return "";
 	}

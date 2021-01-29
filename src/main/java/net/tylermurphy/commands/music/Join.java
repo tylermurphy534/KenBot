@@ -11,6 +11,8 @@ import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.managers.AudioManager;
 import net.tylermurphy.commands.ICommand;
+import net.tylermurphy.music.GuildMusicManager;
+import net.tylermurphy.music.PlayerManager;
 
 public class Join implements ICommand {
 	
@@ -49,6 +51,10 @@ public class Join implements ICommand {
         }
 
         audioManager.openAudioConnection(voiceChannel);
+        PlayerManager manager = PlayerManager.getInstance();
+        GuildMusicManager musicManager = manager.getGuildMusicManager(event.getGuild());
+        musicManager.autoLeaveManager.startTimeout(event.getGuild());
+        
         channel.sendMessage("Joining your voice channel").queue();
 	}
 	

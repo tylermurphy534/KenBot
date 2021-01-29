@@ -47,7 +47,7 @@ public class SoftBan implements ICommand {
 
 		EmbedBuilder builder = new EmbedBuilder()
 				.setTitle("Infraction Notice")
-				.setColor(Color.yellow)
+				.setColor(Color.red)
 				.setDescription(String.format("%s softbanned you in %s, for reason: `%s`",event.getAuthor(),event.getGuild(),reason));
 		
 		target.getUser().openPrivateChannel().queue(privateChannel -> {

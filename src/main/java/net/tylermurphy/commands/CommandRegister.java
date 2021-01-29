@@ -45,6 +45,7 @@ import net.tylermurphy.commands.moderation.Unban;
 import net.tylermurphy.commands.moderation.Unmute;
 import net.tylermurphy.commands.moderation.Warn;
 import net.tylermurphy.commands.moderation.Warns;
+import net.tylermurphy.commands.music.ForceSkip;
 import net.tylermurphy.commands.music.Join;
 import net.tylermurphy.commands.music.Leave;
 import net.tylermurphy.commands.music.Loop;
@@ -66,6 +67,7 @@ import net.tylermurphy.commands.nsfw.HentaiGIF;
 import net.tylermurphy.commands.nsfw.Kuni;
 import net.tylermurphy.commands.nsfw.Lewd;
 import net.tylermurphy.commands.nsfw.LewdKemo;
+import net.tylermurphy.commands.nsfw.NHentai;
 import net.tylermurphy.commands.nsfw.Pussy;
 import net.tylermurphy.commands.nsfw.Rule34;
 import net.tylermurphy.commands.nsfw.SmallBoobs;
@@ -184,6 +186,8 @@ public class CommandRegister {
 		register(new Rule34());
 		register(new Usage());
 		register(new Description());
+		register(new ForceSkip());
+		register(new NHentai());
 	}
 	
 	private static void register(ICommand command) {

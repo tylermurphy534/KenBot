@@ -60,7 +60,7 @@ public class Unban implements ICommand {
 
 			EmbedBuilder builder = new EmbedBuilder()
 					.setTitle("Infraction Notice")
-					.setColor(Color.yellow)
+					.setColor(Color.green)
 					.setDescription(String.format("%s unbanned you in %s.",event.getAuthor(),event.getGuild()));
 			
 			target.openPrivateChannel().queue(privateChannel -> {

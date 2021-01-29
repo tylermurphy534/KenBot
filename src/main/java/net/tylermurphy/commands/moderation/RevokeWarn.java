@@ -12,14 +12,14 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.tylermurphy.commands.ICommand;
 import net.tylermurphy.database.DatabaseManager;
 
-public class ClearWarns implements ICommand {
+public class RevokeWarn implements ICommand {
 
 	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		TextChannel channel = event.getChannel();
 		Member member = event.getMember();
 		List<Member> metionedMembers = event.getMessage().getMentionedMembers();
 		
-		if(metionedMembers.isEmpty()) {
+		if(metionedMembers.isEmpty() || args.size() < 2) {
 			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
 					.appendDescription("**:x: Incorrect Command Usage**\n")
 					.appendDescription(getUsage() +"\n"+ getDescription());
@@ -33,39 +33,56 @@ public class ClearWarns implements ICommand {
 		}
 		
 		Member target = metionedMembers.get(0);
-		
-		if (!member.hasPermission(Permission.KICK_MEMBERS) || !member.canInteract(target)) {
-			channel.sendMessage(":x: You must have the kick members permission to use this command.").queue();
+		String warnIdString = args.get(1);
+		int warnId = 0;
+		try {
+			warnId = Integer.parseInt(warnIdString);
+		} catch(Exception e) {
+			channel.sendMessage(":x: Invalid Warn ID, Unable to parse into an integer.").queue();
 			return;
 		}
 		
-		DatabaseManager.UserSettings.set(target.getUser().getIdLong(), event.getGuild().getIdLong(), "Warns", "0");
-		DatabaseManager.Warnings.revokeAll(target.getUser().getIdLong(), event.getGuild().getIdLong());
-		channel.sendMessage(String.format("%s cleared %s's warns",event.getAuthor(),target)).queue();
+		if (!member.hasPermission(Permission.MANAGE_ROLES) || !member.canInteract(target)) {
+			channel.sendMessage(":x: You must have the manage roles permission to use this command.").queue();
+			return;
+		}
+		
+		int warns = 0;
+		String warnsString = DatabaseManager.UserSettings.get(target.getUser().getIdLong(), event.getGuild().getIdLong(), "Warns");
+		if(warnsString != null) {
+			try {
+				warns = Integer.parseInt(warnsString);
+			} catch (Exception e) {
+				// oop
+			}
+		}
+		warns--;
+		DatabaseManager.UserSettings.set(target.getUser().getIdLong(), event.getGuild().getIdLong(), "Warns", String.valueOf(warns));
+		DatabaseManager.Warnings.revoke(warnId);
 		EmbedBuilder builder = new EmbedBuilder()
 				.setTitle("Infraction Notice")
 				.setColor(Color.green)
-				.setDescription(String.format("%s cleared your warns in %s",event.getAuthor(),event.getGuild()));
-		
+				.setDescription(String.format("%s revoked your warn in %s",event.getAuthor(),event.getGuild()));
+		channel.sendMessageFormat("%s revoked a warn for %s with id: `%s`", event.getAuthor(), warnId).queue();
 		target.getUser().openPrivateChannel().queue(privateChannel -> {
 			privateChannel.sendMessage(builder.build()).queue();
 		});
 	}
 
 	public String getInvoke() {
-		return "clearwarns";
+		return "delwarn";
 	}
 	
 	public String getUsage() {
-		return "ClearWarns <@User>";
+		return "DelWarn <@User> <WarnId>";
 	}
 	
 	public String getDescription() {
-		return "Clear a users warns";
+		return "Remove a warn from a user";
 	}
 	
 	public Permission requiredPermission() {
-		return Permission.KICK_MEMBERS;
+		return Permission.MANAGE_ROLES;
 	}
 
 }

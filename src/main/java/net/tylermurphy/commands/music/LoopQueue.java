@@ -25,7 +25,7 @@ public class LoopQueue implements ICommand {
 		VoiceChannel voiceChannel = audioManager.getConnectedChannel();
 		
 		if (player.getPlayingTrack() == null) {
-			channel.sendMessage(":x: Nothing is playing currently you bafoon.").queue();
+			channel.sendMessage(":x: Nothing is currently playing.").queue();
 			return;
 		}
 		

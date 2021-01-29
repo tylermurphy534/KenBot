@@ -25,12 +25,12 @@ public class Pause implements ICommand {
 		VoiceChannel voiceChannel = audioManager.getConnectedChannel();
 		
 		if (player.getPlayingTrack() == null) {
-			channel.sendMessage(":x: Nothing is playing currently you bafoon.").queue();
+			channel.sendMessage(":x: Nothing is currently playing.").queue();
 			return;
 		}
 		
 		if (player.isPaused()) {
-			channel.sendMessage(":x: Track is already paused you bafoon.").queue();
+			channel.sendMessage(":x: Track is already paused.").queue();
 			return;
 		}
 		

@@ -39,7 +39,8 @@ public class CommandResponder extends ListenerAdapter {
         }
 
         String prefix = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "prefix");
-
+        if(Config.DEBUG) prefix = Config.PREFIX;
+        
         if (!event.getAuthor().isBot() && !event.getMessage().isWebhookMessage() && rw.toLowerCase().startsWith(prefix.toLowerCase())) {
 
             final String[] split = event.getMessage().getContentRaw().replaceFirst(

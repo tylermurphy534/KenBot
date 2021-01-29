@@ -1,6 +1,8 @@
 package net.tylermurphy.commands.moderation;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import me.duncte123.botcommons.messaging.EmbedUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -38,15 +40,24 @@ public class Warns implements ICommand {
 			return;
 		}
 		
-		int warns = 0;
-		String warnsString = DatabaseManager.UserSettings.get(target.getUser().getIdLong(), event.getGuild().getIdLong(), "Warns");
-		if(warnsString != null) {
-			warns = Integer.parseInt(warnsString);
+		Map<Integer,String> warnings = DatabaseManager.Warnings.getAll(target.getUser().getIdLong(), event.getGuild().getIdLong());
+		
+		if(warnings.size() < 1) {
+			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
+					.setDescription(String.format("%s has 0 warnings.", target));
+			channel.sendMessage(embed.build()).queue();
+			return;
+		}
+		
+		String message ="**Warn ID\t Reason For Warning**";
+		for (Entry<Integer, String> entry : warnings.entrySet()) {
+			message = String.format("%s\n`%s`\t%s", message, entry.getKey(), entry.getValue());
 		}
 		
 		EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
-				.setDescription(String.format("%s has %s warns", target, warns));
+				.setDescription(message);
 		channel.sendMessage(embed.build()).queue();
+		return;
 		
 	}
 

@@ -20,8 +20,10 @@ import net.tylermurphy.commands.games.BlackJack;
 import net.tylermurphy.commands.games.Nunchi;
 import net.tylermurphy.commands.moderation.SelfRole;
 import net.tylermurphy.commands.moderation.ServerStats;
+import net.tylermurphy.commands.nsfw.NHentai;
 import net.tylermurphy.database.MariaDBConnection;
 import net.tylermurphy.managers.LogManager;
+import net.tylermurphy.music.BotLeaveListener;
 
 public class Bot {
 
@@ -41,7 +43,17 @@ public class Bot {
 			.setMemberCachePolicy(MemberCachePolicy.ALL)
 			.enableIntents((GatewayIntent.GUILD_MEMBERS))
 			.setActivity(Activity.playing("Use "+Config.PREFIX+"help"))
-		    .addEventListeners(new CommandResponder(), new BlackJack(), new Nunchi(), new Phone(), new Battle(), new SelfRole(), new LogManager(), new ServerStats())
+		    .addEventListeners(
+		    		new CommandResponder(), 
+		    		new BlackJack(), 
+		    		new Nunchi(), 
+		    		new Phone(), 
+		    		new Battle(), 
+		    		new SelfRole(), 
+		    		new LogManager(), 
+		    		new ServerStats(), 
+		    		new BotLeaveListener(), 
+		    		new NHentai())
 		    .build()
 		   	.awaitReady();
 		

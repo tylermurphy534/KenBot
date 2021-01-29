@@ -47,7 +47,7 @@ public class Ban implements ICommand {
 
 		EmbedBuilder builder = new EmbedBuilder()
 				.setTitle("Infraction Notice")
-				.setColor(Color.yellow)
+				.setColor(Color.red)
 				.setDescription(String.format("%s banned you in %s, for reason: `%s`",event.getAuthor(),event.getGuild(),reason));
 		
 		target.getUser().openPrivateChannel().queue(privateChannel -> {

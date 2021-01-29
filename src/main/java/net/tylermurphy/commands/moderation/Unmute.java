@@ -74,7 +74,7 @@ public class Unmute implements ICommand {
 
 		EmbedBuilder builder = new EmbedBuilder()
 				.setTitle("Infraction Notice")
-				.setColor(Color.yellow)
+				.setColor(Color.green)
 				.setDescription(String.format("%s unmuted you in %s",event.getAuthor(),event.getGuild()));
 		
 		target.getUser().openPrivateChannel().queue(privateChannel -> {

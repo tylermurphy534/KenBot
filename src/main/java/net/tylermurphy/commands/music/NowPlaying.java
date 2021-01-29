@@ -10,6 +10,7 @@ import me.duncte123.botcommons.messaging.EmbedUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.tylermurphy.commands.ICommand;
 import net.tylermurphy.music.GuildMusicManager;
@@ -24,25 +25,25 @@ public class NowPlaying implements ICommand {
 		AudioPlayer player = musicManager.player;
 		
 		if(player.getPlayingTrack() == null) {
-			channel.sendMessage(":x: The Player is not playing any song.").queue();
+			channel.sendMessage(":x: Im not currently playing anything!").queue();
 			return;
 		}
 		
 		AudioTrackInfo info = player.getPlayingTrack().getInfo();
+		String videoURL = info.uri;
+		String videoID = videoURL.substring(videoURL.indexOf("=")+1);
+		String imageURL = String.format("https://img.youtube.com/vi/%s/default.jpg",videoID);
 		
 		EmbedBuilder builder = EmbedUtils.getDefaultEmbed()
-				.setTitle("***Now Playing***");
-		
-		builder.appendDescription(info.title);
-		builder.appendDescription("\n");
-		builder.appendDescription(info.uri);
-		builder.appendDescription("\n");
-		builder.appendDescription(String.format(
-			"%s %s : %s",
-			player.isPaused() ? "\u23F8" : "\u23F5",
-			formatTime(player.getPlayingTrack().getPosition()),
-			formatTime(player.getPlayingTrack().getDuration())
-		));
+    			.setTitle("**Now Playing**")
+    			.setDescription(String.format(
+    				"[%s](%s)\n`[%s/%s]`\n\nRequested by %s", 
+    				info.title, 
+    				info.uri,
+    				formatTime(player.getPlayingTrack().getPosition()), 
+    				formatTime(player.getPlayingTrack().getDuration()),
+    				(User)player.getPlayingTrack().getUserData()
+    			)).setThumbnail(imageURL);
 		
 		channel.sendMessage(builder.build()).queue();
 	}
@@ -56,7 +57,11 @@ public class NowPlaying implements ICommand {
 		final long minutes = timeInMillis / TimeUnit.MINUTES.toMillis(1);
 		final long seconeds = timeInMillis % TimeUnit.MINUTES.toMillis(1) / TimeUnit.SECONDS.toMillis(1);
 		
-		return String.format("%02d:%02d:%02d", hours, minutes, seconeds);
+		if(hours == 0) {
+			return String.format("%02d:%02d", minutes, seconeds);
+		} else {
+			return String.format("%02d:%02d:%02d", hours, minutes, seconeds);
+		}
 	}
 	
 	public String getUsage() {

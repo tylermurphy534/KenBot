@@ -37,24 +37,33 @@ public class Warn implements ICommand {
 		Member target = metionedMembers.get(0);
 		String reason = String.join(" ", args.subList(1, args.size()));
 		
-		if (!member.hasPermission(Permission.KICK_MEMBERS) || !member.canInteract(target)) {
-			channel.sendMessage(":x: You must have the kick members permission to use this command.").queue();
+		if (!member.hasPermission(Permission.MANAGE_ROLES) || !member.canInteract(target)) {
+			channel.sendMessage(":x: You must have the manage roles permission to use this command.").queue();
+			return;
+		}
+		
+		if(reason.length()>30) {
+			channel.sendMessage(":x: Reason for a warning may not be more than 30 characters long.").queue();
 			return;
 		}
 		
 		int warns = 0;
 		String warnsString = DatabaseManager.UserSettings.get(target.getUser().getIdLong(), event.getGuild().getIdLong(), "Warns");
 		if(warnsString != null) {
-			warns = Integer.parseInt(warnsString);
+			try {
+				warns = Integer.parseInt(warnsString);
+			} catch (Exception e) {
+				// oop
+			}
 		}
 		warns++;
 		DatabaseManager.UserSettings.set(target.getUser().getIdLong(), event.getGuild().getIdLong(), "Warns", String.valueOf(warns));
-		channel.sendMessage(String.format("%s warned %s, for reason: `%s`",event.getAuthor(),target,reason)).queue();
+		DatabaseManager.Warnings.insert(target.getIdLong(), event.getGuild().getIdLong(), reason);
 		EmbedBuilder builder = new EmbedBuilder()
 				.setTitle("Infraction Notice")
 				.setColor(Color.yellow)
 				.setDescription(String.format("%s warned you in %s, for reason: `%s`",event.getAuthor(),event.getGuild(),reason));
-		
+		channel.sendMessageFormat("%s warned %s, for reason: `%s`", event.getAuthor(), target, reason).queue();
 		target.getUser().openPrivateChannel().queue(privateChannel -> {
 			privateChannel.sendMessage(builder.build()).queue();
 		});
@@ -115,7 +124,7 @@ public class Warn implements ICommand {
 	}
 	
 	public Permission requiredPermission() {
-		return Permission.KICK_MEMBERS;
+		return Permission.MANAGE_ROLES;
 	}
 
 }

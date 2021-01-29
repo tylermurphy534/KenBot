@@ -21,7 +21,7 @@ public class Leave implements ICommand {
         GuildMusicManager musicManager = playerManager.getGuildMusicManager(event.getGuild());
         
         if (!audioManager.isConnected()) {
-            channel.sendMessage(":x: I'm not connected to a voice channelyou bafoon.").queue();
+            channel.sendMessage(":x: I'm not connected to a voice channel.").queue();
             return;
         }
 
@@ -35,12 +35,6 @@ public class Leave implements ICommand {
         boolean allowed = MusicPermissions.hasDJ(event.getMember().getRoles(), voiceChannel);
 		
 		if(allowed) {
-			musicManager.scheduler.getQueue().clear();
-				musicManager.player.stopTrack();
-				musicManager.player.setPaused(false);
-				musicManager.scheduler.boundTextChannel = null;
-				musicManager.scheduler.unLoopQueue();
-				musicManager.scheduler.setLooped(false);
 				audioManager.closeAudioConnection();
 		        channel.sendMessage("Disconnected from your channel").queue();
 				return;

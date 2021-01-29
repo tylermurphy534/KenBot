@@ -7,9 +7,15 @@ import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
+import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
+
+import me.duncte123.botcommons.messaging.EmbedUtils;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
 
+import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,8 +37,9 @@ public class PlayerManager {
         GuildMusicManager musicManager = musicManagers.get(guildId);
 
         if (musicManager == null) {
-            musicManager = new GuildMusicManager(playerManager);
+            musicManager = new GuildMusicManager(guild, playerManager);
             musicManagers.put(guildId, musicManager);
+            musicManager.scheduler.musicManager = musicManager;
         }
 
         guild.getAudioManager().setSendingHandler(musicManager.getSendHandler());
@@ -40,31 +47,98 @@ public class PlayerManager {
         return musicManager;
     }
 
-    public void loadAndPlay(TextChannel channel, String trackUrl) {
+    public void loadAndPlay(TextChannel channel, String trackUrl, User u) {
+    	
         GuildMusicManager musicManager = getGuildMusicManager(channel.getGuild());
-
+        
         playerManager.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack track) {
-                channel.sendMessage("Adding to queue " + track.getInfo().title).queue();
-
+            	
+            	if(musicManager.boundChannel == null) {
+        			musicManager.boundChannel = channel;
+    	        	EmbedBuilder builder = EmbedUtils.getDefaultEmbed()
+    	        			.setTitle("**Bound Text Channel**")
+    	        			.setDescription(String.format(
+    	        					"Bound music messages to text channel %s",
+    	        					channel
+    	        			))
+    	        			.setColor(Color.DARK_GRAY);
+    	        	channel.sendMessage(builder.build()).queue();
+    	        }
+            	
+            	AudioTrackInfo info = track.getInfo();
+            	String videoURL = info.uri;
+        		String videoID = videoURL.substring(videoURL.indexOf("=")+1);
+        		String imageURL = String.format("https://img.youtube.com/vi/%s/default.jpg",videoID);
+        		
+            	EmbedBuilder builder = EmbedUtils.getDefaultEmbed()
+    				.setTitle("**Queued**")
+    				.setDescription(String.format(
+    					"[%s](%s)", 
+    					info.title, 
+    					info.uri
+    				))
+    				.setFooter(String.format(
+    					"In position #%s",
+    					musicManager.scheduler.getLength()+1
+    				))
+    				.setThumbnail(imageURL)
+    				.setColor(Color.DARK_GRAY);
+                channel.sendMessage(builder.build()).queue();
+                track.setUserData(u);
                 play(musicManager, track);
                 
             }
 
             @Override
             public void playlistLoaded(AudioPlaylist playlist) {
+            	
+            	if(musicManager.boundChannel == null) {
+        			musicManager.boundChannel = channel;
+    	        	EmbedBuilder builder = EmbedUtils.getDefaultEmbed()
+    	        			.setTitle("**Bound Text Channel**")
+    	        			.setDescription(String.format(
+    	        					"Bound music messages to text channel %s",
+    	        					channel
+    	        			))
+    	        			.setColor(Color.DARK_GRAY);
+    	        	channel.sendMessage(builder.build()).queue();
+    	        }
+            	
                 AudioTrack firstTrack = playlist.getSelectedTrack();
-
                 if (firstTrack == null) {
                     firstTrack = playlist.getTracks().remove(0);
+                } else {
+                	firstTrack.setUserData(u);
                 }
 
-                channel.sendMessage("Adding to queue " + firstTrack.getInfo().title + " (first track of playlist " + playlist.getName() + ")").queue();
+                String videoURL = firstTrack.getInfo().uri;
+        		String videoID = videoURL.substring(videoURL.indexOf("=")+1);
+        		String imageURL = String.format("https://img.youtube.com/vi/%s/default.jpg",videoID);
+                
+                EmbedBuilder builder = EmbedUtils.getDefaultEmbed()
+        				.setTitle("**Queued**")
+        				.setDescription(String.format(
+        					"[%s](%s)", 
+        					playlist.getName(), 
+        					playlist.getTracks().get(0).getInfo().uri
+        				))
+        				.setFooter(String.format(
+        					"First track of playlist in position #%s",
+        					musicManager.scheduler.getLength()-playlist.getTracks().size()+1
+        				))
+        				.setThumbnail(imageURL)
+        				.setColor(Color.DARK_GRAY);
+                
+                    channel.sendMessage(builder.build()).queue();
 
                 play(musicManager, firstTrack);
                 
-                playlist.getTracks().forEach(musicManager.scheduler::queue);
+                for(AudioTrack track : playlist.getTracks().subList(1, playlist.getTracks().size())) {
+                	track.setUserData(u);
+                	musicManager.scheduler.queue(track);
+                }
             }
 
             @Override
@@ -91,4 +165,5 @@ public class PlayerManager {
 
         return INSTANCE;
     }
+    
 }

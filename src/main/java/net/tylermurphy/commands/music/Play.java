@@ -14,6 +14,7 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.managers.AudioManager;
@@ -37,7 +38,7 @@ public class Play implements ICommand {
 					JacksonFactory.getDefaultInstance(),
 					null
 			)
-				.setApplicationName("Murphy Bot")
+				.setApplicationName("Ken Bot")
 				.build();
 			
 		} catch  (Exception e) {
@@ -49,6 +50,8 @@ public class Play implements ICommand {
 
 	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		
+		User u = event.getAuthor();
+		if(u.isBot()) return;
 		TextChannel channel = event.getChannel();
 		 AudioManager audioManager = event.getGuild().getAudioManager();
 		 
@@ -88,8 +91,7 @@ public class Play implements ICommand {
 	            return;
 	        }
 	        audioManager.openAudioConnection(voiceChannel);
-	        if(scheduler.boundTextChannel == null) scheduler.boundTextChannel = event.getChannel();
-	        manager.loadAndPlay(event.getChannel(), input);
+	        manager.loadAndPlay(event.getChannel(), input, u);
 		} else if(manager.getGuildMusicManager(event.getGuild()).scheduler.isQueueLooped()) {
 			channel.sendMessage(":x: Queue is currently looped").queue();
 			return;
@@ -98,8 +100,7 @@ public class Play implements ICommand {
 			VoiceChannel voiceChannel = memberVoiceState.getChannel();
 			VoiceChannel selfVoiceChannel = audioManager.getConnectedChannel();
 			if(voiceChannel.getIdLong() == selfVoiceChannel.getIdLong()) {
-				if(scheduler.boundTextChannel == null) scheduler.boundTextChannel = event.getChannel();
-				manager.loadAndPlay(event.getChannel(), input);
+				manager.loadAndPlay(event.getChannel(), input, u);
 			} else {
 				channel.sendMessage(":x: Please join the same voice channel first").queue();
 			}

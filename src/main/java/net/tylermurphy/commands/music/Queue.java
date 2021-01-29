@@ -1,6 +1,5 @@
 package net.tylermurphy.commands.music;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
@@ -32,10 +31,7 @@ public class Queue implements ICommand {
 		
 		int trackCount = Math.min(queue.size(), 20);
 		List<AudioTrack> tracks = new ArrayList<>(queue);
-		EmbedBuilder builder = EmbedUtils.getDefaultEmbed()
-				.setTitle("Current Queue (Total: " + queue.size() + ")")
-				.setColor(Color.YELLOW)
-				.setFooter("MurphyBot", null);
+		EmbedBuilder builder = EmbedUtils.getDefaultEmbed().setTitle("Current Queue (Total: " + queue.size() + ")");
 		
 		for(int i = 0; i < trackCount; i++) {
 			AudioTrack track = tracks.get(i);
@@ -43,7 +39,7 @@ public class Queue implements ICommand {
 			
 			builder.appendDescription(String.format(
 					"**%s.** %s - %s\n",
-					i,
+					i+1,
 					info.title,
 					info.author
 			));

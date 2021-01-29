@@ -21,7 +21,7 @@ public class Timeout {
 	}
 	
 	public void refreshTimeout() {
-		timer.cancel();
+		task.lastTime = System.nanoTime();
 	}
 	
 	public boolean isTimedOut() {

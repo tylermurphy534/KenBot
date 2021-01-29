@@ -3,74 +3,68 @@ package net.tylermurphy.commands.music;
 import java.util.List;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
+import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 
-import me.duncte123.botcommons.messaging.EmbedUtils;
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.managers.AudioManager;
 import net.tylermurphy.commands.ICommand;
 import net.tylermurphy.music.GuildMusicManager;
-import net.tylermurphy.music.MusicPermissions;
 import net.tylermurphy.music.PlayerManager;
+import net.tylermurphy.music.TrackScheduler;
 
-public class Remove implements ICommand {
+public class ForceSkip implements ICommand {
 
 	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		TextChannel channel = event.getChannel();
 		PlayerManager playerManager = PlayerManager.getInstance();
 		GuildMusicManager musicManager = playerManager.getGuildMusicManager(event.getGuild());
+		TrackScheduler scheduler = musicManager.scheduler;
 		AudioPlayer player = musicManager.player;
 		AudioManager audioManager = event.getGuild().getAudioManager();
 		VoiceChannel voiceChannel = audioManager.getConnectedChannel();
+		AudioTrack track = player.getPlayingTrack();
 		
-		if (player.getPlayingTrack() == null) {
+		if (track == null) {
 			channel.sendMessage(":x: Nothing is currently playing.").queue();
 			return;
 		}
 		
-		if (args.isEmpty()) {
-			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
-					.appendDescription("**:x: Incorrect Command Usage**\n")
-					.appendDescription(getUsage() +"\n"+ getDescription());
-			channel.sendMessage(embed.build()).queue();
+		if(voiceChannel == null) {
+			channel.sendMessage(":x: Im not connected to a voice channel.").queue();
 			return;
 		}
 		
-		boolean allowed = MusicPermissions.hasDJ(event.getMember().getRoles(), voiceChannel);
-		
-		if(allowed) {
-			int num = 0;
-			try {
-				num = Integer.parseInt(args.get(0));
-			}catch(Exception e) {
-				channel.sendMessage(":x: Error parsing integer: "+args.get(0)).queue();
+		List<Role> roles = event.getMember().getRoles();
+		for(Role role : roles) {
+			if(role.getName().equalsIgnoreCase("dj")) {
+				channel.sendMessage(":arrow_right: Skipping the current track").queue();
+				scheduler.nextTrack();
 				return;
 			}
-			boolean success = musicManager.scheduler.removeFromQueue(num+1);
-			if(success) channel.sendMessage(":white_check_mark: Removed track successfully").queue();
-			else channel.sendMessage(":x: Track not found").queue();
-		} else {
-			channel.sendMessage(":x: You must be the only person in the VC or have the `DJ` role to do this.").queue();
 		}
+		
+		channel.sendMessage(":x: You must have the `DJ` role to do this.").queue();
+		
 	}
 
 	public String getInvoke() {
-		return "remove";
+		return "fskip";
 	}
 	
 	public String getUsage() {
-		return "Remove <position in queue>";
+		return "";
 	}
 	
 	public String getDescription() {
-		return "Remove song in queue";
+		return "Force skip current playing song";
 	}
 	
 	public Permission requiredPermission() {
 		return null;
 	}
-
+	
 }

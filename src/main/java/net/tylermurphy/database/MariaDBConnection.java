@@ -11,7 +11,7 @@ import net.tylermurphy.Config;
 
 public class MariaDBConnection {
 	private static final HikariConfig config = new HikariConfig();
-	private static final HikariDataSource ds;
+	private static HikariDataSource ds;
 	
 	static {
 
@@ -73,12 +73,6 @@ public class MariaDBConnection {
 		}
 		
 		try(final Statement statement = getConnection().createStatement()){
-			statement.execute("ALTER TABLE SelfRoles CHANGE Reaction Reaction VARCHAR(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		try(final Statement statement = getConnection().createStatement()){
 			statement.execute("CREATE TABLE IF NOT EXISTS Webhooks (" +
 					"GuildId VARCHAR(20) NOT NULL,"+
 					"AvatarURL TEXT NOT NULL,"+
@@ -101,6 +95,17 @@ public class MariaDBConnection {
 			e.printStackTrace();
 		}
 		
+		try(final Statement statement = getConnection().createStatement()){
+			statement.execute("CREATE TABLE IF NOT EXISTS Warnings (" +
+					"WarnId INTEGER AUTO_INCREMENT NOT NULL,"+
+					"UserId VARCHAR(20) NOT NULL,"+
+					"GuildId VARCHAR(20) NOT NULL,"+
+					"WarnMessage VARCHAR(30) NOT NULL,"+
+					"PRIMARY KEY (WarnId)"+
+					");");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 	}
 	

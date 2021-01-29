@@ -9,7 +9,6 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -34,23 +33,13 @@ public class Skip implements ICommand {
 		AudioTrack track = player.getPlayingTrack();
 		
 		if (track == null) {
-			channel.sendMessage(":x: Nothing is playing currently you bafoon.").queue();
+			channel.sendMessage(":x: Nothing is currently playing.").queue();
 			return;
 		}
 		
 		if(voiceChannel == null) {
 			channel.sendMessage(":x: Im not connected to a voice channel.").queue();
 			return;
-		}
-		
-		List<Role> roles = event.getMember().getRoles();
-		for(Role role : roles) {
-			if(role.getName().equalsIgnoreCase("dj")) {
-				channel.sendMessage(":arrow_right: Skipping the current track").queue();
-				skips.remove(track);
-				scheduler.nextTrack();
-				return;
-			}
 		}
 		
 		if(skips.get(track) == null) {
@@ -84,7 +73,7 @@ public class Skip implements ICommand {
 			skips.remove(track);
 			scheduler.nextTrack();
 		}else {
-			channel.sendMessage(String.format(":arrow_right: Skips (%s/%s) for skipping current track.",skips.get(track).size(),skipsNeeded)).queue();
+			channel.sendMessage(String.format(":arrow_right: Skips (%s/%s) for skipping current track. Use the command fskip to force skip.",skips.get(track).size(),skipsNeeded)).queue();
 		}
 		
 	}

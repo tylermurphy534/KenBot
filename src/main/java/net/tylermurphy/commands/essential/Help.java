@@ -30,13 +30,13 @@ public class Help implements ICommand {
 				":test_tube: XP or Level Commands\n"+
 				"```xp,level,top```"+
 				":hammer: **Admin Commands**\n"+
-				"```ban,clearWarns,delSelfRole,kick,logChannel,mute,purge,selfRole,serverStats,setPrefix,setPrefixWithSpace,setWarnAction,softBan,tempMute,unban,unmute,warn,warns```"+
+				"```ban,delSelfRole,kick,logChannel,mute,purge,selfRole,serverStats,setPrefix,setPrefixWithSpace,setWarnAction,softBan,tempMute,unban,unmute,warn,warns,delwarn,clearWarns```"+
 				":robot: **Webhooks**\n"+
 				"```createWebhook,deleteWebhook,setWebhookName,setWebhookURL```"+
 				":tools: **AutoMod**\n"+
 				"```allcaps,duplicatetext,emojispam,mentionsspam,messagespam```"+
 				":octagonal_sign: **NSFW**\n"+
-				"```blowjob,boobs,cum,e621,hentai,hentaiGif,kuni,lewd,lewdKemo,pussy,rule34,spank,tits```";
+				"```nhentai,blowjob,boobs,cum,e621,hentai,hentaiGif,kuni,lewd,lewdKemo,pussy,rule34,spank,tits```";
 		user.openPrivateChannel().queue((channel) -> {
 			EmbedBuilder builder = EmbedUtils.getDefaultEmbed()
 					.setDescription(help);

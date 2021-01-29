@@ -23,19 +23,17 @@ public class Rule34 implements ICommand {
 			channel.sendMessage(":x: NSFW is disabled by the bot host").queue();
 			return;
 		}
-		Thread newThread = new Thread(() -> {
-			String search = String.join(" ", args);
-			String url = Rule34API.getUrlFromSearch(search);
-			if(url == null) {
-				channel.sendMessage(":x: Unable to find post with seach: "+search).queue();
-				return;
-			}else {
-				EmbedBuilder embed = EmbedUtils.getDefaultEmbed();
-				embed.setImage(url);
-				channel.sendMessage(embed.build()).queue();
-			}
-		});;
-		newThread.start();
+		String search = String.join(" ", args);
+		String url = Rule34API.getUrlFromSearch(search);
+		if(url == null) {
+			channel.sendMessage(":x: Unable to find post with seach: "+search).queue();
+			return;
+		}else {
+			EmbedBuilder embed = EmbedUtils.getDefaultEmbed();
+			embed.setImage(url);
+			channel.sendMessage(embed.build()).queue();
+		}
+
 	}
 
 	public String getInvoke() {

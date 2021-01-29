@@ -4,24 +4,29 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
+import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 
 import me.duncte123.botcommons.messaging.EmbedUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.User;
 
 import java.util.Iterator;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 public class TrackScheduler extends AudioEventAdapter {
     private final AudioPlayer player;
+    private final Guild guild;
     private final BlockingQueue<AudioTrack> queue;
     private boolean looping,queueLooped;
-    private AudioTrack lastTrack;
-    public TextChannel boundTextChannel;
+    private AudioTrack trackToBeLooped;
+    public GuildMusicManager musicManager;
     
-    public TrackScheduler(AudioPlayer player) {
+    public TrackScheduler(AudioPlayer player, Guild guild) {
         this.player = player;
+        this.guild = guild;
         this.queue = new LinkedBlockingQueue<>();
         looping = false;
         queueLooped = false;
@@ -29,24 +34,39 @@ public class TrackScheduler extends AudioEventAdapter {
     
     private boolean play(AudioTrack track, boolean dontForce) {
     	boolean success = player.startTrack(track, dontForce);
+    	trackToBeLooped = track;
+    	if(queueLooped)  queue.offer(track.makeClone());
     	if(success) {
-    		EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
-    				.setTitle("Now Playing",track.getInfo().uri)
-    				.setDescription(String.format(
-    						"**Title:** %s\n**Author:** %s",
-    						track.getInfo().title,
-    						track.getInfo().author
-    					));
-    		boundTextChannel.sendMessage(embed.build()).queue();
+    		AudioTrackInfo info = player.getPlayingTrack().getInfo();
+    		
+    		String videoURL = track.getInfo().uri;
+    		String videoID = videoURL.substring(videoURL.indexOf("=")+1);
+    		String imageURL = String.format("https://img.youtube.com/vi/%s/default.jpg",videoID);
+    		
+    		musicManager.autoLeaveManager.stopTimeout();
+    		
+    		EmbedBuilder builder = EmbedUtils.getDefaultEmbed()
+    			.setTitle("**Now Playing**")
+    			.setDescription(String.format(
+    				"[%s](%s)\n`[%s/%s]`\n\nRequested by %s", 
+    				info.title, 
+    				info.uri,
+    				formatTime(player.getPlayingTrack().getPosition()), 
+    				formatTime(player.getPlayingTrack().getDuration()),
+    				(User)player.getPlayingTrack().getUserData()
+    			)).setThumbnail(imageURL);
+    		musicManager.boundChannel.sendMessage(builder.build()).queue();
+    		
     	}
     	return success;
     }
 
-    public void queue(AudioTrack track) {
-    	lastTrack = track;
+    public boolean queue(AudioTrack track) {
     	if (!play(track, true)) {
             queue.offer(track);
+            return false;
         }
+    	return true;
     }
     
     public BlockingQueue<AudioTrack> getQueue() {
@@ -62,21 +82,30 @@ public class TrackScheduler extends AudioEventAdapter {
     }
 
     public void nextTrack() {
-    	lastTrack = queue.poll();
-    	if(lastTrack == null) {
-    		boundTextChannel = null;
+    	
+    	if(looping) {
+        	repeatTrack(); return;
+    	}
+    	
+    	AudioTrack nextTrack = queue.poll();
+    	
+    	player.stopTrack();
+    	if(nextTrack == null) {
     		looping = false;
     		queueLooped = false;
+    		
+    		PlayerManager manager = PlayerManager.getInstance();
+    		GuildMusicManager musicManager = manager.getGuildMusicManager(guild);
+    		musicManager.autoLeaveManager.startTimeout(guild);
+    		
     		return;
-    	}else {
-    		player.stopTrack();
     	}
-    	play(lastTrack.makeClone(), false);
-    	if(queueLooped)  queue.offer(lastTrack.makeClone());
+    	
+    	play(nextTrack.makeClone(), false);
     }
     
     public void repeatTrack() {
-    	play(lastTrack.makeClone(), false);
+    	play(trackToBeLooped.makeClone(), false);
     }
 
     public boolean removeFromQueue(int num) {
@@ -113,4 +142,20 @@ public class TrackScheduler extends AudioEventAdapter {
             }
         }
     }
+
+	public int getLength() {
+		return queue.size();
+	}
+	
+	private String formatTime(long timeInMillis) {
+		final long hours = timeInMillis / TimeUnit.HOURS.toMillis(1);
+		final long minutes = timeInMillis / TimeUnit.MINUTES.toMillis(1);
+		final long seconeds = timeInMillis % TimeUnit.MINUTES.toMillis(1) / TimeUnit.SECONDS.toMillis(1);
+		
+		if(hours == 0) {
+			return String.format("%02d:%02d", minutes, seconeds);
+		} else {
+			return String.format("%02d:%02d:%02d", hours, minutes, seconeds);
+		}
+	}
 }
