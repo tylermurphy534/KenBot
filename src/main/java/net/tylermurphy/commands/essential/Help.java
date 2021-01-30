@@ -36,7 +36,7 @@ public class Help implements ICommand {
 				":tools: **AutoMod**\n"+
 				"```allcaps,duplicatetext,emojispam,mentionsspam,messagespam```"+
 				":octagonal_sign: **NSFW**\n"+
-				"```nhentai,blowjob,boobs,cum,e621,hentai,hentaiGif,kuni,lewd,lewdKemo,pussy,rule34,spank,tits```";
+				"```nhentai,e621,hentai,rule34```";
 		user.openPrivateChannel().queue((channel) -> {
 			EmbedBuilder builder = EmbedUtils.getDefaultEmbed()
 					.setDescription(help);
