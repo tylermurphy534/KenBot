@@ -16,16 +16,26 @@ public class NHentaiAPI extends API {
 
 	public static Comic getComicFromSearch(String search) {
 		try {
-			JSONObject json = getSearchResults(search);
-			System.out.println(json.toString());
-			JSONArray results = json.getJSONArray("result");
-			int choice = (int) (Math.random()*results.length()-1);
-			JSONObject post = (JSONObject) results.get(choice);
-			int id = post.getInt("id");
+			int id;
+			JSONObject info;
+			if(search.length() == 6 && isNumber(search)) {
+				id = Integer.parseInt(search);
+				info = getPostInformation(id);
+			} else {
+				JSONObject json = getSearchResults(search);
+				System.out.println(json.toString());
+				JSONArray results = json.getJSONArray("result");
+				int choice = (int) (Math.random()*results.length()-1);
+				JSONObject post = (JSONObject) results.get(choice);
+				id = post.getInt("id");
+				info = getPostInformation(id);
+				if(info == null) {
+					return null;
+				}
+			}
 			if(cache.containsKey(id)) {
 				return cache.get(id);
 			}
-			JSONObject info = getPostInformation(id);
 			Comic c = new Comic();
 			c.pages = info.getJSONObject("images").getJSONArray("pages").length();
 			c.page_file_type = new String[c.pages];
@@ -41,9 +51,17 @@ public class NHentaiAPI extends API {
 			c.title = info.getJSONObject("title").getString("english");
 			c.main_id = id;
 			return c;
-		} catch (JSONException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
 			return null;
+		}
+	}
+	
+	private static boolean isNumber(String test) {
+		try {
+			Integer.parseInt(test);
+			return true;
+		} catch (Exception e){
+			return false;
 		}
 	}
 	

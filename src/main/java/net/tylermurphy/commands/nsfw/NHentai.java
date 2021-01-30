@@ -43,24 +43,34 @@ public class NHentai extends ListenerAdapter implements ICommand {
 			return;
 		}
 		
+		String search = String.join("%20", args);
+		Comic c = NHentaiAPI.getComicFromSearch(search);
+		if(c == null) {
+			if(search.length()==6) {
+				try {
+					Integer.parseInt(search);
+					EmbedBuilder embed = EmbedUtils.getDefaultEmbed();
+					embed.setDescription("Invalid post id: `"+String.join(" ", args)+"`");
+					channel.sendMessage(embed.build()).queue();
+					return;
+				} catch (Exception e) {}
+			}
+			EmbedBuilder embed = EmbedUtils.getDefaultEmbed();
+			embed.setDescription("No search results came up for query `"+String.join(" ", args)+"`");
+			channel.sendMessage(embed.build()).queue();
+			return;
+		}
+		
 		if(comics.containsKey(event.getChannel().getId())) {
 			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
-					.setTitle("Close Previous Comic")
+					.setTitle("Closed Previous Comic")
 					.setDescription("There was a previous nHentai comic opened. Only one is allowed opened at a time in a channel so it was closed");
 			channel.sendMessage(embed.build()).queue();
 		}
 		
-		String search = String.join("%20", args);
-		Comic c = NHentaiAPI.getComicFromSearch(search);
-		if(c==null) {
-			EmbedBuilder embed = EmbedUtils.getDefaultEmbed();
-			embed.setDescription("No search results came up for query "+String.join("", args));
-			return;
-		}
-		
 		EmbedBuilder embed = EmbedUtils.getDefaultEmbed();
 		embed.setTitle(c.title);
-		embed.setDescription(String.format("NHentai ID: `%s`", c.main_id));
+		embed.setDescription(String.format("nHentai ID: `%s`", c.main_id));
 		embed.setImage(String.format(CoverImageLink, c.media_id, c.cover_file_type));
 		embed.setFooter(String.format("Page %s/%s", c.currentPage, c.pages));
 		Message sentMessage = channel.sendMessage(embed.build()).complete();
@@ -75,6 +85,7 @@ public class NHentai extends ListenerAdapter implements ICommand {
 	public void onGuildMessageReactionAdd(GuildMessageReactionAddEvent event) {
 		if(!comics.containsKey(event.getChannel().getId())) return;
 		if(event.getMember().getUser().isBot()) return;
+		if(comics.get(event.getChannel().getId()).message.getIdLong() != event.getMessageIdLong()) return;
 		
 		MessageReaction reaction = event.getReaction();
         String emote;
@@ -104,7 +115,7 @@ public class NHentai extends ListenerAdapter implements ICommand {
 				String.format(PageImageLink, c.media_id, c.currentPage, c.page_file_type[c.currentPage-1]);
 		EmbedBuilder embed = EmbedUtils.getDefaultEmbed();
 		embed.setTitle(c.title);
-		embed.setDescription(String.format("NHentai ID: `%s`", c.main_id));
+		embed.setDescription(String.format("nHentai ID: `%s`", c.main_id));
 		embed.setImage(link);
 		embed.setFooter(String.format("Page %s/%s", c.currentPage, c.pages));
 		

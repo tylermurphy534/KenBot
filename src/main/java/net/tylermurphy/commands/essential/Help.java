@@ -20,7 +20,7 @@ public class Help implements ICommand {
 				":white_check_mark: **Essential Commands**\n"+
 				"```help,description,usage```"+
 				":ok_hand: Fun Commands:\n"+
-				"```joke,kill,meme,phone,ping,percent,trumpQuote,whoAreYou\n```"+
+				"```joke,kill,meme,phone,ping,percent,whoAreYou\n```"+
 				":heartpulse: **Social Commands**\n"+
 				"```boop,cookie,getShip,gift,highFive,hug,kiss,lick,pet,punch,ship,slap,tickle```"+
 				":game_die: **Game Commands**\n"+
