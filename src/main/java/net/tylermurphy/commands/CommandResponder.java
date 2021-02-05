@@ -38,8 +38,14 @@ public class CommandResponder extends ListenerAdapter {
             return;
         }
 
-        String prefix = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "prefix");
-        if(Config.DEBUG) prefix = Config.PREFIX;
+        String prefix;
+        try {
+        	prefix = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "prefix");
+        	if(Config.DEBUG) prefix = Config.PREFIX;
+        	if(prefix == null) prefix = Config.PREFIX;
+        } catch(Exception e) {
+        	prefix = Config.PREFIX;
+        }
         
         if (!event.getAuthor().isBot() && !event.getMessage().isWebhookMessage() && rw.toLowerCase().startsWith(prefix.toLowerCase())) {
 
