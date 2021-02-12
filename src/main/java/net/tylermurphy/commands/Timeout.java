@@ -48,7 +48,7 @@ class TimeoutTask extends TimerTask {
 		if(lastTime == 0) {
 			lastTime = System.nanoTime();
 		}
-		if(System.nanoTime() - lastTime > interval * 1_000_000_000) {
+		if(System.nanoTime() - lastTime > interval * 1_000_000_000L) {
 			channel.sendMessage(timeoutMessage).queue();
 			timedOut = true;
 			this.cancel();

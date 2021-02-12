@@ -51,7 +51,7 @@ class TimeoutTask extends TimerTask {
 		if(lastTime == 0) {
 			lastTime = System.nanoTime();
 		}
-		if( (System.nanoTime() - lastTime) / 1_000_000_000 > 5 * 60) {
+		if( (System.nanoTime() - lastTime) / 1_000_000_000L > 5 * 60) {
 			EmbedBuilder builder = EmbedUtils.getDefaultEmbed()
 					.setDescription("Left voice channel due to bot inactivity.");
 			channel.sendMessage(builder.build()).queue();
