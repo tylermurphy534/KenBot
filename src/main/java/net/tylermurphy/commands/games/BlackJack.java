@@ -58,7 +58,7 @@ public class BlackJack extends ListenerAdapter implements ICommand {
         	game.hit(channel);
         }else if(emote.equalsIgnoreCase("U+274C")) {
         	EmbedBuilder builder = EmbedUtils.getDefaultEmbed()
-					.setColor(Color.yellow)
+					.setColor(Color.magenta)
 					.setDescription("You Canceled The Game");
 			channel.sendMessage(builder.build()).queue();
         	games.remove(discriminator);
@@ -96,7 +96,7 @@ public class BlackJack extends ListenerAdapter implements ICommand {
 			}
 			EmbedBuilder builder = EmbedUtils.getDefaultEmbed()
 					.setTitle("Hit!")
-					.setColor(Color.yellow)
+					.setColor(Color.magenta)
 					.appendDescription("You drew a "+getCardAsString(card)+"!\n Your current score is "+getCurrentValue(NumberOfAces,playedCards))
 					.appendDescription("\nCurrent Hand:"+hand);
 			channel.sendMessage(builder.build()).queue();
@@ -109,7 +109,7 @@ public class BlackJack extends ListenerAdapter implements ICommand {
 			timeout.refreshTimeout();
 			EmbedBuilder builder = EmbedUtils.getDefaultEmbed()
 					.setTitle("Hit or Stay?")
-					.setColor(Color.yellow)
+					.setColor(Color.magenta)
 					.appendDescription(":octagonal_sign: Stay\n")
 					.appendDescription(":arrow_right: Hit\n")
 					.appendDescription(":x: Cancel Game");
@@ -168,7 +168,7 @@ public class BlackJack extends ListenerAdapter implements ICommand {
 			int dealerEndingScore = getCurrentValue(aces,dealersHand);
 			EmbedBuilder builder = EmbedUtils.getDefaultEmbed()
 					.setTitle("Dealers Hand")
-					.setColor(Color.yellow)
+					.setColor(Color.magenta)
 					.appendDescription("The dealer ended the game with a score of: "+dealerEndingScore)
 					.appendDescription("\nThe dealers hand was:"+hand);
 			channel.sendMessage(builder.build()).queue();
@@ -185,7 +185,7 @@ public class BlackJack extends ListenerAdapter implements ICommand {
 			}
 			EmbedBuilder builder2 = EmbedUtils.getDefaultEmbed()
 					.setTitle(title)
-					.setColor(Color.yellow)
+					.setColor(Color.magenta)
 					.setDescription(desc);
 			channel.sendMessage(builder2.build()).queue();
 			ended = true;
