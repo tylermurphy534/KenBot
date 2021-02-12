@@ -17,7 +17,7 @@ public class Timeout {
 	}
 	
 	public void stopTimeout() {
-		task.lastTime = System.nanoTime();
+		task.cancel();
 	}
 	
 	public void refreshTimeout() {
