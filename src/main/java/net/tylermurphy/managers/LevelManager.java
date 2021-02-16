@@ -71,7 +71,7 @@ public class LevelManager {
 	
 	public static int getLevel(int xp) {
 		int level = 0;
-		while(xp > 250+level*150) {
+		while(xp > level*250) {
 			level++;
 		}
 		return level;
