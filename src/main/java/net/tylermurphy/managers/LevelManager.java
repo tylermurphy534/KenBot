@@ -1,14 +1,17 @@
 package net.tylermurphy.managers;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import me.duncte123.botcommons.messaging.EmbedUtils;
-import net.dv8tion.jda.api.EmbedBuilder;
+import javax.imageio.ImageIO;
+
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.tylermurphy.database.DatabaseManager;
+import net.tylermurphy.image.ImageGenerator;
 
 public class LevelManager {
 	
@@ -43,11 +46,27 @@ public class LevelManager {
 		xp++;
 		DatabaseManager.UserSettings.set(event.getAuthor().getIdLong(), event.getGuild().getIdLong(), "XP", String.valueOf(xp));
 		if(getLevel(xp) > getLevel(xp-1)) {
-			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
-					.setTitle("Level Up!")
-					.setDescription(String.format("%s has reached level %s!", event.getAuthor(), getLevel(xp)));
-			 try{ event.getChannel().sendMessage(embed.build()).queue(); }catch(Exception e) {};
+			sendLevelUpMessage(event, getLevel(xp));
 		}
+	}
+	
+	private void sendLevelUpMessage(GuildMessageReceivedEvent event, int level) {
+		try{ 
+			 BufferedImage img = ImageGenerator.GenerateLevelUpImage(1, event.getAuthor());
+			 
+			 ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		     ImageIO.write(img, "png", baos);
+		     byte[] bytes = baos.toByteArray();
+			 
+			 event.getChannel()
+			 	.sendMessageFormat(":tada:**| %s** leveled up!", event.getAuthor().getName())
+			 	.addFile(bytes, "levelUp.png")
+			 	.queue();
+			 System.out.println('3');
+		 }
+		 catch(Exception e) {
+			 e.printStackTrace();
+		 };
 	}
 	
 	public static int getLevel(int xp) {
