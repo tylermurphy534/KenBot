@@ -41,7 +41,9 @@ public class CreateWebhook implements ICommand {
 		}
 		
 		EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
-				.setDescription("Created webhook with prefix "+args.get(0));
+				.setTitle("Created webhook with prefix "+args.get(0))
+				.appendDescription("To change the webhook's name, run `Ken setWebhookName <prefix> <name>`.")
+				.appendDescription("\n\nTo change the webhook's picture, run `Ken setWebhookAvatar <prefix>`. Then after sending that message, in the same channel, upload the picutre of the avatar you want.");
 		channel.sendMessage(embed.build()).queue();
 	}
 

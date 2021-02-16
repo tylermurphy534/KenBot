@@ -77,7 +77,7 @@ import net.tylermurphy.commands.social.Tickle;
 import net.tylermurphy.commands.webhooks.CreateWebhook;
 import net.tylermurphy.commands.webhooks.DeleteWebhook;
 import net.tylermurphy.commands.webhooks.SetWebhookName;
-import net.tylermurphy.commands.webhooks.SetWebhookURL;
+import net.tylermurphy.commands.webhooks.SetWebhookAvatar;
 import net.tylermurphy.commands.xp.Level;
 import net.tylermurphy.commands.xp.Top;
 import net.tylermurphy.commands.xp.XP;
@@ -149,7 +149,7 @@ public class CommandRegister {
 		register(new DeleteWebhook());
 		register(new CreateWebhook());
 		register(new SetWebhookName());
-		register(new SetWebhookURL());
+		register(new SetWebhookAvatar());
 		register(new Hentai());
 		register(new LoopQueue());
 		register(new Remove());

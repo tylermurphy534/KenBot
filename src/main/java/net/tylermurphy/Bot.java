@@ -21,6 +21,7 @@ import net.tylermurphy.commands.games.Nunchi;
 import net.tylermurphy.commands.moderation.SelfRole;
 import net.tylermurphy.commands.moderation.ServerStats;
 import net.tylermurphy.commands.nsfw.NHentai;
+import net.tylermurphy.commands.webhooks.SetWebhookAvatar;
 import net.tylermurphy.database.MariaDBConnection;
 import net.tylermurphy.managers.LogManager;
 import net.tylermurphy.music.BotLeaveListener;
@@ -53,7 +54,8 @@ public class Bot {
 		    		new LogManager(), 
 		    		new ServerStats(), 
 		    		new BotLeaveListener(), 
-		    		new NHentai())
+		    		new NHentai(),
+		    		new SetWebhookAvatar())
 		    .build()
 		   	.awaitReady();
 		
