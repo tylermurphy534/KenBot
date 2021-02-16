@@ -70,7 +70,11 @@ public class LevelManager {
 	}
 	
 	public static int getLevel(int xp) {
-		return (int) (Math.max(Math.exp(Math.log(xp/20)/1.5),0))+1;
+		int level = 0;
+		while(xp < 250+level*150) {
+			level++;
+		}
+		return level;
 	}
 	
 }
