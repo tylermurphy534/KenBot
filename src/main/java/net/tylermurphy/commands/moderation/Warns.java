@@ -49,13 +49,15 @@ public class Warns implements ICommand {
 			return;
 		}
 		
-		String message ="**Warn ID\t Reason For Warning**";
+		String message = "";
 		for (Entry<Integer, String> entry : warnings.entrySet()) {
-			message = String.format("%s\n`%s`\t%s", message, entry.getKey(), entry.getValue());
+			message = String.format("`Id: %s`\t%s\n", message, entry.getKey(), entry.getValue());
 		}
 		
 		EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
-				.setDescription(message);
+				.setAuthor(target.getUser().getAvatarUrl(), null, "Warns for "+target.getEffectiveName())
+				.setDescription(message)
+				.setFooter(target.getEffectiveName()+" has "+warnings.size()+" warnings.");
 		channel.sendMessage(embed.build()).queue();
 		return;
 		
