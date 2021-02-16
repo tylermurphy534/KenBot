@@ -83,16 +83,16 @@ public class Nunchi extends ListenerAdapter implements ICommand {
         	}
         }
         if(game == null || !game.status.equals("Joining Phase")) return;
-        if(emote.equals("U+2705")) {
+        if(emote.equalsIgnoreCase("U+2705")) {
         	if(game.users.contains(pointer)) return;
         	game.users.add(pointer);
         	channel.sendMessage(pointer + " has joined the game queue.").queue();
         	game.timeout.refreshTimeout();
-        } else if(emote.equals("U+25B6") && game.gameMaster.equals(pointer) && event.getGuild().getIdLong() == game.guildId) {
+        } else if(emote.equalsIgnoreCase("U+25B6") && game.gameMaster.equals(pointer) && event.getGuild().getIdLong() == game.guildId) {
         	if(game.users.size() < 2) return;
         	game.status = "Game In Progress";
         	game.next(channel);
-        } else if(emote.equals("U+274C") && game.gameMaster.equals(pointer) && event.getGuild().getIdLong() == game.guildId) {
+        } else if(emote.equalsIgnoreCase("U+274C") && game.gameMaster.equals(pointer) && event.getGuild().getIdLong() == game.guildId) {
         	games.remove(game);
         	game.timeout.stopTimeout();
         	EmbedBuilder embed = EmbedUtils.getDefaultEmbed()

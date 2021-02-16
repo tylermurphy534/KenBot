@@ -49,7 +49,7 @@ public class Remove implements ICommand {
 				channel.sendMessage(":x: Error parsing integer: "+args.get(0)).queue();
 				return;
 			}
-			boolean success = musicManager.scheduler.removeFromQueue(num+1);
+			boolean success = musicManager.scheduler.removeFromQueue(num-1);
 			if(success) channel.sendMessage(":white_check_mark: Removed track successfully").queue();
 			else channel.sendMessage(":x: Track not found").queue();
 		} else {

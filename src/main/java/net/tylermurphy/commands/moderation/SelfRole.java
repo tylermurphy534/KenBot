@@ -141,6 +141,13 @@ public class SelfRole extends ListenerAdapter implements ICommand {
         Role role = event.getJDA().getRoleById(Long.parseLong(result));
         try {
         	event.getGuild().addRoleToMember(event.getMember(), role).complete();
+        	Message message = event.getChannel().retrieveMessageById(event.getMessageId()).complete();
+    		List<String> reactions = new ArrayList<String>();
+    		message.getReactions().forEach(r -> reactions.add(r.getReactionEmote().getAsReactionCode()));
+    		for(String r : reactions) {
+    			if(r.equalsIgnoreCase(emote)) continue;
+    			message.removeReaction(r, event.getUser()).queue();
+    		}
         } catch (Exception e) {
         	e.printStackTrace();
         }
