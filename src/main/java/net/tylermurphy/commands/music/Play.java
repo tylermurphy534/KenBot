@@ -21,7 +21,6 @@ import net.dv8tion.jda.api.managers.AudioManager;
 import net.tylermurphy.Config;
 import net.tylermurphy.commands.ICommand;
 import net.tylermurphy.music.PlayerManager;
-import net.tylermurphy.music.TrackScheduler;
 
 public class Play implements ICommand {
 	
@@ -77,7 +76,6 @@ public class Play implements ICommand {
 		}
 		
 		PlayerManager manager = PlayerManager.getInstance();
-		TrackScheduler scheduler = manager.getGuildMusicManager(event.getGuild()).scheduler;
 		if(!audioManager.isConnected()) {
 			GuildVoiceState memberVoiceState = event.getMember().getVoiceState();
 	        if (!memberVoiceState.inVoiceChannel()) {

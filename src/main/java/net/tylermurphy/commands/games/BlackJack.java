@@ -36,6 +36,7 @@ public class BlackJack extends ListenerAdapter implements ICommand {
 		game.hit(channel);
 	}
 	
+	@SuppressWarnings("unlikely-arg-type")
 	public void onGuildMessageReactionAdd(GuildMessageReactionAddEvent event) {
         MessageReaction reaction = event.getReaction();
         String emote;

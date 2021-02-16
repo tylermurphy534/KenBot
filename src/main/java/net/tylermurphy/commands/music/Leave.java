@@ -8,17 +8,13 @@ import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.managers.AudioManager;
 import net.tylermurphy.commands.ICommand;
-import net.tylermurphy.music.GuildMusicManager;
 import net.tylermurphy.music.MusicPermissions;
-import net.tylermurphy.music.PlayerManager;
 
 public class Leave implements ICommand {
 
 	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
         TextChannel channel = event.getChannel();
         AudioManager audioManager = event.getGuild().getAudioManager();
-        PlayerManager playerManager = PlayerManager.getInstance();
-        GuildMusicManager musicManager = playerManager.getGuildMusicManager(event.getGuild());
         
         if (!audioManager.isConnected()) {
             channel.sendMessage(":x: I'm not connected to a voice channel.").queue();
