@@ -16,6 +16,13 @@ import net.tylermurphy.managers.LevelManager;
 public class Top implements ICommand {
 
 	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
+		String value = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(),"Leveling");
+		if(value != null && value.equals("false")) {
+			EmbedBuilder builder = EmbedUtils.getDefaultEmbed()
+					.setDescription("Leveling is disabled on this server");
+			event.getChannel().sendMessage(builder.build()).queue();
+			return;
+		}
 		TextChannel channel = event.getChannel();
 		List<String> data = DatabaseManager.UserSettings.getAll(event.getGuild().getIdLong(), "XP");
 		List<String> ids = new ArrayList<String>();

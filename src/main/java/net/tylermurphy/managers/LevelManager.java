@@ -26,6 +26,8 @@ public class LevelManager {
 	}
 	
 	public void handleMessage(GuildMessageReceivedEvent event) {
+		String value = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(),"Leveling");
+		if(value != null && value.equals("false")) return;
 		if(!blockedIds.contains(event.getAuthor().getIdLong())) {
 			blockedIds.add(event.getAuthor().getIdLong());
 			handleMember(event);

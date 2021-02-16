@@ -28,9 +28,11 @@ public class Help implements ICommand {
 				":musical_note: **Music Commands**\n"+
 				"```join,leave,loop,loopQueue,np,pause,play,queue,remove,resume,skip,stop```"+
 				":test_tube: XP or Level Commands\n"+
-				"```xp,level,top```"+
-				":hammer: **Admin Commands**\n"+
-				"```ban,delSelfRole,kick,logChannel,mute,purge,selfRole,serverStats,setPrefix,setPrefixWithSpace,setWarnAction,softBan,tempMute,unban,unmute,warn,warns,delwarn,clearWarns```"+
+				"```xp,level,top,toggleLeveling```"+
+				":wrench: **Admin Commands**\n"+
+				"``delSelfRole,selfRole,logChannel,purge,serverStats,setPrefix,setPrefixWithSpace```"+
+				":hammer: **Moderation Commands**\n"+
+				"```ban,kick,mute,setWarnAction,softBan,tempMute,unban,unmute,warn,warns,delwarn,clearWarns```"+
 				":robot: **Webhooks**\n"+
 				"```createWebhook,deleteWebhook,setWebhookName,setWebhookURL```"+
 				":tools: **AutoMod**\n"+

@@ -12,6 +12,13 @@ import net.tylermurphy.database.DatabaseManager;
 public class XP implements ICommand {
 
 	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
+		String value = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(),"Leveling");
+		if(value != null && value.equals("false")) {
+			EmbedBuilder builder = EmbedUtils.getDefaultEmbed()
+					.setDescription("Leveling is disabled on this server");
+			event.getChannel().sendMessage(builder.build()).queue();
+			return;
+		}
 		String textXp = DatabaseManager.UserSettings.get(event.getAuthor().getIdLong(), event.getGuild().getIdLong(), "XP");
 		if(textXp.equals(""))
 			textXp = "0";

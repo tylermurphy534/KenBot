@@ -8,41 +8,35 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.tylermurphy.commands.ICommand;
 import net.tylermurphy.database.DatabaseManager;
-import net.tylermurphy.managers.LevelManager;
 
-public class Level implements ICommand {
+public class ToggleLeveling implements ICommand {
 
 	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		String value = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(),"Leveling");
-		if(value != null && value.equals("false")) {
-			EmbedBuilder builder = EmbedUtils.getDefaultEmbed()
-					.setDescription("Leveling is disabled on this server");
-			event.getChannel().sendMessage(builder.build()).queue();
-			return;
-		}
-		String unparsedXp = DatabaseManager.UserSettings.get(event.getAuthor().getIdLong(), event.getGuild().getIdLong(), "XP");
-		if(unparsedXp.equals(""))
-			unparsedXp = "0";
-		int xp = Integer.parseInt(unparsedXp);
+		if(value == null || value.equals("true"))
+			value = "false";
+		else
+			value = "true";
+		DatabaseManager.GuildSettings.set(event.getGuild().getIdLong(),"Leveling",value);
 		EmbedBuilder builder = EmbedUtils.getDefaultEmbed()
-				.setDescription(String.format("You are level %s!", LevelManager.getLevel(xp)));
+				.setDescription("Set leveling status on this server to `"+value+"`");
 		event.getChannel().sendMessage(builder.build()).queue();
 	}
 
 	public String getInvoke() {
-		return "level";
+		return "toggleleveling";
 	}
-	
+
 	public String getUsage() {
 		return "";
 	}
 
 	public String getDescription() {
-		return "Get current level";
+		return "Toggles the level system of the bot";
 	}
-	
+
 	public Permission requiredPermission() {
-		return null;
+		return Permission.ADMINISTRATOR;
 	}
 	
 }

@@ -4,6 +4,12 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.tylermurphy.commands.admin.LogChannel;
+import net.tylermurphy.commands.admin.Purge;
+import net.tylermurphy.commands.admin.SelfRole;
+import net.tylermurphy.commands.admin.ServerStats;
+import net.tylermurphy.commands.admin.SetPrefix;
+import net.tylermurphy.commands.admin.SetPrefixWithSpace;
 import net.tylermurphy.commands.autoModeration.Caps;
 import net.tylermurphy.commands.autoModeration.Duplicate;
 import net.tylermurphy.commands.autoModeration.Emoji;
@@ -30,13 +36,7 @@ import net.tylermurphy.commands.moderation.Ban;
 import net.tylermurphy.commands.moderation.ClearWarns;
 import net.tylermurphy.commands.moderation.DelSelfRole;
 import net.tylermurphy.commands.moderation.Kick;
-import net.tylermurphy.commands.moderation.LogChannel;
 import net.tylermurphy.commands.moderation.Mute;
-import net.tylermurphy.commands.moderation.Purge;
-import net.tylermurphy.commands.moderation.SelfRole;
-import net.tylermurphy.commands.moderation.ServerStats;
-import net.tylermurphy.commands.moderation.SetPrefix;
-import net.tylermurphy.commands.moderation.SetPrefixWithSpace;
 import net.tylermurphy.commands.moderation.SetWarnAction;
 import net.tylermurphy.commands.moderation.SoftBan;
 import net.tylermurphy.commands.moderation.TempMute;
@@ -79,6 +79,7 @@ import net.tylermurphy.commands.webhooks.DeleteWebhook;
 import net.tylermurphy.commands.webhooks.SetWebhookName;
 import net.tylermurphy.commands.webhooks.SetWebhookAvatar;
 import net.tylermurphy.commands.xp.Level;
+import net.tylermurphy.commands.xp.ToggleLeveling;
 import net.tylermurphy.commands.xp.Top;
 import net.tylermurphy.commands.xp.XP;
 
@@ -164,6 +165,7 @@ public class CommandRegister {
 		register(new Description());
 		register(new ForceSkip());
 		register(new NHentai());
+		register(new ToggleLeveling());
 	}
 	
 	private static void register(ICommand command) {

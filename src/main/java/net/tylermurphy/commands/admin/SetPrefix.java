@@ -1,4 +1,4 @@
-package net.tylermurphy.commands.moderation;
+package net.tylermurphy.commands.admin;
 
 import java.util.List;
 
