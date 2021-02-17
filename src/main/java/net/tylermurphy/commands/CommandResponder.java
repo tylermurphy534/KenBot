@@ -8,19 +8,20 @@ import java.util.regex.Pattern;
 import me.duncte123.botcommons.messaging.EmbedUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.tylermurphy.Config;
 import net.tylermurphy.database.DatabaseManager;
 import net.tylermurphy.managers.AutoModManager;
 import net.tylermurphy.managers.LevelManager;
 import net.tylermurphy.managers.WebhookManager;
 
-public class CommandResponder {
+public class CommandResponder extends ListenerAdapter {
 
     private final LevelManager levelManager;
     private final AutoModManager autoModManager;
     private final WebhookManager webhookManger;
 	
-	public CommandResponder(){
+	public CommandResponder() {
         this.levelManager = new LevelManager();
         this.autoModManager = new AutoModManager();
         this.webhookManger = new WebhookManager();
