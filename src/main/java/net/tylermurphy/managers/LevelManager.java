@@ -41,7 +41,7 @@ public class LevelManager {
 		if(!unparsedXp.equals("")) xp = Integer.parseInt(unparsedXp);
 		xp++;
 		DatabaseManager.UserSettings.set(event.getAuthor().getIdLong(), event.getGuild().getIdLong(), "XP", String.valueOf(xp));
-		if(getLevel(xp) > getLevel(xp-1) && getLevel(xp) > 0) {
+		if(getLevel(xp) > getLevel(xp-1) && getLevel(xp) > 1) {
 			sendLevelUpMessage(event, getLevel(xp));
 		}
 	}
@@ -65,7 +65,7 @@ public class LevelManager {
 		while(xp > level*250) {
 			level++;
 		}
-		return level--;
+		return level;
 	}
 	
 }
