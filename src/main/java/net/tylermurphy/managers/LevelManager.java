@@ -48,7 +48,7 @@ public class LevelManager {
 	
 	private void sendLevelUpMessage(GuildMessageReceivedEvent event, int level) {
 		try{ 
-			 byte[] img = ImageGenerator.GenerateLevelUpImage(1, event.getAuthor());
+			 byte[] img = ImageGenerator.GenerateLevelUpImage(level, event.getAuthor());
 			 
 			 event.getChannel()
 			 	.sendMessageFormat(":tada:**| %s** leveled up!", event.getAuthor().getName())
