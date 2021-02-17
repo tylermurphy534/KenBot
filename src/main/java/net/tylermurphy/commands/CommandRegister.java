@@ -1,5 +1,6 @@
 package net.tylermurphy.commands;
 
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +11,7 @@ import net.tylermurphy.commands.admin.SelfRole;
 import net.tylermurphy.commands.admin.ServerStats;
 import net.tylermurphy.commands.admin.SetPrefix;
 import net.tylermurphy.commands.admin.SetPrefixWithSpace;
+import net.tylermurphy.commands.admin.ToggleWelcomeMessages;
 import net.tylermurphy.commands.autoModeration.Caps;
 import net.tylermurphy.commands.autoModeration.Duplicate;
 import net.tylermurphy.commands.autoModeration.Emoji;
@@ -172,6 +174,7 @@ public class CommandRegister {
 		register(new Cry());
 		register(new Pout());
 		register(new Dance());
+		register(new ToggleWelcomeMessages());
 	}
 	
 	private static void register(ICommand command) {

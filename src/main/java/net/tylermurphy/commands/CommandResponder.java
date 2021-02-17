@@ -8,14 +8,13 @@ import java.util.regex.Pattern;
 import me.duncte123.botcommons.messaging.EmbedUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.tylermurphy.Config;
 import net.tylermurphy.database.DatabaseManager;
 import net.tylermurphy.managers.AutoModManager;
 import net.tylermurphy.managers.LevelManager;
 import net.tylermurphy.managers.WebhookManager;
 
-public class CommandResponder extends ListenerAdapter {
+public class CommandResponder {
 
     private final LevelManager levelManager;
     private final AutoModManager autoModManager;
@@ -28,7 +27,7 @@ public class CommandResponder extends ListenerAdapter {
 	}
 	
 	public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
-
+		
         String rw = event.getMessage().getContentRaw();
 
         if (rw.equalsIgnoreCase(Config.PREFIX + "shutdown") &&

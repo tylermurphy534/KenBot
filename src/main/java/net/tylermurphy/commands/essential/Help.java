@@ -30,7 +30,7 @@ public class Help implements ICommand {
 				":test_tube: XP or Level Commands\n"+
 				"```xp,level,top,toggleLeveling```"+
 				":wrench: **Admin Commands**\n"+
-				"``delSelfRole,selfRole,logChannel,purge,serverStats,setPrefix,setPrefixWithSpace```"+
+				"``delSelfRole,selfRole,logChannel,purge,serverStats,setPrefix,setPrefixWithSpace,toggleWelcomeMessages```"+
 				":hammer: **Moderation Commands**\n"+
 				"```ban,kick,mute,setWarnAction,softBan,tempMute,unban,unmute,warn,warns,delwarn,clearWarns```"+
 				":robot: **Webhooks**\n"+

@@ -24,6 +24,7 @@ import net.tylermurphy.commands.nsfw.NHentai;
 import net.tylermurphy.commands.webhooks.SetWebhookAvatar;
 import net.tylermurphy.database.MariaDBConnection;
 import net.tylermurphy.managers.LogManager;
+import net.tylermurphy.managers.WelcomeManager;
 import net.tylermurphy.music.BotLeaveListener;
 
 public class Bot {
@@ -55,7 +56,8 @@ public class Bot {
 		    		new ServerStats(), 
 		    		new BotLeaveListener(), 
 		    		new NHentai(),
-		    		new SetWebhookAvatar())
+		    		new SetWebhookAvatar(),
+		    		new WelcomeManager())
 		    .build()
 		   	.awaitReady();
 		

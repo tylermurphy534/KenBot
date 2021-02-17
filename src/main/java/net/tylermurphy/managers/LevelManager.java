@@ -54,7 +54,6 @@ public class LevelManager {
 			 	.sendMessageFormat(":tada:**| %s** leveled up!", event.getAuthor().getName())
 			 	.addFile(img, "levelUp.png")
 			 	.queue();
-			 System.out.println('3');
 		 }
 		 catch(Exception e) {
 			 e.printStackTrace();
