@@ -63,6 +63,8 @@ import net.tylermurphy.commands.nsfw.NHentai;
 import net.tylermurphy.commands.nsfw.Rule34;
 import net.tylermurphy.commands.social.Boop;
 import net.tylermurphy.commands.social.Cookie;
+import net.tylermurphy.commands.social.Cry;
+import net.tylermurphy.commands.social.Dance;
 import net.tylermurphy.commands.social.GetShip;
 import net.tylermurphy.commands.social.Gift;
 import net.tylermurphy.commands.social.HighFive;
@@ -70,6 +72,7 @@ import net.tylermurphy.commands.social.Hug;
 import net.tylermurphy.commands.social.Kiss;
 import net.tylermurphy.commands.social.Lick;
 import net.tylermurphy.commands.social.Pet;
+import net.tylermurphy.commands.social.Pout;
 import net.tylermurphy.commands.social.Punch;
 import net.tylermurphy.commands.social.Ship;
 import net.tylermurphy.commands.social.Slap;
@@ -166,6 +169,9 @@ public class CommandRegister {
 		register(new ForceSkip());
 		register(new NHentai());
 		register(new ToggleLeveling());
+		register(new Cry());
+		register(new Pout());
+		register(new Dance());
 	}
 	
 	private static void register(ICommand command) {

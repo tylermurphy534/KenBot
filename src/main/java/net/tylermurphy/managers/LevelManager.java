@@ -1,13 +1,9 @@
 package net.tylermurphy.managers;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import javax.imageio.ImageIO;
 
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.tylermurphy.database.DatabaseManager;
@@ -52,15 +48,11 @@ public class LevelManager {
 	
 	private void sendLevelUpMessage(GuildMessageReceivedEvent event, int level) {
 		try{ 
-			 BufferedImage img = ImageGenerator.GenerateLevelUpImage(1, event.getAuthor());
-			 
-			 ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		     ImageIO.write(img, "png", baos);
-		     byte[] bytes = baos.toByteArray();
+			 byte[] img = ImageGenerator.GenerateLevelUpImage(1, event.getAuthor());
 			 
 			 event.getChannel()
 			 	.sendMessageFormat(":tada:**| %s** leveled up!", event.getAuthor().getName())
-			 	.addFile(bytes, "levelUp.png")
+			 	.addFile(img, "levelUp.png")
 			 	.queue();
 			 System.out.println('3');
 		 }

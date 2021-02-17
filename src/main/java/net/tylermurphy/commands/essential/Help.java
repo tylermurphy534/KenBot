@@ -22,7 +22,7 @@ public class Help implements ICommand {
 				":ok_hand: Fun Commands:\n"+
 				"```joke,kill,meme,phone,ping,percent,whoAreYou\n```"+
 				":heartpulse: **Social Commands**\n"+
-				"```boop,cookie,getShip,gift,highFive,hug,kiss,lick,pet,punch,ship,slap,tickle```"+
+				"```boop,cookie,getShip,gift,highFive,hug,kiss,lick,pet,punch,ship,slap,tickle,dance,cry,pout```"+
 				":game_die: **Game Commands**\n"+
 				"```battle,blackjack,coinflip,dice,8ball,multiDice,nunchi```"+
 				":musical_note: **Music Commands**\n"+
