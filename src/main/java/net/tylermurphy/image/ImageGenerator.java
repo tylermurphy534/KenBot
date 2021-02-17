@@ -9,6 +9,7 @@ import java.awt.RenderingHints;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
@@ -21,12 +22,9 @@ public class ImageGenerator {
 	public static byte[] GenerateLevelUpImage(int level, User u) {
 		BufferedImage background,avatar,frame;
 		try {
-			background = ImageIO.read(new URL(
-					"https://i.pinimg.com/originals/08/13/d9/0813d9eeaea3dddd22cde3272dcdec1e.jpg"));
-			frame = ImageIO.read(new URL(
-					"https://i.pinimg.com/originals/53/64/39/5364393b6764334c4b70e514a55ced72.png"));
-			avatar = ImageIO.read(new URL(
-					u.getAvatarUrl()));
+			background = getImageFromURL("https://i.pinimg.com/originals/08/13/d9/0813d9eeaea3dddd22cde3272dcdec1e.jpg");
+			frame = getImageFromURL("https://i.pinimg.com/originals/53/64/39/5364393b6764334c4b70e514a55ced72.png");
+			avatar = getImageFromURL(u.getAvatarUrl());
 			
 			BufferedImage img = new BufferedImage(220, 100, BufferedImage.TYPE_INT_ARGB);
 			Graphics2D g2d = img.createGraphics();
@@ -56,15 +54,16 @@ public class ImageGenerator {
 	}
 	
 	public static byte[] WelcomeImage(User u, Guild g) {
+		System.out.println(u);
+		System.out.println(u.getAvatarUrl());
 		BufferedImage background,avatar;
 		try {
 			background = makeRoundedCorner(
-				ImageIO.read(new URL(
-					"https://i.pinimg.com/originals/69/e9/3c/69e93ced914a9230dcf2b9ba160f129f.jpg")),
+					getImageFromURL("https://i.pinimg.com/originals/69/e9/3c/69e93ced914a9230dcf2b9ba160f129f.jpg"),
 				300
 			);
 			avatar = makeRoundedCorner(
-				ImageIO.read(new URL(u.getAvatarUrl())),
+					getImageFromURL(u.getAvatarUrl()),
 				100
 			);
 			
@@ -75,13 +74,13 @@ public class ImageGenerator {
 			g2d.setPaint(Color.white);
 			
 			String s = String.format("%s#%s has joined the server", u.getName(), u.getDiscriminator());
-			g2d.setFont(new Font("Dialog", Font.BOLD, 20));
+			g2d.setFont(new Font("Dialog", Font.BOLD, 15));
 			FontMetrics fm = g2d.getFontMetrics();
 			int x = 500/2 - fm.stringWidth(s)/2;
 			g2d.drawString(s, x, 235);
 			
 			s = String.format("Member #%s", g.getMemberCount());
-			g2d.setFont(new Font("Dialog", Font.BOLD, 15));
+			g2d.setFont(new Font("Dialog", Font.BOLD, 10));
 			fm = g2d.getFontMetrics();
 			x = 500/2 - fm.stringWidth(s)/2;
 			g2d.drawString(s, x, 255);
@@ -119,6 +118,19 @@ public class ImageGenerator {
 	    g2.dispose();
 	    
 	    return output;
+	}
+	
+	private static BufferedImage getImageFromURL(String surl) {
+		try {
+			final URL url = new URL(surl);
+			final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0");
+			final BufferedImage image = ImageIO.read(connection.getInputStream());
+			return image;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 }

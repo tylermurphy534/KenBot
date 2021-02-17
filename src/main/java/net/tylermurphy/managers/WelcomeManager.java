@@ -17,10 +17,9 @@ public class WelcomeManager extends ListenerAdapter {
 		byte[] img = ImageGenerator.WelcomeImage(event.getMember().getUser(), event.getGuild());
 		 
 		channel
-			.sendMessageFormat(":tada:**| Weclome %s#%s to %s!", event.getMember().getEffectiveName(), event.getMember().getUser().getDiscriminator(), event.getGuild().getName())
+			.sendMessageFormat(":tada:**| Weclome %s#%s** to %s!", event.getMember().getEffectiveName(), event.getMember().getUser().getDiscriminator(), event.getGuild().getName())
 			.addFile(img, "welcome.png")
 			.queue();
-		
 	}
 	
 }
