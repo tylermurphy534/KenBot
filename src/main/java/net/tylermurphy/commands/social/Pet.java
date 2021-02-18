@@ -14,17 +14,18 @@ import net.tylermurphy.database.DatabaseManager;
 public class Pet implements ICommand {
 
 	private String[] gifs = {
-			"https://media.tenor.com/images/da8431374a530ae516c0cc8f966d1c2b/tenor.gif",
-			"https://media.tenor.com/images/8d7cdba4b7c6a04fd0c12d5f7418f920/tenor.gif",
-			"https://media.tenor.com/images/40f454db8d7ee7ccad8998479fbabe69/tenor.gif",
-			"https://media.tenor.com/images/acd836cdaf53a3ffd76c7c216935325b/tenor.gif",
-			"https://media.tenor.com/images/ab5183f650fc93a5ec84f8510bd9d23c/tenor.gif",
-			"https://media.tenor.com/images/f2addaf38c9ca8f552a20bfa13f2adc5/tenor.gif",
-			"https://media.tenor.com/images/bb4471bdc56bb2cf355338059d9fe4a0/tenor.gif",
-			"https://media.tenor.com/images/69fb17b3eafe27df334f9f873473d531/tenor.gif",
-			"https://media.tenor.com/images/dc008a41a50a3e91a523ccb9a1533c40/tenor.gif",
-			"https://media.tenor.com/images/2a2521cb348d42f18dd1fbbe9af83e29/tenor.gif",
-			"https://media.tenor.com/images/d98f3f1482faa9c978c5e720a3ad15f3/tenor.gif"
+			"https://media.tenor.com/images/d9b480bcd392d05426ae6150e986bbf0/tenor.gif",
+			"https://media.tenor.com/images/a4a2b1eaa47fd0d8d0951433bc59ab9a/tenor.gif",
+			"https://media.tenor.com/images/f5176d4c5cbb776e85af5dcc5eea59be/tenor.gif",
+			"https://media.tenor.com/images/57b6168e77f77046f4f6b1158de7ba3d/tenor.gif",
+			"https://media.tenor.com/images/73a746bada06751716d3173fbb9e6864/tenor.gif",
+			"https://media.tenor.com/images/0ac15c04eaf7264dbfac413c6ce11496/tenor.gif",
+			"https://media.tenor.com/images/116fe7ede5b7976920fac3bf8067d42b/tenor.gif",
+			"https://media.tenor.com/images/ba551e0f5a51c7d77a3ca4e62a14a919/tenor.gif",
+			"https://media.tenor.com/images/01827ac93db8966ee97e63308ba79965/tenor.gif",
+			"https://media.tenor.com/images/17b946b3bdcf55311039ed554d776948/tenor.gif",
+			"https://media.tenor.com/images/183ff4514cbe90609e3f286adaa3d0b4/tenor.gif",
+			"https://media.tenor.com/images/e25190a3302799225ea95e4380ae5a45/tenor.gif"
 	};
 	
 	public void invoke(List<String> args, GuildMessageReceivedEvent event) {

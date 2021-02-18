@@ -14,12 +14,13 @@ import net.tylermurphy.database.DatabaseManager;
 public class Cookie implements ICommand {
 	
 	private String[] gifs = {
-			"https://media.tenor.com/images/23fa876f0384559e91cc2f56d70e8242/tenor.gif",
-			"https://media.tenor.com/images/91435046882a65ff216f5c4a1fee8e56/tenor.gif",
-			"https://media.tenor.com/images/21df9d9e9334c62e6662e6a02f2ae1ae/tenor.gif",
-			"https://media.tenor.com/images/c041d53a96143ec2dee20b5f77de7cfd/tenor.gif",
-			"https://media.tenor.com/images/8d8e509e4a48feb9eee02f7bd6036646/tenor.gif",
-			"https://media.tenor.com/images/c9c5645e8616bb60f58ea6972015e276/tenor.gif"
+			"https://media.tenor.com/images/56654eb38f6ed08f81ebd395e98197ac/tenor.gif",
+			"https://media.tenor.com/images/68d0a78bb6a73a7aeebde4a3723583af/tenor.gif",
+			"https://media.tenor.com/images/627b576970a11717cc5b6522d57789da/tenor.gif",
+			"https://media.tenor.com/images/a1d39744954134c973b51205385a0932/tenor.gif",
+			"https://media.tenor.com/images/4096d48462e9c8b2adc2a4fd63d292bf/tenor.gif",
+			"https://media.tenor.com/images/9a684862dd6a95ca16c5ecd6b02b119f/tenor.gif",
+			"https://media.tenor.com/images/70e1031a9b4380cb2107aa51ec360cdd/tenor.gif"
 	};
 
 	public void invoke(List<String> args, GuildMessageReceivedEvent event) {

@@ -14,14 +14,13 @@ import net.tylermurphy.database.DatabaseManager;
 public class Tickle implements ICommand {
 	
 	private String[] gifs = {
-			"https://media.tenor.com/images/2e3bcdc3423c4b97dbdf2225fd3d6caf/tenor.gif",
-			"https://media.tenor.com/images/d6a0512280a84726ff8ac695a37eadbe/tenor.gif",
-			"https://media.tenor.com/images/7f41832fc5c09b4947cfde63b6ff9f80/tenor.gif",
-			"https://i.pinimg.com/originals/de/63/73/de6373193dc2b6622ec4178382a6a18b.gif",
-			"https://i.imgur.com/8GfodAL.gif",
-			"https://i1247.photobucket.com/albums/gg628/Otokonokotron2/tumblr/Kusuguttai/K%20posts/LB-1v2.gif",
-			"https://pa1.narvii.com/6319/de96cdc5bcdcb0b06e55d01cf7fd7fac24f7dcf8_00.gif",
-			"https://thumbs.gfycat.com/BlandMassiveCranefly-size_restricted.gif"
+			"https://media.tenor.com/images/a1cdb42b309b9fd6d1ed1c70a1c4b64f/tenor.gif",
+			"https://media.tenor.com/images/fea79fed0168efcaf1ddfb14d8af1a6d/tenor.gif",
+			"https://media.tenor.com/images/05a64a05e5501be2b1a5a734998ad2b2/tenor.gif",
+			"https://media.tenor.com/images/ae7fc8d4dffe5ca4dea5eaeee5fb8abd/tenor.gif",
+			"https://media.tenor.com/images/16662667791fc3275c25db595fdf89f8/tenor.gif",
+			"https://media.tenor.com/images/99c4c3f50c825dabff89d9968c2dd23c/tenor.gif",
+			
 	};
 
 	public void invoke(List<String> args, GuildMessageReceivedEvent event) {

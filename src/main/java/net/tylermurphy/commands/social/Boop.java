@@ -14,12 +14,15 @@ import net.tylermurphy.database.DatabaseManager;
 public class Boop implements ICommand {
 
 	private String[] gifs = {
-			"https://media.tenor.com/images/9945480efe5179c227558769613ee275/tenor.gif",
-			"https://media.tenor.com/images/c46116b9116e1baa24e96fa6c5a78818/tenor.gif",
-			"https://media.tenor.com/images/d07762ab2f5fc5d1d43525d2b3db7de8/tenor.gif",
-			"https://media.tenor.com/images/ff69974ac6a5ffa9a4ab8a59a522d04e/tenor.gif",
-			"https://media.tenor.com/images/75c40413d2a4ec935b707ef32ab53321/tenor.gif",
-			"https://i.imgur.com/fZmUTgw.gif"
+			"https://media.tenor.com/images/80f689a9a510e872807ad11b0560c736/tenor.gif",
+			"https://media.tenor.com/images/cbf38a2e97a348a621207c967a77628a/tenor.gif",
+			"https://media.tenor.com/images/0da232de2ee45e1464bf1d5916869a39/tenor.gif",
+			"https://media.tenor.com/images/fde75886df37020bc37d7ba44c1e29ee/tenor.gif",
+			"https://media.tenor.com/images/b0565fb51f600ee5f3deb3d572eef680/tenor.gif",
+			"https://media.tenor.com/images/dbde71d42e747010b980422b88e77f9b/tenor.gif",
+			"https://media.tenor.com/images/e8e15ece5fe1b91e8d349402b8fe1fad/tenor.gif",
+			"https://media.tenor.com/images/1ca61d7ecff5b3433f9edd71ebd4bc40/tenor.gif",
+			"https://media.tenor.com/images/6882df36a5ee12e9464549eb62730655/tenor.gif"
 	};
 	
 	public void invoke(List<String> args, GuildMessageReceivedEvent event) {

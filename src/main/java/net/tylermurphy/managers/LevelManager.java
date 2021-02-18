@@ -6,6 +6,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.tylermurphy.Config;
 import net.tylermurphy.database.DatabaseManager;
 import net.tylermurphy.image.ImageGenerator;
 
@@ -25,6 +26,9 @@ public class LevelManager {
 	}
 	
 	public void handleMessage(GuildMessageReceivedEvent event) {
+		if(Config.DEBUG == true && event.getAuthor().getIdLong() == Config.OWNER && event.getMessage().getContentRaw().equalsIgnoreCase(Config.PREFIX+"lvltest")) {
+			sendLevelUpMessage(event, (int)(Math.random()*30));
+		}
 		String value = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(),"Leveling");
 		if(value != null && value.equals("false")) return;
 		if(!blockedIds.contains(event.getAuthor().getIdLong())) {

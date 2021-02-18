@@ -16,33 +16,65 @@ public class Help implements ICommand {
 		
 		Message message = event.getMessage();
 		User user = message.getAuthor();
-		String help = 
-				":white_check_mark: **Essential Commands**\n"+
-				"```help,description,usage```"+
-				":ok_hand: Fun Commands:\n"+
-				"```joke,kill,meme,phone,ping,percent,whoAreYou\n```"+
-				":heartpulse: **Social Commands**\n"+
-				"```boop,cookie,getShip,gift,highFive,hug,kiss,lick,pet,punch,ship,slap,tickle,dance,cry,pout```"+
-				":game_die: **Game Commands**\n"+
-				"```battle,blackjack,coinflip,dice,8ball,multiDice,nunchi```"+
-				":musical_note: **Music Commands**\n"+
-				"```join,leave,loop,loopQueue,np,pause,play,queue,remove,resume,skip,stop```"+
-				":test_tube: XP or Level Commands\n"+
-				"```xp,level,top,toggleLeveling```"+
-				":wrench: **Admin Commands**\n"+
-				"``delSelfRole,selfRole,logChannel,purge,serverStats,setPrefix,setPrefixWithSpace,toggleWelcomeMessages```"+
-				":hammer: **Moderation Commands**\n"+
-				"```ban,kick,mute,setWarnAction,softBan,tempMute,unban,unmute,warn,warns,delwarn,clearWarns```"+
-				":robot: **Webhooks**\n"+
-				"```createWebhook,deleteWebhook,setWebhookName,setWebhookURL```"+
-				":tools: **AutoMod**\n"+
-				"```allcaps,duplicatetext,emojispam,mentionsspam,messagespam```"+
-				":octagonal_sign: **NSFW**\n"+
-				"```nhentai,e621,hentai,rule34```";
 		user.openPrivateChannel().queue((channel) -> {
-			EmbedBuilder builder = EmbedUtils.getDefaultEmbed()
-					.setDescription(help);
-			channel.sendMessage(builder.build()).queue();
+			EmbedBuilder embed = EmbedUtils.getDefaultEmbed();
+			embed.appendDescription(
+					"This is all the commands that are included with Ken\n"+
+					"If you want to know what a command does, run `Ken description {command}`\n"+
+					"Or you need help with a command, run `Ken usage {command}`\n"+
+					"Any questions? Join our [discord support server](https://discord.gg/76wrVtCT)"
+					);
+			embed.addField(
+					":white_check_mark: Essential Commands",
+					"`help`,`description`,`usage`",
+					false);
+			embed.addField(
+					":ok_hand: Fun Commands",
+					"`joke`,`kill`,`meme`,`phone`,`ping`,`percent`,`whoAreYou`",
+					false);
+			embed.addField(
+					":heartpulse: Social Commands",
+					"`boop`,`cookie`,`gift`,`highFive`,`hug`,`kiss`,`lick`,`pet`,`punch`,`slap`,`tickle`,`dance`,`cry`,`pout`",
+					false);
+			embed.addField(
+					":ring: Relationship Commands",
+					"`ship`,`getship`",
+					false);
+			embed.addField(
+					":game_die: Game Commands",
+					"`battle`,`blackjack`,`coinflip`,`dice`,`8ball`,`multiDice`,`nunchi`",
+					false);
+			embed.addField(
+					":musical_note: Music Commands",
+					"`join`,`leave`,`loop`,`loopQueue`,`np`,`pause`,`play`,`queue`,`remove`,`resume`,`skip`,`stop`",
+					false);
+			embed.addField(
+					":medal: Rankings / Levels",
+					"`xp`,`level`,`top`,`toggleLeveling`",
+					false);
+			embed.addField(
+					":robot: Webhook Commands (Send messages with a diffrent name and pfp)",
+					"`createWebhook`,`deleteWebhook`,`setWebhookName`,`setWebhookAvatar`",
+					false);
+			embed.addField(
+					":wrench: Admin Commands",
+					"`delSelfRole`,`selfRole`,`logChannel`,`purge`,`serverStats`,`setPrefix`,`setPrefixWithSpace`,`toggleWelcomeMessages`",
+					false);
+			embed.addField(
+					":hammer: Moderation Commands",
+					"`ban`,`kick`,`mute`,`setWarnAction`,`softBan`,`tempMute`,`unban`,`unmute`,`warn`,`warns`,`delwarn`,`clearWarns`",
+					false);
+			embed.addField(
+					":tools: Auto Moderation Commands",
+					"`allcaps`,`duplicatetext`,`emojispam`,`mentionsspam`,`messagespam`",
+					false);
+			embed.addField(
+					":octagonal_sign: 18+ Commands",
+					"`nhentai`,`e621`,`hentai`,`rule34`",
+					false);
+			embed.setAuthor("Ken Discord Bot Commmand List", null, event.getAuthor().getAvatarUrl());
+			
+			channel.sendMessage(embed.build()).queue();
 		});
 	}
 	

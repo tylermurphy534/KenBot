@@ -14,15 +14,15 @@ import net.tylermurphy.database.DatabaseManager;
 public class HighFive implements ICommand {
 
 	private String[] gifs = {
-			"https://media.tenor.com/images/2cfb5b7ad498e16043917f02883b4793/tenor.gif",
-			"https://media.tenor.com/images/fbbf9713d5202abed4ad4f4c3306cbe9/tenor.gif",
-			"https://media.tenor.com/images/5628f231595350b459d6bf8278cc5e59/tenor.gif",
-			"https://media.tenor.com/images/5ab9ca34fce5ecbd2a99f2a041b93f4c/tenor.gif",
-			"https://media.tenor.com/images/0e95047c3c3103eb894d478646e408af/tenor.gif",
-			"https://media.tenor.com/images/0e3829385e85a5c38010400642fba1dc/tenor.gif",
-			"https://media.tenor.com/images/d1c848d0b68b4253e8844014905e54f7/tenor.gif",
-			"https://media.tenor.com/images/d25d531813a8f492ce587f3563b20eb2/tenor.gif",
-			"https://media.tenor.com/images/56c5b1b4e3e856e5e8d54460d4a44d8b/tenor.gif"
+			"https://media.tenor.com/images/b714d7680f8b49d69b07bc2f1e052e72/tenor.gif",
+			"https://media.tenor.com/images/3a34c5ca91ad9988f4a5a905bec25448/tenor.gif",
+			"https://media.tenor.com/images/ad22432b945ea3676ffb16ea2989b41b/tenor.gif",
+			"https://media.tenor.com/images/7b1f06eac73c36721912edcaacddf666/tenor.gif",
+			"https://media.tenor.com/images/c3263b8196afc25ddc1d53a4224347cd/tenor.gif",
+			"https://media.tenor.com/images/9730876547cb3939388cf79b8a641da9/tenor.gif",
+			"https://media.tenor.com/images/72f1cb228b748d68ad43ffda5d29de30/tenor.gif",
+			"https://media.tenor.com/images/16267f3a34efb42598bd822effaccd11/tenor.gif",
+			"https://media.tenor.com/images/0c23b320822afd5b1ce3faf01c2b9b69/tenor.gif"
 	};
 	
 	public void invoke(List<String> args, GuildMessageReceivedEvent event) {

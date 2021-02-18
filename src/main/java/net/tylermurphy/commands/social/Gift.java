@@ -14,12 +14,12 @@ import net.tylermurphy.database.DatabaseManager;
 public class Gift implements ICommand {
 	
 	private String[] gifs = {
-			"https://media.tenor.com/images/426936fef75e617265c52dda0ed7a5fb/tenor.gif",
-			"https://media.tenor.com/images/6728206fb90c1f0c481d335f09aab82f/tenor.gif",
-			"https://media.tenor.com/images/92cd1e0053bc97a637dcb1c84a89a0ce/tenor.gif",
-			"https://i0.wp.com/drunkenanimeblog.com/wp-content/uploads/2018/12/anime-christmas-gift.gif",
-			"https://pa1.narvii.com/5755/c86a21e370abd85dfd4e0f975bfeeb4f53db30eb_hq.gif",
-			"https://animeshelter.com/wp-content/uploads/2017/11/giphy6.gif"
+			"https://media.tenor.com/images/07cd6978e5ac988ff3530d40b57d22df/tenor.gif",
+			"https://media.tenor.com/images/d98bef7cb37f836469d6fd92d8482a3a/tenor.gif",
+			"https://media.tenor.com/images/3c3ccae11ef44be488dae1d80594af1d/tenor.gif",
+			"https://media.tenor.com/images/f80c7f979ed3768f66d5428991b10f28/tenor.gif",
+			"https://media.tenor.com/images/3996e8475b7acdd295ee488fafe8bce3/tenor.gif",
+			"https://media.tenor.com/images/a61b678a3e4d1147704d2856a81ed156/tenor.gif"
 	};
 
 	public void invoke(List<String> args, GuildMessageReceivedEvent event) {

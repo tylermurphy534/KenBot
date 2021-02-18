@@ -14,16 +14,17 @@ import net.tylermurphy.database.DatabaseManager;
 public class Punch implements ICommand {
 
 	private String[] gifs = {
-			"https://media.tenor.com/images/00a3cca756b4bbae191ac33ccc6d7bcf/tenor.gif",
-			"https://media.tenor.com/images/b11c79cf158d8c9bd6e721676b06ad73/tenor.gif",
-			"https://media.tenor.com/images/9c14d2d5dd918471954e5946166f3632/tenor.gif",
-			"https://media.tenor.com/images/eb379f98c7ced6d43a16e78dc25ae864/tenor.gif",
-			"https://media.tenor.com/images/bef50761d75e855c95cb94139c8c292f/tenor.gif",
-			"https://media.tenor.com/images/359a3a05dbde06a89cdcf494ad62bb5d/tenor.gif",
-			"https://media.tenor.com/images/3d95f0ee1f044518cbfd3f4ee12d26bd/tenor.gif",
-			"https://media.tenor.com/images/e069f131288ec2e4aaa9c6e00d27cff1/tenor.gif",
-			"https://media.tenor.com/images/524ff44277b710a47267d26cef5c11c5/tenor.gif",
-			"https://media.tenor.com/images/7cfb1a03d0f71b7555e29963cd8da5d0/tenor.gif"
+			"https://media.tenor.com/images/31686440e805309d34e94219e4bedac1/tenor.gif",
+			"https://media.tenor.com/images/1c986c555ed0b645670596d978c88f6e/tenor.gif",
+			"https://media.tenor.com/images/c621075def6ca41785ef4aaea20cc3a2/tenor.gif",
+			"https://media.tenor.com/images/cff010b188084e1faed2905c0f1634c2/tenor.gif",
+			"https://media.tenor.com/images/79cc6480652032a20f1cb5c446b113ae/tenor.gif",
+			"https://media.tenor.com/images/f03329d8877abfde62b1e056953724f3/tenor.gif",
+			"https://media.tenor.com/images/2487a7679b3d7d23cadcd51381635467/tenor.gif",
+			"https://media.tenor.com/images/965fabbfcdc09ee0eb4d697e25509f34/tenor.gif",
+			"https://media.tenor.com/images/0d0afe2df6c9ff3499a81bf0dab1d27c/tenor.gif",
+			"https://media.tenor.com/images/b746bc37f2e29185523b1b7a0df45fdd/tenor.gif",
+			"https://media.tenor.com/images/6afcfbc435b698fa5ceb2ff019718e6d/tenor.gif"
 	};
 	
 	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
