@@ -1,5 +1,6 @@
 package net.tylermurphy.commands.fun;
 
+import java.io.File;
 import java.util.List;
 
 import me.duncte123.botcommons.messaging.EmbedUtils;
@@ -23,10 +24,16 @@ public class Eject implements ICommand {
 			channel.sendMessage(embed.build()).queue();
 			return;
 		}
+		
+		File gif = GifFactory.generateEjectGif(mentionedMembers.get(0).getUser());
+		
 		channel
 			.sendMessageFormat(":rocket:**| %s** decided to vote off %s", event.getAuthor().getName(), mentionedMembers.get(0).getUser().getName())
-			.addFile(GifFactory.generateEjectGif(mentionedMembers.get(0).getUser()), "eject.gif")
-			.queue();
+			.addFile(gif, "eject.gif")
+			.queue((result) -> {
+				gif.delete();
+			});
+		
 	}
 
 	public String getInvoke() {

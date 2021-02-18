@@ -22,7 +22,7 @@ public class Help implements ICommand {
 					"This is all the commands that are included with Ken\n"+
 					"If you want to know what a command does, run `Ken description {command}`\n"+
 					"Or you need help with a command, run `Ken usage {command}`\n"+
-					"Any questions? Join our [discord support server](https://discord.gg/76wrVtCT)"
+					"Any questions? Join our [discord support server](https://discord.gg/9qxE5BY)"
 					);
 			embed.addField(
 					":white_check_mark: Essential Commands",

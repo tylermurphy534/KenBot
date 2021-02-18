@@ -34,8 +34,9 @@ public class GifFactory {
 			frames[i] = ImageFactory.GenerateEjectFrame(message, Math.min(i, 23), 24, space1, avatar);
 		}
 		
+		int rand = (int)(Math.random()*1000000000);
 		try {
-			return generateFromBI(frames, "eject.gif", 100/12, true);
+			return generateFromBI(frames, rand+".gif", 100/12, true);
 		} catch(Exception e) {
 			e.printStackTrace(); 
 			return null;
