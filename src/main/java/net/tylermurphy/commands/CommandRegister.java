@@ -20,6 +20,7 @@ import net.tylermurphy.commands.autoModeration.Spam;
 import net.tylermurphy.commands.essential.Description;
 import net.tylermurphy.commands.essential.Help;
 import net.tylermurphy.commands.essential.Usage;
+import net.tylermurphy.commands.fun.Eject;
 import net.tylermurphy.commands.fun.Joke;
 import net.tylermurphy.commands.fun.Kill;
 import net.tylermurphy.commands.fun.Meme;
@@ -175,6 +176,7 @@ public class CommandRegister {
 		register(new Pout());
 		register(new Dance());
 		register(new ToggleWelcomeMessages());
+		register(new Eject());
 	}
 	
 	private static void register(ICommand command) {

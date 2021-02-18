@@ -8,7 +8,7 @@ import java.util.TimerTask;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.tylermurphy.Config;
 import net.tylermurphy.database.DatabaseManager;
-import net.tylermurphy.image.ImageGenerator;
+import net.tylermurphy.image.ImageFactory;
 
 public class LevelManager {
 	
@@ -52,7 +52,7 @@ public class LevelManager {
 	
 	private void sendLevelUpMessage(GuildMessageReceivedEvent event, int level) {
 		try{ 
-			 byte[] img = ImageGenerator.GenerateLevelUpImage(level, event.getAuthor());
+			 byte[] img = ImageFactory.GenerateLevelUpImage(level, event.getAuthor());
 			 
 			 event.getChannel()
 			 	.sendMessageFormat(":tada:**| %s** leveled up!", event.getAuthor().getName())

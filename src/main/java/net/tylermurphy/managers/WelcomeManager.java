@@ -6,7 +6,7 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.tylermurphy.Config;
 import net.tylermurphy.database.DatabaseManager;
-import net.tylermurphy.image.ImageGenerator;
+import net.tylermurphy.image.ImageFactory;
 
 public class WelcomeManager extends ListenerAdapter {
 
@@ -16,7 +16,7 @@ public class WelcomeManager extends ListenerAdapter {
 		
 		TextChannel channel = event.getGuild().getSystemChannel();
 		if(channel == null) return;
-		byte[] img = ImageGenerator.WelcomeImage(event.getMember().getUser(), event.getGuild());
+		byte[] img = ImageFactory.WelcomeImage(event.getMember().getUser(), event.getGuild());
 		 
 		channel
 			.sendMessageFormat(":tada:**| Weclome %s#%s** to %s!", event.getMember().getEffectiveName(), event.getMember().getUser().getDiscriminator(), event.getGuild().getName())
@@ -28,7 +28,7 @@ public class WelcomeManager extends ListenerAdapter {
 	
 		if(Config.DEBUG == true && event.getAuthor().getIdLong() == Config.OWNER && event.getMessage().getContentRaw().equalsIgnoreCase(Config.PREFIX+"welcometest")) {
 			TextChannel channel = event.getChannel();
-			byte[] img = ImageGenerator.WelcomeImage(event.getMember().getUser(), event.getGuild());
+			byte[] img = ImageFactory.WelcomeImage(event.getMember().getUser(), event.getGuild());
 			
 			channel
 				.sendMessageFormat(":tada:**| Weclome %s#%s** to %s!", event.getMember().getEffectiveName(), event.getMember().getUser().getDiscriminator(), event.getGuild().getName())

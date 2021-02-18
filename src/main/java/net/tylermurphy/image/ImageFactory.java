@@ -1,6 +1,7 @@
 package net.tylermurphy.image;
 
 import java.awt.AlphaComposite;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -17,7 +18,7 @@ import javax.imageio.ImageIO;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.User;
 
-public class ImageGenerator {
+public class ImageFactory {
 
 	public static byte[] GenerateLevelUpImage(int level, User u) {
 		BufferedImage background,avatar,frame;
@@ -54,8 +55,6 @@ public class ImageGenerator {
 	}
 	
 	public static byte[] WelcomeImage(User u, Guild g) {
-		System.out.println(u);
-		System.out.println(u.getAvatarUrl());
 		BufferedImage background,avatar;
 		try {
 			background = makeRoundedCorner(
@@ -96,8 +95,50 @@ public class ImageGenerator {
 			return null;
 		}
 		
-		
-		
+	}
+	
+	public static BufferedImage GenerateEjectFrame(String message, int frame, float totalFrames, BufferedImage space1, BufferedImage avatar) {
+		try {
+			int w = 600;
+			int h = 400;
+			BufferedImage img = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+			
+			Graphics2D g2d = img.createGraphics();
+			g2d.drawImage(space1, (int) (-100+100/totalFrames*frame), 0, (int)(w*1.5), (int)(h*1.5), null);
+			
+			BufferedImage ravater = rotate(avatar, 180/24*frame);
+			g2d.drawImage(ravater, (w+2*avatar.getWidth()+100)/24*frame-avatar.getWidth()-50, h/2-avatar.getHeight()/2, 150, 150,  null);
+			
+			if(frame > 12) {
+				int length = (message.length() * (frame-11)/12);
+				message = message.substring(0, length);
+				
+				g2d.setFont(new Font("Dialog", Font.BOLD, 30));
+				FontMetrics fm = g2d.getFontMetrics();
+				int x = w/2 - fm.stringWidth(message)/2;
+				int y = h/2;
+				g2d.drawString(message, x, y);
+			}
+			
+			return img;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static BufferedImage rotate(BufferedImage bimg, double angle) {
+
+	    int w = bimg.getWidth()+50;    
+	    int h = bimg.getHeight()+50;
+
+	    BufferedImage rotated = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);  
+	    Graphics2D graphic = rotated.createGraphics();
+	    graphic.rotate(Math.toRadians(angle), w/2, h/2);
+	    graphic.drawImage(bimg, null, w/2-bimg.getWidth()/2, h/2-bimg.getHeight()/2);
+	    graphic.dispose();
+	    return rotated;
 	}
 	
 	private static BufferedImage makeRoundedCorner(BufferedImage image, int cornerRadius) {
@@ -120,7 +161,7 @@ public class ImageGenerator {
 	    return output;
 	}
 	
-	private static BufferedImage getImageFromURL(String surl) {
+	public static BufferedImage getImageFromURL(String surl) {
 		try {
 			final URL url = new URL(surl);
 			final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
