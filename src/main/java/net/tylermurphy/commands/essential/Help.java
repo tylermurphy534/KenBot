@@ -30,7 +30,7 @@ public class Help implements ICommand {
 					false);
 			embed.addField(
 					":ok_hand: Fun Commands",
-					"`joke`,`kill`,`meme`,`phone`,`ping`,`percent`,`whoAreYou`",
+					"`joke`,`kill`,`meme`,`phone`,`ping`,`percent`,`whoAreYou`, `eject`",
 					false);
 			embed.addField(
 					":heartpulse: Social Commands",
