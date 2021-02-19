@@ -42,7 +42,7 @@ public class LevelManager {
 	private void handleMember(GuildMessageReceivedEvent event) {
 		String unparsedXp = DatabaseManager.UserSettings.get(event.getAuthor().getIdLong(), event.getGuild().getIdLong(), "XP");
 		int xp = 0;
-		if(!unparsedXp.equals("")) xp = Integer.parseInt(unparsedXp);
+		if(unparsedXp != null) xp = Integer.parseInt(unparsedXp);
 		xp++;
 		DatabaseManager.UserSettings.set(event.getAuthor().getIdLong(), event.getGuild().getIdLong(), "XP", String.valueOf(xp));
 		if(getLevel(xp) > getLevel(xp-1) && getLevel(xp) > 1) {

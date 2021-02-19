@@ -80,11 +80,17 @@ public class AutoModManager {
 		if(data.get(column) == null || data.get(column).equals("false")) {
 			return;
 		} else if(data.get(column).equalsIgnoreCase("warn")) {
-			int warns = Integer.parseInt(DatabaseManager.UserSettings.get(event.getMember().getUser().getIdLong(), event.getGuild().getIdLong(), "Warns"));
+			int warns = 0;
+			try{ 
+				Integer.parseInt(DatabaseManager.UserSettings.get(event.getMember().getUser().getIdLong(), event.getGuild().getIdLong(), "Warns"));
+			} catch (Exception ignore) {}
 			warn(event,column,warns+1);
 			Warn.HandleWarn(event, event.getMember(), DatabaseManager.WarnActions.get(event.getGuild().getIdLong(), warns), names.get(column));
 		} else if(data.get(column).equalsIgnoreCase("warnanddelete")) {
-			int warns = Integer.parseInt(DatabaseManager.UserSettings.get(event.getMember().getUser().getIdLong(), event.getGuild().getIdLong(), "Warns"));
+			int warns = 0;
+			try{ 
+				Integer.parseInt(DatabaseManager.UserSettings.get(event.getMember().getUser().getIdLong(), event.getGuild().getIdLong(), "Warns"));
+			} catch (Exception ignore) {}
 			warn(event,column,warns+1);
 			Warn.HandleWarn(event, event.getMember(), DatabaseManager.WarnActions.get(event.getGuild().getIdLong(), warns), names.get(column));
 			event.getMessage().delete().queue();

@@ -20,7 +20,7 @@ public class XP implements ICommand {
 			return;
 		}
 		String textXp = DatabaseManager.UserSettings.get(event.getAuthor().getIdLong(), event.getGuild().getIdLong(), "XP");
-		if(textXp.equals(""))
+		if(textXp == null)
 			textXp = "0";
 		int xp = Integer.parseInt(textXp);
 		EmbedBuilder builder = EmbedUtils.getDefaultEmbed()

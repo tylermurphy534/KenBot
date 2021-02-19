@@ -38,7 +38,7 @@ public class Help implements ICommand {
 					false);
 			embed.addField(
 					":ring: Relationship Commands",
-					"`ship`,`getship`",
+					"`status`,`propose`,`acceptProposal`,`rejectProposal`,`divorce`",
 					false);
 			embed.addField(
 					":game_die: Game Commands",

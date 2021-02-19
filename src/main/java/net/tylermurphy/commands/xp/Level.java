@@ -21,7 +21,7 @@ public class Level implements ICommand {
 			return;
 		}
 		String unparsedXp = DatabaseManager.UserSettings.get(event.getAuthor().getIdLong(), event.getGuild().getIdLong(), "XP");
-		if(unparsedXp.equals(""))
+		if(unparsedXp == null)
 			unparsedXp = "0";
 		int xp = Integer.parseInt(unparsedXp);
 		EmbedBuilder builder = EmbedUtils.getDefaultEmbed()
