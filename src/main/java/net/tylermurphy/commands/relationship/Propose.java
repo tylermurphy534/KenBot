@@ -54,7 +54,8 @@ public class Propose implements ICommand {
 		}
 		EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
 				.appendDescription(String.format("%s has proposed to %s!\n", event.getAuthor(), mentionedMembers.get(0)))
-				.appendDescription("Run `Ken acceptProposal` to accept or `Ken rejectProposal` to deny");
+				.appendDescription("Run `Ken acceptProposal` to accept or `Ken rejectProposal` to deny")
+				.appendDescription("\nRun `Ken divorce` to cancel proposal");
 		channel.sendMessage(embed.build()).queue();
 		DatabaseManager.UserSettings.set(userId, 0, "LoveId", String.valueOf(otherId));
 		return;

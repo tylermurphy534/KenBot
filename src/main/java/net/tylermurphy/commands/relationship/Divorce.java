@@ -22,7 +22,7 @@ public class Divorce implements ICommand {
 			channel.sendMessage(embed.build()).queue();
 			return;
 		}
-		String otherId = DatabaseManager.UserSettings.get(Long.parseLong(testId), 0, "LoveId");
+		String otherId = DatabaseManager.UserSettings.getUserFromValue(0, "LoveId", String.valueOf(userId));
 		if(!testId.equals(otherId)) {
 			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
 					.setDescription("You canceled your proposal.");

@@ -10,16 +10,14 @@ import java.util.List;
 public class UserSettings {
 
 	public String get(long userId, long guildId, String settingName) {
-		String sql = "SELECT * FROM UserSettings WHERE UserId = ? AND SettingName = ?";
+		String sql = "SELECT * FROM UserSettings WHERE UserId = ? AND GuildId = ? AND SettingName = ?";
 		try( Connection connection = MariaDBConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ){
-			statement.setString(1, String.valueOf(userId));
-			statement.setString(2, settingName);
+			statement.setString(1, String.valueOf(guildId));
+			statement.setString(2, String.valueOf(userId));
+			statement.setString(3, settingName);
 			try(final ResultSet resultSet = statement.executeQuery()){
-    			while(resultSet.next()) {
-    				if(resultSet.getString("GuildId").equals(String.valueOf(guildId))) {
-    					connection.commit();
-    					return resultSet.getString("SettingValue");
-    				}
+    			if(resultSet.next()) {
+					return resultSet.getString("SettingValue");
     			}
     		}
 		} catch (SQLException e) {
@@ -39,7 +37,6 @@ public class UserSettings {
 					String s = resultSet.getString("UserId") + ":" + resultSet.getString("SettingValue");
     				data.add(s);
     			}
-    			connection.commit();
     			return data;
     		}
 		} catch (SQLException e) {
@@ -56,7 +53,6 @@ public class UserSettings {
 			statement.setString(3, settingName);
 			statement.setString(4, settingValue);
 			statement.execute();
-			connection.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -69,7 +65,6 @@ public class UserSettings {
 			statement.setString(2, String.valueOf(guildId));
 			statement.setString(3, settingName);
 			statement.execute();
-			connection.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -83,8 +78,7 @@ public class UserSettings {
 			statement.setString(3, settingValue);
 			try(final ResultSet resultSet = statement.executeQuery()){
     			while(resultSet.next()) {
-    				if(resultSet.getString("GuildId").equals(String.valueOf(guildId))) {
-    					connection.commit();
+    				if(resultSet.next()) {
     					return resultSet.getString("UserId");
     				}
     			}

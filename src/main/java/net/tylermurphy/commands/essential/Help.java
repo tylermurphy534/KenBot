@@ -34,7 +34,7 @@ public class Help implements ICommand {
 					false);
 			embed.addField(
 					":heartpulse: Social Commands",
-					"`boop`,`cookie`,`gift`,`highFive`,`hug`,`kiss`,`lick`,`pet`,`punch`,`slap`,`tickle`,`dance`,`cry`,`pout`",
+					"`boop`,`cookie`,`gift`,`highFive`,`hug`,`kiss`,`lick`,`pet`,`punch`,`slap`,`tickle`,`dance`,`cry`,`pout`, `stats`",
 					false);
 			embed.addField(
 					":ring: Relationship Commands",

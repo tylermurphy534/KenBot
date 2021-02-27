@@ -20,7 +20,7 @@ public class AcceptProposal implements ICommand {
 		String otherId = DatabaseManager.UserSettings.getUserFromValue(0L, "LoveId", String.valueOf(userId));
 		if(otherId == null) {
 			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
-					.setDescription("There is no propostal for you to accept");
+					.setDescription("There is no proposal for you to accept");
 			channel.sendMessage(embed.build()).queue();
 			return;
 		}
