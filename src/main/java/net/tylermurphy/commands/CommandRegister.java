@@ -109,6 +109,7 @@ public class CommandRegister {
 		register(new Divorce());
 		register(new RejectProposal());
 		register(new AcceptProposal());
+		register(new Stats());
 	}
 	
 	private static void register(ICommand command) {

@@ -12,8 +12,8 @@ public class UserSettings {
 	public String get(long userId, long guildId, String settingName) {
 		String sql = "SELECT * FROM UserSettings WHERE UserId = ? AND GuildId = ? AND SettingName = ?";
 		try( Connection connection = MariaDBConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ){
-			statement.setString(1, String.valueOf(guildId));
-			statement.setString(2, String.valueOf(userId));
+			statement.setString(1, String.valueOf(userId));
+			statement.setString(2, String.valueOf(guildId));
 			statement.setString(3, settingName);
 			try(final ResultSet resultSet = statement.executeQuery()){
     			if(resultSet.next()) {
