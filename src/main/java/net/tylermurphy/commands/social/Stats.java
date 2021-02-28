@@ -25,7 +25,7 @@ public class Stats implements ICommand{
 	    put("hug","Hug :people_hugging:");
 	    put("kiss","Kiss :kissing_heart:");
 	    put("lick","Lick :flushed:");
-	    put("pet","Pet :pinching_hands:");
+	    put("pet","Pet :pinching_hand:");
 	    put("punch","Punch :right_fist:");
 	    put("slap","Slap :clap:");
 	    put("tickle","Tickle :laughing:");
@@ -48,18 +48,14 @@ public class Stats implements ICommand{
 		HashMap<String,Integer> stats = DatabaseManager.SocialStats.getAll(userId, otherId);
 		HashMap<String,Integer> stats2 = DatabaseManager.SocialStats.getAll(otherId, userId);
 		
-		if(stats.size() < 1 && stats2.size() < 1) {
-			EmbedBuilder embed = EmbedUtils.getDefaultEmbed();
-			embed.setDescription("You have no social command history.");
-			channel.sendMessage(embed.build()).queue();
-			return;
-		}
-		
 		EmbedBuilder embed = EmbedUtils.getDefaultEmbed();
 		
 		embed.setAuthor("Social Stats With "+ mentionedMembers.get(0).getUser().getName(), null, mentionedMembers.get(0).getUser().getAvatarUrl());
-		for(Entry<String,Integer> entry : stats.entrySet()) {
-			embed.addField(labels.get(entry.getKey()), entry.getValue()+stats2.get(entry.getKey())+"", true);
+		for(Entry<String, String> entry : labels.entrySet()) {
+			String title = entry.getValue();
+			int value = stats.get(entry.getKey()) == null ? 0 : stats.get(entry.getKey());
+			int value2 = stats2.get(entry.getKey()) == null ? 0 : stats2.get(entry.getKey());
+			embed.addField(title, (value+value2)+"", true);
 		}
 		
 		embed.addField(event.getAuthor().getName() + "'s social command uses", stats.size()+"", false);
