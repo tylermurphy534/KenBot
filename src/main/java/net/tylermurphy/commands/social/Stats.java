@@ -51,15 +51,20 @@ public class Stats implements ICommand{
 		EmbedBuilder embed = EmbedUtils.getDefaultEmbed();
 		
 		embed.setAuthor("Social Stats With "+ mentionedMembers.get(0).getUser().getName(), null, mentionedMembers.get(0).getUser().getAvatarUrl());
+		
+		int total = 0, total2 = 0;
+		
 		for(Entry<String, String> entry : labels.entrySet()) {
 			String title = entry.getValue();
 			int value = stats.get(entry.getKey()) == null ? 0 : stats.get(entry.getKey());
+			total += value;
 			int value2 = stats2.get(entry.getKey()) == null ? 0 : stats2.get(entry.getKey());
+			total2 += value2;
 			embed.addField(title, (value+value2)+"", true);
 		}
 		
-		embed.addField(event.getAuthor().getName() + "'s social command uses", stats.size()+"", false);
-		embed.addField(mentionedMembers.get(0).getUser().getName() + "'s social command uses", stats2.size()+"", false);
+		embed.addField(event.getAuthor().getName() + "'s social command uses", total+"", false);
+		embed.addField(mentionedMembers.get(0).getUser().getName() + "'s social command uses", total2+"", false);
 		
 		channel.sendMessage(embed.build()).queue();
 	}
