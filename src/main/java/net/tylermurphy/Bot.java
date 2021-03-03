@@ -1,9 +1,13 @@
 package net.tylermurphy;
 
 import java.awt.Color;
+
 import java.sql.SQLException;
 
 import javax.security.auth.login.LoginException;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import me.duncte123.botcommons.messaging.EmbedUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -61,9 +65,20 @@ public class Bot {
 		    .build()
 		   	.awaitReady();
 		
+		SpringBoot.init();
+		
 	}
 	
 	public static void main(String[] args) throws LoginException, InterruptedException, SQLException, SecurityException {
 		new Bot();
     }
+}
+
+@SpringBootApplication
+class SpringBoot {
+	
+	public static void init() {
+		SpringApplication.run(SpringBoot.class, new String[0]);
+	}
+	
 }

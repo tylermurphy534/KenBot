@@ -69,7 +69,7 @@ public class NHentaiAPI extends API {
         final String url = String.format("https://nhentai.net/api/galleries/search?query=%s%s", searchTerm, "%20language:english");
         System.out.println(url);
         try {
-            return getJson(url);
+        	return getJson("GET",url,API.API_HEADERS_JSON_USERAGENT);
         } catch (JSONException | IOException ignored) {}
         return null;
      }
@@ -78,7 +78,7 @@ public class NHentaiAPI extends API {
         final String url = String.format("https://nhentai.net/api/gallery/%s", id);
         System.out.println(url);
         try {
-            return getJson(url);
+        	return getJson("GET",url,API.API_HEADERS_JSON_USERAGENT);
         } catch (JSONException | IOException ignored) {}
         return null;
      }

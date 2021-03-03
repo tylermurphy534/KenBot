@@ -3,6 +3,8 @@ plugins {
     id 'java'
     id 'application'
     id'com.github.johnrengelman.shadow' version '4.0.4'
+    id 'org.springframework.boot' version '2.4.2'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 }
 
 mainClassName = 'net.tylermurphy.Bot'
@@ -23,12 +25,23 @@ dependencies {
 	compile group: 'com.google.apis', name: 'google-api-services-youtube', version: 'v3-rev222-1.25.0'
 	compile group: 'com.zaxxer', name: 'HikariCP', version: '3.4.1'
 	compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
-	compile group: 'org.json', name: 'json', version: '20090211'
 	compile group: 'com.vdurmont', name: 'emoji-java', version: '5.1.1'
 	compile group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.1.2'
 	compile group: 'club.minnced', name: 'discord-webhooks', version: '0.3.2'
 	compile group: 'org.jdom', name: 'jdom', version: '2.0.0'
 	compile group: 'log4j', name: 'log4j', version: '1.2.17'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testCompile('org.springframework.boot:spring-boot-starter-test'){
+        exclude group: "com.vaadin.external.google", module:"android-json"
+	}
+}
+
+test {
+	useJUnitPlatform()
+}
+
+configurations {
+     testImplementation.exclude group: 'com.vaadin.external.google', module: 'android-json'
 }
 
 compileJava.options.encoding = 'UTF-8'

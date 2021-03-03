@@ -40,7 +40,6 @@ public class CommandRegister {
 		register(new Ban());
 		register(new Unban());
 		register(new Purge());
-		register(new SetPrefix());
 		register(new Loop());
 		register(new Mute());
 		register(new Unmute());
@@ -72,7 +71,6 @@ public class CommandRegister {
 		register(new Top());
 		register(new SelfRole());
 		register(new DelSelfRole());
-		register(new SetPrefixWithSpace());
 		register(new LogChannel());
 		register(new ServerStats());
 		register(new Caps());
@@ -110,6 +108,8 @@ public class CommandRegister {
 		register(new RejectProposal());
 		register(new AcceptProposal());
 		register(new Stats());
+		register(new SetPrefix());
+		register(new SetPrefixWithSpace());
 	}
 	
 	private static void register(ICommand command) {

@@ -58,7 +58,7 @@ public class Help implements ICommand {
 					false);
 			embed.addField(
 					":wrench: Admin Commands",
-					"`delSelfRole`,`selfRole`,`logChannel`,`purge`,`serverStats`,`setPrefix`,`setPrefixWithSpace`,`toggleWelcomeMessages`",
+					"`delSelfRole`,`selfRole`,`logChannel`,`purge`,`setPrefix`,`setPrefixWithSpace`,`serverStats`,`toggleWelcomeMessages`",
 					false);
 			embed.addField(
 					":hammer: Moderation Commands",

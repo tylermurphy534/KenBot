@@ -113,7 +113,7 @@ public class ImageFactory {
 				int length = (message.length() * (frame-11)/12);
 				message = message.substring(0, length);
 				
-				g2d.setFont(new Font("Dialog", Font.BOLD, 30));
+				g2d.setFont(new Font("Dialog", Font.BOLD, 25));
 				FontMetrics fm = g2d.getFontMetrics();
 				int x = w/2 - fm.stringWidth(message)/2;
 				int y = h/2;

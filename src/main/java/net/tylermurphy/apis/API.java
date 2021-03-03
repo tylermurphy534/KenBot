@@ -1,29 +1,25 @@
 package net.tylermurphy.apis;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.StringWriter;
-import java.net.ConnectException;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 
 public abstract class API{
+	
+	public final static int API_HEADERS_NONE = 0;
+	public final static int API_HEADERS_JSON = 1;
+	public final static int API_HEADERS_JSON_USERAGENT = 2;
+	public final static int API_HEADERS_USERAGENT = 3;
 
-	protected static JSONObject getJson(String url) throws IOException, JSONException {
-        HttpURLConnection connection = getConnection(url);
+	protected static JSONObject getJson(String request, String url, int headerSetting, String... headers) throws IOException, JSONException {
+        HttpURLConnection connection = getConnection(request, url, headerSetting, null, headers);
         try {
-            return parseJson(connection);
+            return Parser.parseJson(connection.getInputStream());
         } catch (Exception ignored) {
         	ignored.printStackTrace();
         } finally {
@@ -34,10 +30,24 @@ public abstract class API{
         return new JSONObject("");
     }
 	
-	protected static Document getXML(String url) throws IOException, JSONException {
-        HttpURLConnection connection = getConnection(url);
+	protected static JSONObject getJson(String request, String url, int headerSetting, String body, String... headers) throws IOException, JSONException {
+        HttpURLConnection connection = getConnection(request, url, headerSetting, body, headers);
         try {
-            return parseXML(connection);
+            return Parser.parseJson(connection.getInputStream());
+        } catch (Exception ignored) {
+        	ignored.printStackTrace();
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+        return new JSONObject("");
+    }
+	
+	protected static Document getXML(String request, String url, int headerSetting, String... headers) throws IOException, JSONException {
+        HttpURLConnection connection = getConnection(request, url, headerSetting, null, headers);
+        try {
+            return Parser.parseXML(connection.getInputStream());
         } catch (Exception ignored) {
         	ignored.printStackTrace();
         } finally {
@@ -48,23 +58,43 @@ public abstract class API{
         return null;
     }
 	
-	private static HttpURLConnection getConnection(String url) {
+	private static HttpURLConnection getConnection(String request, String url, int headerSetting, String body, String... headers) {
 		HttpURLConnection connection = null;
         try {
             connection = (HttpURLConnection) new URL(url).openConnection();
             connection.setDoInput(true);
             connection.setDoOutput(true);
-            connection.setRequestMethod("GET");
-            connection.setRequestProperty("Content-Type", "application/json");
-            connection.setRequestProperty("Accept", "application/json");
-            connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-            connection.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0");
+            connection.setRequestMethod(request);
             
-            int statusCode = connection.getResponseCode();
-            if (statusCode != HttpURLConnection.HTTP_OK && statusCode != HttpURLConnection.HTTP_CREATED) {
-                String error = String.format("HTTP Code: '%1$s' from '%2$s'", statusCode, url);
-                throw new ConnectException(error);
+            if(headerSetting == API_HEADERS_JSON) {
+	            connection.setRequestProperty("Content-Type", "application/json");
+	            connection.setRequestProperty("Accept", "application/json");
+	            connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+            } else if(headerSetting == API_HEADERS_JSON_USERAGENT){
+            	connection.setRequestProperty("Content-Type", "application/json");
+	            connection.setRequestProperty("Accept", "application/json");
+	            connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+	            connection.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0");
+            } else if(headerSetting == API_HEADERS_USERAGENT){
+	            connection.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0");
             }
+            
+            for(int i=0; i+1<headers.length; i+=2) {
+            	connection.addRequestProperty(headers[i], headers[i+1]);
+            }
+            
+            if(body != null) {
+	            try(OutputStream os = connection.getOutputStream()) {
+	                byte[] input = body.getBytes("utf-8");
+	                os.write(input, 0, input.length);			
+	            }
+            }
+            
+//            int statusCode = connection.getResponseCode();
+//            if (statusCode != HttpURLConnection.HTTP_OK && statusCode != HttpURLConnection.HTTP_CREATED) {
+//                String error = String.format("HTTP Code: '%1$s' from '%2$s'", statusCode, url);
+//                throw new ConnectException(error);
+//            }            
             
             return connection;
         } catch (Exception e) { 
@@ -72,51 +102,5 @@ public abstract class API{
         }
         return null;
 	}
-	
-	private static Document parseXML(HttpURLConnection connection) throws ParserConfigurationException, SAXException {
-        InputStream stream = null;
-        try {
-            stream = new BufferedInputStream(connection.getInputStream());
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(stream);
-            doc.getDocumentElement().normalize();
-            return doc;
-        } catch (IOException ignored) {
-        	ignored.printStackTrace();
-        } finally {
-            if (stream != null) {
-                try {
-                    stream.close();
-                } catch (IOException ignored) {
-                }
-            }
-        }
-        return null;
-	}
-    
-	private static JSONObject parseJson(HttpURLConnection connection) throws JSONException {
-        char[] buffer = new char[1024 * 4];
-        int n;
-        InputStream stream = null;
-        try {
-            stream = new BufferedInputStream(connection.getInputStream());
-            InputStreamReader reader = new InputStreamReader(stream, "UTF-8");
-            StringWriter writer = new StringWriter();
-            while (-1 != (n = reader.read(buffer))) {
-                writer.write(buffer, 0, n);
-            }
-            return new JSONObject(writer.toString());
-        } catch (IOException ignored) {
-        } finally {
-            if (stream != null) {
-                try {
-                    stream.close();
-                } catch (IOException ignored) {
-                }
-            }
-        }
-        return new JSONObject("");
-    }
 	
 }

@@ -43,5 +43,9 @@ public class Config {
 	public static String DATABASE_NAME;
 	public static boolean NSFW;
 	public static boolean DEBUG;
+	public static String TWITCH_CLIENT_ID;
+	public static String TWITCH_CLIENT_SECRET;
+	public static String REST_API_ENDPOINT_URL;
 	
 }
+ 

@@ -32,7 +32,7 @@ public class TennorAPI extends API {
         final String url = String.format("https://api.tenor.com/v1/search?q=%1$s&key=%2$s&limit=%3$s",
                 searchTerm, Config.TENNOR_API_KEY, limit);
         try {
-            return getJson(url);
+        	return getJson("GET",url,API.API_HEADERS_JSON_USERAGENT);
         } catch (JSONException | IOException ignored) {
         }
         return null;
