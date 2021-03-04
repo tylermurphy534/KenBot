@@ -5,13 +5,13 @@ import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.tylermurphy.Config;
-import net.tylermurphy.database.DatabaseManager;
+import net.tylermurphy.database.Database;
 import net.tylermurphy.image.ImageFactory;
 
 public class WelcomeManager extends ListenerAdapter {
 
 	public void onGuildMemberJoin(GuildMemberJoinEvent event) {
-		String value = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "WelcomeMessage");
+		String value = Database.GuildSettings.get(event.getGuild().getIdLong(), "WelcomeMessage");
 		if(value != null && value.equals("false")) return;
 		
 		TextChannel channel = event.getGuild().getSystemChannel();

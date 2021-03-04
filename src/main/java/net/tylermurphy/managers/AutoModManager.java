@@ -13,7 +13,7 @@ import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.tylermurphy.commands.moderation.TempMute;
 import net.tylermurphy.commands.moderation.Warn;
-import net.tylermurphy.database.DatabaseManager;
+import net.tylermurphy.database.Database;
 
 public class AutoModManager {
 	
@@ -35,11 +35,11 @@ public class AutoModManager {
 		String content = event.getMessage().getContentRaw();
 		long guildId = event.getGuild().getIdLong();
 		HashMap<String,String> data = new HashMap<String,String>(){{
-			put("autoModCaps", DatabaseManager.GuildSettings.get(guildId, "autoModCaps"));
-			put("autoModMentions", DatabaseManager.GuildSettings.get(guildId, "autoModMentions"));
-			put("autoModSpam", DatabaseManager.GuildSettings.get(guildId, "autoModSpam"));
-			put("autoModDuplicate", DatabaseManager.GuildSettings.get(guildId, "autoModDuplicate"));
-			put("autoModEmoji", DatabaseManager.GuildSettings.get(guildId, "autoModEmoji"));
+			put("autoModCaps", Database.GuildSettings.get(guildId, "autoModCaps"));
+			put("autoModMentions", Database.GuildSettings.get(guildId, "autoModMentions"));
+			put("autoModSpam", Database.GuildSettings.get(guildId, "autoModSpam"));
+			put("autoModDuplicate", Database.GuildSettings.get(guildId, "autoModDuplicate"));
+			put("autoModEmoji", Database.GuildSettings.get(guildId, "autoModEmoji"));
 		}};
 		if(event.getAuthor().isBot() || event.getMember().hasPermission(Permission.ADMINISTRATOR) || event.getMember().hasPermission(Permission.MANAGE_SERVER) || event.getMember().hasPermission(Permission.MESSAGE_MANAGE))
 			return;
@@ -82,17 +82,17 @@ public class AutoModManager {
 		} else if(data.get(column).equalsIgnoreCase("warn")) {
 			int warns = 0;
 			try{ 
-				Integer.parseInt(DatabaseManager.UserSettings.get(event.getMember().getUser().getIdLong(), event.getGuild().getIdLong(), "Warns"));
+				Integer.parseInt(Database.UserSettings.get(event.getMember().getUser().getIdLong(), event.getGuild().getIdLong(), "Warns"));
 			} catch (Exception ignore) {}
 			warn(event,column,warns+1);
-			Warn.HandleWarn(event, event.getMember(), DatabaseManager.WarnActions.get(event.getGuild().getIdLong(), warns), names.get(column));
+			Warn.HandleWarn(event, event.getMember(), Database.WarnActions.get(event.getGuild().getIdLong(), warns), names.get(column));
 		} else if(data.get(column).equalsIgnoreCase("warnanddelete")) {
 			int warns = 0;
 			try{ 
-				Integer.parseInt(DatabaseManager.UserSettings.get(event.getMember().getUser().getIdLong(), event.getGuild().getIdLong(), "Warns"));
+				Integer.parseInt(Database.UserSettings.get(event.getMember().getUser().getIdLong(), event.getGuild().getIdLong(), "Warns"));
 			} catch (Exception ignore) {}
 			warn(event,column,warns+1);
-			Warn.HandleWarn(event, event.getMember(), DatabaseManager.WarnActions.get(event.getGuild().getIdLong(), warns), names.get(column));
+			Warn.HandleWarn(event, event.getMember(), Database.WarnActions.get(event.getGuild().getIdLong(), warns), names.get(column));
 			event.getMessage().delete().queue();
 		} else if(data.get(column).equalsIgnoreCase("delete")) {
 			event.getMessage().delete().queue();
@@ -141,7 +141,7 @@ public class AutoModManager {
 				.setColor(Color.yellow)
 				.setDescription(String.format("%s, you have been warned for %s",event.getAuthor(),names.get(column)));
 		event.getChannel().sendMessage(builder.build()).queue();
-		DatabaseManager.UserSettings.set(event.getMember().getUser().getIdLong(), event.getGuild().getIdLong(), "Warns", String.valueOf(warns));
+		Database.UserSettings.set(event.getMember().getUser().getIdLong(), event.getGuild().getIdLong(), "Warns", String.valueOf(warns));
 	}
 	
 }

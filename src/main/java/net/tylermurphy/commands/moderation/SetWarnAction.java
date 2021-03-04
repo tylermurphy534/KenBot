@@ -7,7 +7,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.tylermurphy.commands.ICommand;
-import net.tylermurphy.database.DatabaseManager;
+import net.tylermurphy.database.Database;
 
 public class SetWarnAction implements ICommand {
 
@@ -41,13 +41,13 @@ public class SetWarnAction implements ICommand {
 		}
 		
 		if(args.get(1).equalsIgnoreCase("mute")) {
-			DatabaseManager.WarnActions.set(event.getGuild().getIdLong(), warns, "mute");
+			Database.WarnActions.set(event.getGuild().getIdLong(), warns, "mute");
 		} else if(args.get(1).equalsIgnoreCase("kick")) {
-			DatabaseManager.WarnActions.set(event.getGuild().getIdLong(), warns, "kick");
+			Database.WarnActions.set(event.getGuild().getIdLong(), warns, "kick");
 		} else if(args.get(1).equalsIgnoreCase("ban")) {
-			DatabaseManager.WarnActions.set(event.getGuild().getIdLong(), warns, "ban");
+			Database.WarnActions.set(event.getGuild().getIdLong(), warns, "ban");
 		} else {
-			DatabaseManager.WarnActions.remove(event.getGuild().getIdLong(), warns);
+			Database.WarnActions.remove(event.getGuild().getIdLong(), warns);
 			event.getChannel().sendMessage("Removed warn action for "+warns+"warns").queue();
 			return;
 		}

@@ -1,6 +1,6 @@
 package net.tylermurphy.database;
 
-public class DatabaseManager {
+public class Database {
 	
 	public static GuildSettings GuildSettings = new GuildSettings();
 	public static SelfRoles SelfRoles = new SelfRoles();

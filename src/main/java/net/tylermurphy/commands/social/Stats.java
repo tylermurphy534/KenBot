@@ -12,7 +12,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.tylermurphy.commands.ICommand;
-import net.tylermurphy.database.DatabaseManager;
+import net.tylermurphy.database.Database;
 
 public class Stats implements ICommand{
 	
@@ -45,8 +45,8 @@ public class Stats implements ICommand{
 		long userId = event.getAuthor().getIdLong();
 		long otherId = mentionedMembers.get(0).getUser().getIdLong();
 		
-		HashMap<String,Integer> stats = DatabaseManager.SocialStats.getAll(userId, otherId);
-		HashMap<String,Integer> stats2 = DatabaseManager.SocialStats.getAll(otherId, userId);
+		HashMap<String,Integer> stats = Database.SocialStats.getAll(userId, otherId);
+		HashMap<String,Integer> stats2 = Database.SocialStats.getAll(otherId, userId);
 		
 		EmbedBuilder embed = EmbedUtils.getDefaultEmbed();
 		

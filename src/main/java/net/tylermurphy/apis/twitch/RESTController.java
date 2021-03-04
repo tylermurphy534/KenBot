@@ -20,8 +20,11 @@ public class RESTController {
 				JSONObject subscription = json.getJSONObject("subscription");
 				String status = subscription.getString("status");
 				if(status.equals("webhook_callback_verification_pending")) {
+					//tell channel it was a success horray
 					return json.getString("challenge");
 				}
+				// to be coded
+				// this is when there was a actual notification
 				return "false";
 			} catch(JSONException e) {
 				return e.getMessage();

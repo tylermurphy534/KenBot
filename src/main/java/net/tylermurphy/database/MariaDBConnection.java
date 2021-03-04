@@ -21,8 +21,8 @@ public class MariaDBConnection {
 		config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
 		config.addDataSourceProperty("user", Config.DATABASE_USER);
 		config.addDataSourceProperty("password", Config.DATABASE_PASSWORD);
-		config.setDriverClassName("org.mariadb.jdbc.Driver");
-		config.setAutoCommit(false);
+		config.addDataSourceProperty("autoCommit", "true");
+		config.setAutoCommit(true);
 		config.setMaximumPoolSize(20);
 		ds = new HikariDataSource(config);
 		

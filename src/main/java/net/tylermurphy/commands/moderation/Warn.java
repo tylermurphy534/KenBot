@@ -12,7 +12,7 @@ import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.tylermurphy.commands.ICommand;
-import net.tylermurphy.database.DatabaseManager;
+import net.tylermurphy.database.Database;
 
 public class Warn implements ICommand {
 
@@ -48,7 +48,7 @@ public class Warn implements ICommand {
 		}
 		
 		int warns = 0;
-		String warnsString = DatabaseManager.UserSettings.get(target.getUser().getIdLong(), event.getGuild().getIdLong(), "Warns");
+		String warnsString = Database.UserSettings.get(target.getUser().getIdLong(), event.getGuild().getIdLong(), "Warns");
 		if(warnsString != null) {
 			try {
 				warns = Integer.parseInt(warnsString);
@@ -57,8 +57,8 @@ public class Warn implements ICommand {
 			}
 		}
 		warns++;
-		DatabaseManager.UserSettings.set(target.getUser().getIdLong(), event.getGuild().getIdLong(), "Warns", String.valueOf(warns));
-		DatabaseManager.Warnings.insert(target.getIdLong(), event.getGuild().getIdLong(), reason);
+		Database.UserSettings.set(target.getUser().getIdLong(), event.getGuild().getIdLong(), "Warns", String.valueOf(warns));
+		Database.Warnings.insert(target.getIdLong(), event.getGuild().getIdLong(), reason);
 		EmbedBuilder builder = new EmbedBuilder()
 				.setTitle("Infraction Notice")
 				.setColor(Color.yellow)
@@ -67,7 +67,7 @@ public class Warn implements ICommand {
 		target.getUser().openPrivateChannel().queue(privateChannel -> {
 			privateChannel.sendMessage(builder.build()).queue();
 		});
-		HandleWarn(event, target, DatabaseManager.WarnActions.get(event.getGuild().getIdLong(), warns), reason);
+		HandleWarn(event, target, Database.WarnActions.get(event.getGuild().getIdLong(), warns), reason);
 	}
 	
 	public static void HandleWarn(GuildMessageReceivedEvent event, Member target, String action, String reason) {

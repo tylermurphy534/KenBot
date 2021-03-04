@@ -8,25 +8,25 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.tylermurphy.commands.ICommand;
-import net.tylermurphy.database.DatabaseManager;
+import net.tylermurphy.database.Database;
 
 public class Divorce implements ICommand {
 
 	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		TextChannel channel = event.getChannel();
 		long userId = event.getAuthor().getIdLong();
-		String testId = DatabaseManager.UserSettings.get(userId, 0, "LoveId");
+		String testId = Database.UserSettings.get(userId, 0, "LoveId");
 		if(testId == null || testId.equals("")) {
 			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
 					.setDescription("You are currently not in a relationship.");
 			channel.sendMessage(embed.build()).queue();
 			return;
 		}
-		String otherId = DatabaseManager.UserSettings.getUserFromValue(0, "LoveId", String.valueOf(userId));
+		String otherId = Database.UserSettings.getUserFromValue(0, "LoveId", String.valueOf(userId));
 		if(!testId.equals(otherId)) {
 			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
 					.setDescription("You canceled your proposal.");
-			DatabaseManager.UserSettings.delete(userId, 0, "LoveId");
+			Database.UserSettings.delete(userId, 0, "LoveId");
 			channel.sendMessage(embed.build()).queue();
 			return;
 		}
@@ -34,10 +34,10 @@ public class Divorce implements ICommand {
 				.setTitle(":broken_heart: Divorced")
 				.setDescription("You dicorced your relationship.");
 		channel.sendMessage(embed.build()).queue();
-		DatabaseManager.UserSettings.delete(userId, 0, "LoveId");
-		DatabaseManager.UserSettings.delete(Long.parseLong(otherId), 0, "LoveId");
-		DatabaseManager.UserSettings.delete(userId, 0, "LoveTime");
-		DatabaseManager.UserSettings.delete(Long.parseLong(otherId), 0, "LoveTime");
+		Database.UserSettings.delete(userId, 0, "LoveId");
+		Database.UserSettings.delete(Long.parseLong(otherId), 0, "LoveId");
+		Database.UserSettings.delete(userId, 0, "LoveTime");
+		Database.UserSettings.delete(Long.parseLong(otherId), 0, "LoveTime");
 	}
 
 	public String getInvoke() {

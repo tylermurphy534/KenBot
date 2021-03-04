@@ -7,7 +7,7 @@ import java.util.TimerTask;
 
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.tylermurphy.Config;
-import net.tylermurphy.database.DatabaseManager;
+import net.tylermurphy.database.Database;
 import net.tylermurphy.image.ImageFactory;
 
 public class LevelManager {
@@ -29,7 +29,7 @@ public class LevelManager {
 		if(Config.DEBUG == true && event.getAuthor().getIdLong() == Config.OWNER && event.getMessage().getContentRaw().equalsIgnoreCase(Config.PREFIX+"lvltest")) {
 			sendLevelUpMessage(event, (int)(Math.random()*30));
 		}
-		String value = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(),"Leveling");
+		String value = Database.GuildSettings.get(event.getGuild().getIdLong(),"Leveling");
 		if(value != null && value.equals("false")) return;
 		if(!blockedIds.contains(event.getAuthor().getIdLong())) {
 			blockedIds.add(event.getAuthor().getIdLong());
@@ -40,11 +40,11 @@ public class LevelManager {
 	}
 	
 	private void handleMember(GuildMessageReceivedEvent event) {
-		String unparsedXp = DatabaseManager.UserSettings.get(event.getAuthor().getIdLong(), event.getGuild().getIdLong(), "XP");
+		String unparsedXp = Database.UserSettings.get(event.getAuthor().getIdLong(), event.getGuild().getIdLong(), "XP");
 		int xp = 0;
 		if(unparsedXp != null) xp = Integer.parseInt(unparsedXp);
 		xp++;
-		DatabaseManager.UserSettings.set(event.getAuthor().getIdLong(), event.getGuild().getIdLong(), "XP", String.valueOf(xp));
+		Database.UserSettings.set(event.getAuthor().getIdLong(), event.getGuild().getIdLong(), "XP", String.valueOf(xp));
 		if(getLevel(xp) > getLevel(xp-1) && getLevel(xp) > 1) {
 			sendLevelUpMessage(event, getLevel(xp));
 		}

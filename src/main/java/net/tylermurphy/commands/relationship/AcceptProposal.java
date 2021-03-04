@@ -10,35 +10,35 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.tylermurphy.commands.ICommand;
-import net.tylermurphy.database.DatabaseManager;
+import net.tylermurphy.database.Database;
 
 public class AcceptProposal implements ICommand {
 
 	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		TextChannel channel = event.getChannel();
 		long userId = event.getAuthor().getIdLong();
-		String otherId = DatabaseManager.UserSettings.getUserFromValue(0L, "LoveId", String.valueOf(userId));
+		String otherId = Database.UserSettings.getUserFromValue(0L, "LoveId", String.valueOf(userId));
 		if(otherId == null) {
 			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
 					.setDescription("There is no proposal for you to accept");
 			channel.sendMessage(embed.build()).queue();
 			return;
 		}
-		String testId = DatabaseManager.UserSettings.get(userId, 0, "LoveId");
+		String testId = Database.UserSettings.get(userId, 0, "LoveId");
 		if(testId != null) {
 			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
 					.setDescription("You are currently in a relationship. Use `Ken divorce` if you to enter another relationship.");
 			channel.sendMessage(embed.build()).queue();
 			return;
 		}
-		DatabaseManager.UserSettings.set(userId, 0, "LoveId", otherId);
+		Database.UserSettings.set(userId, 0, "LoveId", otherId);
 		User otherUser = event.getGuild().getMemberById(otherId).getUser();
 		EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
 				.setTitle(":ring: Married!")
 				.setDescription(String.format("%s has accepted the proposal from %s!\nThey are now happily married!", event.getAuthor(), otherUser));
 		channel.sendMessage(embed.build()).queue();
-		DatabaseManager.UserSettings.set(userId, 0, "LoveTime", String.valueOf(new Date().getTime()));
-		DatabaseManager.UserSettings.set(Long.parseLong(otherId), 0, "LoveTime", String.valueOf(new Date().getTime()));
+		Database.UserSettings.set(userId, 0, "LoveTime", String.valueOf(new Date().getTime()));
+		Database.UserSettings.set(Long.parseLong(otherId), 0, "LoveTime", String.valueOf(new Date().getTime()));
 	}
 
 	public String getInvoke() {

@@ -9,7 +9,7 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.tylermurphy.commands.ICommand;
-import net.tylermurphy.database.DatabaseManager;
+import net.tylermurphy.database.Database;
 
 public class Propose implements ICommand {
 
@@ -17,7 +17,7 @@ public class Propose implements ICommand {
 		TextChannel channel = event.getChannel();
 		List<User> mentionedMembers = event.getMessage().getMentionedUsers();
 		long userId = event.getAuthor().getIdLong();
-		String loveId = DatabaseManager.UserSettings.get(userId, 0, "LoveId");
+		String loveId = Database.UserSettings.get(userId, 0, "LoveId");
 		if(mentionedMembers.isEmpty()) {
 			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
 					.appendDescription("**:x: Incorrect Command Usage**\n")
@@ -37,7 +37,7 @@ public class Propose implements ICommand {
 			channel.sendMessage(embed.build()).queue();
 			return;
 		}
-		String testId = DatabaseManager.UserSettings.getUserFromValue(0L, "LoveId", mentionedMembers.get(0).getId());
+		String testId = Database.UserSettings.getUserFromValue(0L, "LoveId", mentionedMembers.get(0).getId());
 		if(testId != null) {
 			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
 					.setDescription(String.format("%s is already in a relationship or has already been proposed to.\n Wait for them to leave their relationship to try again.", mentionedMembers.get(0)));
@@ -45,7 +45,7 @@ public class Propose implements ICommand {
 			return;
 		}
 		long otherId = mentionedMembers.get(0).getIdLong();
-		String otherLoveId = DatabaseManager.UserSettings.get(otherId, 0, "LoveId");
+		String otherLoveId = Database.UserSettings.get(otherId, 0, "LoveId");
 		if(otherLoveId != null && !otherLoveId.equals("") && otherLoveId.equals(String.valueOf(userId))) {
 			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
 					.setDescription(String.format("%s has proposed to you. You must accept or deny before making any further relationship commands.", mentionedMembers.get(0)));
@@ -57,7 +57,7 @@ public class Propose implements ICommand {
 				.appendDescription("Run `Ken acceptProposal` to accept or `Ken rejectProposal` to deny")
 				.appendDescription("\nRun `Ken divorce` to cancel proposal");
 		channel.sendMessage(embed.build()).queue();
-		DatabaseManager.UserSettings.set(userId, 0, "LoveId", String.valueOf(otherId));
+		Database.UserSettings.set(userId, 0, "LoveId", String.valueOf(otherId));
 		return;
 	}
 

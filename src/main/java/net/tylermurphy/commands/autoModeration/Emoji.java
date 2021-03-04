@@ -7,7 +7,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.tylermurphy.commands.ICommand;
-import net.tylermurphy.database.DatabaseManager;
+import net.tylermurphy.database.Database;
 
 public class Emoji implements ICommand {
 
@@ -19,7 +19,7 @@ public class Emoji implements ICommand {
             event.getChannel().sendMessage(":x: You must have the Manage Server permission to use this command.").queue();
             return;
         }
-        String setting = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), dataBaseCollum);
+        String setting = Database.GuildSettings.get(event.getGuild().getIdLong(), dataBaseCollum);
 		if(setting == null) setting = "false";
 		if(args.isEmpty()) {
 			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
@@ -29,19 +29,19 @@ public class Emoji implements ICommand {
 		}
 		
 		if(args.get(0).equalsIgnoreCase("false")) {
-			DatabaseManager.GuildSettings.set(event.getGuild().getIdLong(), dataBaseCollum, "false");
+			Database.GuildSettings.set(event.getGuild().getIdLong(), dataBaseCollum, "false");
 		} else if(args.get(0).equalsIgnoreCase("mute")) {
-			DatabaseManager.GuildSettings.set(event.getGuild().getIdLong(), dataBaseCollum, "mute");
+			Database.GuildSettings.set(event.getGuild().getIdLong(), dataBaseCollum, "mute");
 		} else if(args.get(0).equalsIgnoreCase("delete")) {
-			DatabaseManager.GuildSettings.set(event.getGuild().getIdLong(), dataBaseCollum, "delete");
+			Database.GuildSettings.set(event.getGuild().getIdLong(), dataBaseCollum, "delete");
 		} else if(args.get(0).equalsIgnoreCase("warn")) {
-			DatabaseManager.GuildSettings.set(event.getGuild().getIdLong(), dataBaseCollum, "warn");
+			Database.GuildSettings.set(event.getGuild().getIdLong(), dataBaseCollum, "warn");
 		} else if(args.get(0).equalsIgnoreCase("warnanddelete")) {
-			DatabaseManager.GuildSettings.set(event.getGuild().getIdLong(), dataBaseCollum, "warnanddelete");
+			Database.GuildSettings.set(event.getGuild().getIdLong(), dataBaseCollum, "warnanddelete");
 		} else if(args.get(0).equalsIgnoreCase("kick")) {
-			DatabaseManager.GuildSettings.set(event.getGuild().getIdLong(), dataBaseCollum, "kick");;
+			Database.GuildSettings.set(event.getGuild().getIdLong(), dataBaseCollum, "kick");;
 		} else if(args.get(0).equalsIgnoreCase("ban")) {
-			DatabaseManager.GuildSettings.set(event.getGuild().getIdLong(), dataBaseCollum, "ban");
+			Database.GuildSettings.set(event.getGuild().getIdLong(), dataBaseCollum, "ban");
 		} else {
 			event.getChannel().sendMessage(":x: Invalid argument.").queue();
 			return;

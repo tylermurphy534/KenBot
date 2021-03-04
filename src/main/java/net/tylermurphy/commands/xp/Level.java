@@ -7,20 +7,20 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.tylermurphy.commands.ICommand;
-import net.tylermurphy.database.DatabaseManager;
+import net.tylermurphy.database.Database;
 import net.tylermurphy.managers.LevelManager;
 
 public class Level implements ICommand {
 
 	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
-		String value = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(),"Leveling");
+		String value = Database.GuildSettings.get(event.getGuild().getIdLong(),"Leveling");
 		if(value != null && value.equals("false")) {
 			EmbedBuilder builder = EmbedUtils.getDefaultEmbed()
 					.setDescription("Leveling is disabled on this server");
 			event.getChannel().sendMessage(builder.build()).queue();
 			return;
 		}
-		String unparsedXp = DatabaseManager.UserSettings.get(event.getAuthor().getIdLong(), event.getGuild().getIdLong(), "XP");
+		String unparsedXp = Database.UserSettings.get(event.getAuthor().getIdLong(), event.getGuild().getIdLong(), "XP");
 		if(unparsedXp == null)
 			unparsedXp = "0";
 		int xp = Integer.parseInt(unparsedXp);

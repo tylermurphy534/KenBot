@@ -11,7 +11,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.tylermurphy.commands.ICommand;
-import net.tylermurphy.database.DatabaseManager;
+import net.tylermurphy.database.Database;
 
 public class Status implements ICommand{
 
@@ -22,7 +22,7 @@ public class Status implements ICommand{
 			mentionedMembers.add(event.getMember());
 		}
 		long userId = mentionedMembers.get(0).getUser().getIdLong();
-		String loveId = DatabaseManager.UserSettings.get(userId, 0, "LoveId");
+		String loveId = Database.UserSettings.get(userId, 0, "LoveId");
 		if(loveId == null) {
 			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
 					.setDescription(mentionedMembers.get(0).getUser().getName()+" is currently not in an relationship.");
@@ -30,12 +30,12 @@ public class Status implements ICommand{
 			return;
 		}
 		boolean inlove = false;
-		if(DatabaseManager.UserSettings.get(Long.parseLong(loveId), 0, "LoveId").equals(String.valueOf(userId)))
+		if(Database.UserSettings.get(Long.parseLong(loveId), 0, "LoveId").equals(String.valueOf(userId)))
 			inlove = true;
 			
-		long time = new Date().getTime() - Long.parseLong(DatabaseManager.UserSettings.get(userId, 0, "LoveTime"));
-		HashMap<String,Integer> stats = DatabaseManager.SocialStats.getAll(userId, Long.parseLong(loveId));
-		HashMap<String,Integer> stats2 = DatabaseManager.SocialStats.getAll(Long.parseLong(loveId), userId);
+		long time = new Date().getTime() - Long.parseLong(Database.UserSettings.get(userId, 0, "LoveTime"));
+		HashMap<String,Integer> stats = Database.SocialStats.getAll(userId, Long.parseLong(loveId));
+		HashMap<String,Integer> stats2 = Database.SocialStats.getAll(Long.parseLong(loveId), userId);
 		int xp = 0,xp2 = 0;
 		if(stats != null) { xp = (int) ((time/2500000)+5*(stats.getOrDefault("boop",0)+stats.getOrDefault("cookie",0)+stats.getOrDefault("gift",0)+stats.getOrDefault("hug",0)+stats.getOrDefault("kiss",0)+stats.getOrDefault("pet",0)-stats.getOrDefault("slap",0)+stats.getOrDefault("tickle",0)+stats.getOrDefault("highfive",0)+stats.getOrDefault("lick",0)-(stats.getOrDefault("punch",0)))); }
 		if(stats2 != null) { xp2 = (int) ((time/2500000)+5*(stats2.getOrDefault("boop",0)+stats2.getOrDefault("cookie",0)+stats2.getOrDefault("gift",0)+stats2.getOrDefault("hug",0)+stats2.getOrDefault("kiss",0)+stats2.getOrDefault("pet",0)-stats2.getOrDefault("slap",0)+stats2.getOrDefault("tickle",0)+stats2.getOrDefault("highfive",0)+stats2.getOrDefault("lick",0)-(stats2.getOrDefault("punch",0)))); }

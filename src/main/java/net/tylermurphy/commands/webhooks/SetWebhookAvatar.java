@@ -11,7 +11,7 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.tylermurphy.commands.ICommand;
-import net.tylermurphy.database.DatabaseManager;
+import net.tylermurphy.database.Database;
 
 public class SetWebhookAvatar extends ListenerAdapter implements ICommand {
 
@@ -32,13 +32,13 @@ public class SetWebhookAvatar extends ListenerAdapter implements ICommand {
 			return;
 		}
 		
-		HashMap<String,String> webhook = DatabaseManager.Webhooks.get(event.getGuild().getIdLong(), args.get(0).toLowerCase());
+		HashMap<String,String> webhook = Database.Webhooks.get(event.getGuild().getIdLong(), args.get(0).toLowerCase());
 		if(webhook==null) {
 			channel.sendMessage(":x: Webhook does not exist").queue();
 			return;
 		}
 		
-		DatabaseManager.GuildSettings.set(event.getGuild().getIdLong(), "WebhookCache", args.get(0)+":"+event.getChannel().getId()+":"+event.getAuthor().getId());
+		Database.GuildSettings.set(event.getGuild().getIdLong(), "WebhookCache", args.get(0)+":"+event.getChannel().getId()+":"+event.getAuthor().getId());
 		
 		EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
 				.setDescription("Now upload the image of the webhook you want to use. Or type `cancel` to cancel.");
@@ -47,17 +47,17 @@ public class SetWebhookAvatar extends ListenerAdapter implements ICommand {
 	
 	public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 		if(event.getAuthor().isBot()) return;
-		String reply = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "WebhookCache");
+		String reply = Database.GuildSettings.get(event.getGuild().getIdLong(), "WebhookCache");
 		if(reply == null || reply.equals("")) return;
 		String[] cache = reply.split(":");
 		if(!event.getAuthor().getId().equals(cache[2])) return;
-		HashMap<String,String> webhook = DatabaseManager.Webhooks.get(event.getGuild().getIdLong(), cache[0].toLowerCase());
+		HashMap<String,String> webhook = Database.Webhooks.get(event.getGuild().getIdLong(), cache[0].toLowerCase());
 		if(webhook==null) {
-			DatabaseManager.GuildSettings.set(event.getGuild().getIdLong(), "WebhookCache", "");
+			Database.GuildSettings.set(event.getGuild().getIdLong(), "WebhookCache", "");
 			return;
 		}
 		if(event.getMessage().getContentRaw().equalsIgnoreCase("cancel")) {
-			DatabaseManager.GuildSettings.set(event.getGuild().getIdLong(), "WebhookCache", "");
+			Database.GuildSettings.set(event.getGuild().getIdLong(), "WebhookCache", "");
 			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
 					.setDescription("Canceled avatar change.");
 			event.getChannel().sendMessage(embed.build()).queue();
@@ -77,8 +77,8 @@ public class SetWebhookAvatar extends ListenerAdapter implements ICommand {
 		EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
 				.setDescription("Changed Webhook Avatar. If you ever delete the image, the avatar on the webhook will soon disapear as well.");
 		event.getChannel().sendMessage(embed.build()).queue();
-		DatabaseManager.Webhooks.set(event.getGuild().getIdLong(), url, webhook.get("Name"), cache[0].toLowerCase());
-		DatabaseManager.GuildSettings.set(event.getGuild().getIdLong(), "WebhookCache", "");
+		Database.Webhooks.set(event.getGuild().getIdLong(), url, webhook.get("Name"), cache[0].toLowerCase());
+		Database.GuildSettings.set(event.getGuild().getIdLong(), "WebhookCache", "");
 	}
 
 	public String getInvoke() {

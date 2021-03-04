@@ -29,7 +29,7 @@ public class Rule34API extends API {
         final String url = "https://rule34.xxx/index.php?page=dapi&s=post&q=index&tags="+ searchTerm;
         System.out.println(url);
         try {
-        	return getXML("GET",url,API.API_HEADERS_USERAGENT);
+        	return getXML("GET",url);
         } catch (JSONException | IOException ignored) {}
         return null;
 	 }

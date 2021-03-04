@@ -18,7 +18,7 @@ import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEve
 import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionRemoveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.tylermurphy.commands.ICommand;
-import net.tylermurphy.database.DatabaseManager;
+import net.tylermurphy.database.Database;
 
 public class SelfRole extends ListenerAdapter implements ICommand {
 
@@ -102,7 +102,7 @@ public class SelfRole extends ListenerAdapter implements ICommand {
 		}
 		
 		String locationId = guildId+""+channelId+""+messageId;
-        String result = DatabaseManager.SelfRoles.get(locationId, reaction);
+        String result = Database.SelfRoles.get(locationId, reaction);
 		if(result != null) {
 			channel.sendMessage(":x: There is already a self role for this reaction on this message.").queue();
 			return;
@@ -116,7 +116,7 @@ public class SelfRole extends ListenerAdapter implements ICommand {
 		targetChannel.retrieveMessageById(messageId).queue((message) -> {
 			    message.addReaction(reaction).queue();
 			    String locationId2 = guildId+""+channelId+""+messageId;
-		        DatabaseManager.SelfRoles.set(locationId2, roleId, reaction);
+		        Database.SelfRoles.set(locationId2, roleId, reaction);
 				Role role = event.getJDA().getRoleById(roleId);
 				EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
 						.setDescription(String.format(
@@ -136,7 +136,7 @@ public class SelfRole extends ListenerAdapter implements ICommand {
         long channelId = event.getChannel().getIdLong();
         long messageId = event.getMessageIdLong();
         String locationId = guildId+""+channelId+""+messageId;
-        String result = DatabaseManager.SelfRoles.get(locationId, emote);
+        String result = Database.SelfRoles.get(locationId, emote);
         if(result == null) return;
         Role role = event.getJDA().getRoleById(Long.parseLong(result));
         try {
@@ -160,7 +160,7 @@ public class SelfRole extends ListenerAdapter implements ICommand {
         long channelId = event.getChannel().getIdLong();
         long messageId = event.getMessageIdLong();
         String locationId = guildId+""+channelId+""+messageId;
-        String result = DatabaseManager.SelfRoles.get(locationId, emote);
+        String result = Database.SelfRoles.get(locationId, emote);
         if(result == null) return;
         Role role = event.getJDA().getRoleById(Long.parseLong(result));
         try {

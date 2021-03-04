@@ -10,7 +10,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.tylermurphy.Config;
-import net.tylermurphy.database.DatabaseManager;
+import net.tylermurphy.database.Database;
 import net.tylermurphy.managers.AutoModManager;
 import net.tylermurphy.managers.LevelManager;
 import net.tylermurphy.managers.WebhookManager;
@@ -40,7 +40,7 @@ public class CommandResponder extends ListenerAdapter {
 
         String prefix;
         try {
-        	prefix = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "prefix");
+        	prefix = Database.GuildSettings.get(event.getGuild().getIdLong(), "prefix");
         	if(Config.DEBUG) prefix = Config.PREFIX;
         	if(prefix == null) prefix = Config.PREFIX;
         } catch(Exception e) {

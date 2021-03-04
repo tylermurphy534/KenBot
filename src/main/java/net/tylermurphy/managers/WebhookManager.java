@@ -10,7 +10,7 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.Webhook;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import net.tylermurphy.database.DatabaseManager;
+import net.tylermurphy.database.Database;
 
 public class WebhookManager {
 	
@@ -24,7 +24,7 @@ public class WebhookManager {
 			prefix = event.getMessage().getContentRaw().split(" ")[0];
 			message = event.getMessage().getContentRaw().substring(prefix.length()+1);
 		} catch(Exception e) { return; }
-		HashMap<String,String> webhookData = DatabaseManager.Webhooks.get(guildId, prefix);
+		HashMap<String,String> webhookData = Database.Webhooks.get(guildId, prefix);
 		if(webhookData == null) return;
 		if (!event.getMember().hasPermission(Permission.ADMINISTRATOR)) {
             return;

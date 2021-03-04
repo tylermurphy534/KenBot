@@ -11,7 +11,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.tylermurphy.commands.ICommand;
-import net.tylermurphy.database.DatabaseManager;
+import net.tylermurphy.database.Database;
 
 public class Warns implements ICommand {
 
@@ -40,7 +40,7 @@ public class Warns implements ICommand {
 			return;
 		}
 		
-		Map<Integer,String> warnings = DatabaseManager.Warnings.getAll(target.getUser().getIdLong(), event.getGuild().getIdLong());
+		Map<Integer,String> warnings = Database.Warnings.getAll(target.getUser().getIdLong(), event.getGuild().getIdLong());
 		
 		if(warnings.size() < 1) {
 			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()

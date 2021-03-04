@@ -10,7 +10,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.tylermurphy.commands.ICommand;
-import net.tylermurphy.database.DatabaseManager;
+import net.tylermurphy.database.Database;
 
 public class RevokeWarn implements ICommand {
 
@@ -48,7 +48,7 @@ public class RevokeWarn implements ICommand {
 		}
 		
 		int warns = 0;
-		String warnsString = DatabaseManager.UserSettings.get(target.getUser().getIdLong(), event.getGuild().getIdLong(), "Warns");
+		String warnsString = Database.UserSettings.get(target.getUser().getIdLong(), event.getGuild().getIdLong(), "Warns");
 		if(warnsString != null) {
 			try {
 				warns = Integer.parseInt(warnsString);
@@ -57,8 +57,8 @@ public class RevokeWarn implements ICommand {
 			}
 		}
 		warns--;
-		DatabaseManager.UserSettings.set(target.getUser().getIdLong(), event.getGuild().getIdLong(), "Warns", String.valueOf(warns));
-		DatabaseManager.Warnings.revoke(warnId);
+		Database.UserSettings.set(target.getUser().getIdLong(), event.getGuild().getIdLong(), "Warns", String.valueOf(warns));
+		Database.Warnings.revoke(warnId);
 		EmbedBuilder builder = new EmbedBuilder()
 				.setTitle("Infraction Notice")
 				.setColor(Color.green)

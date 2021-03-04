@@ -29,7 +29,7 @@ public class E621API extends API {
 	        final String url = String.format("https://e621.net/posts.json?tags=%s", searchTerm);
 	        System.out.println(url);
 	        try {
-	            return getJson("GET",url,API.API_HEADERS_JSON_USERAGENT);
+	            return getJson("GET",url);
 	        } catch (JSONException | IOException ignored) {}
 	        return null;
 	    }

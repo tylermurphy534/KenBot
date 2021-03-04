@@ -10,7 +10,7 @@ import net.dv8tion.jda.api.entities.MessageReaction;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.tylermurphy.commands.ICommand;
-import net.tylermurphy.database.DatabaseManager;
+import net.tylermurphy.database.Database;
 
 public class DelSelfRole implements ICommand {
 
@@ -51,9 +51,9 @@ public class DelSelfRole implements ICommand {
 			return;
 		}
 		String locationId = guildId+""+channelId+""+messageId;
-		List<String> reactions = DatabaseManager.SelfRoles.getAll(locationId);
+		List<String> reactions = Database.SelfRoles.getAll(locationId);
 		if( reactions != null) {
-			DatabaseManager.SelfRoles.del(locationId);
+			Database.SelfRoles.del(locationId);
 			TextChannel targetChannel = event.getJDA().getTextChannelById(channelId);
 			targetChannel.retrieveMessageById(messageId).queue((message) -> {
 				List<MessageReaction> rcs = message.getReactions();

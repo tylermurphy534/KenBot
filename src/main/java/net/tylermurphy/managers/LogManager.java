@@ -49,12 +49,12 @@ import net.dv8tion.jda.api.events.role.RoleDeleteEvent;
 import net.dv8tion.jda.api.events.role.update.RoleUpdateColorEvent;
 import net.dv8tion.jda.api.events.role.update.RoleUpdateNameEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.tylermurphy.database.DatabaseManager;
+import net.tylermurphy.database.Database;
 
 public class LogManager extends ListenerAdapter {
 	
     public void onGuildMessageUpdate(@Nonnull GuildMessageUpdateEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -67,7 +67,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onTextChannelDelete(@Nonnull TextChannelDeleteEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -79,7 +79,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onTextChannelUpdateName(@Nonnull TextChannelUpdateNameEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -93,7 +93,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onTextChannelUpdateTopic(@Nonnull TextChannelUpdateTopicEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -107,7 +107,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onTextChannelUpdatePosition(@Nonnull TextChannelUpdatePositionEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -121,7 +121,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onTextChannelUpdateNSFW(@Nonnull TextChannelUpdateNSFWEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -134,7 +134,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onTextChannelUpdateParent(@Nonnull TextChannelUpdateParentEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -147,7 +147,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onTextChannelUpdateSlowmode(@Nonnull TextChannelUpdateSlowmodeEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -160,7 +160,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onTextChannelCreate(@Nonnull TextChannelCreateEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -172,7 +172,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onVoiceChannelDelete(@Nonnull VoiceChannelDeleteEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -184,7 +184,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onVoiceChannelUpdateName(@Nonnull VoiceChannelUpdateNameEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -198,7 +198,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onVoiceChannelUpdatePosition(@Nonnull VoiceChannelUpdatePositionEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -212,7 +212,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onVoiceChannelUpdateUserLimit(@Nonnull VoiceChannelUpdateUserLimitEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -226,7 +226,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onVoiceChannelUpdateBitrate(@Nonnull VoiceChannelUpdateBitrateEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -240,7 +240,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onVoiceChannelUpdateParent(@Nonnull VoiceChannelUpdateParentEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -253,7 +253,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onVoiceChannelCreate(@Nonnull VoiceChannelCreateEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -265,7 +265,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onCategoryDelete(@Nonnull CategoryDeleteEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -277,7 +277,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onCategoryUpdateName(@Nonnull CategoryUpdateNameEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -291,7 +291,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onCategoryUpdatePosition(@Nonnull CategoryUpdatePositionEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -305,7 +305,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onCategoryCreate(@Nonnull CategoryCreateEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -317,7 +317,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onGuildBan(@Nonnull GuildBanEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -329,7 +329,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onGuildUnban(@Nonnull GuildUnbanEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -341,7 +341,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onGuildMemberRemove(@Nonnull GuildMemberRemoveEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -353,7 +353,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onGuildMemberRoleAdd(@Nonnull GuildMemberRoleAddEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -370,7 +370,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onGuildMemberRoleRemove(@Nonnull GuildMemberRoleRemoveEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -387,7 +387,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onGuildUpdateAfkChannel(@Nonnull GuildUpdateAfkChannelEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -399,7 +399,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onGuildUpdateSystemChannel(@Nonnull GuildUpdateSystemChannelEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -411,7 +411,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onGuildUpdateAfkTimeout(@Nonnull GuildUpdateAfkTimeoutEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -423,7 +423,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onGuildUpdateName(@Nonnull GuildUpdateNameEvent event){
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -436,7 +436,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onGuildUpdateOwner(@Nonnull GuildUpdateOwnerEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -448,7 +448,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onGuildInviteCreate(@Nonnull GuildInviteCreateEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -460,7 +460,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onRoleCreate(@Nonnull RoleCreateEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -472,7 +472,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onRoleDelete(@Nonnull RoleDeleteEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -484,7 +484,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onRoleUpdateColor(@Nonnull RoleUpdateColorEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -497,7 +497,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onRoleUpdateName(@Nonnull RoleUpdateNameEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -510,7 +510,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onGuildVoiceJoin(@Nonnull GuildVoiceJoinEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -524,7 +524,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onGuildVoiceLeave(@Nonnull GuildVoiceLeaveEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -538,7 +538,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onGuildVoiceGuildMute(@Nonnull GuildVoiceGuildMuteEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -550,7 +550,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onGuildVoiceGuildDeafen(@Nonnull GuildVoiceGuildDeafenEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;
@@ -562,7 +562,7 @@ public class LogManager extends ListenerAdapter {
     	channel.sendMessage(embed.build()).queue();
     }
     public void onGuildMemberUpdateNickname(@Nonnull GuildMemberUpdateNicknameEvent event) {
-    	String id = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
+    	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");
 		if(id == null || id.equalsIgnoreCase("")) return;
 		TextChannel channel = event.getJDA().getTextChannelById(id);
     	if(channel == null) return;

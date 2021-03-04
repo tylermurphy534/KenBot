@@ -10,7 +10,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.tylermurphy.commands.ICommand;
-import net.tylermurphy.database.DatabaseManager;
+import net.tylermurphy.database.Database;
 
 public class ClearWarns implements ICommand {
 
@@ -39,8 +39,8 @@ public class ClearWarns implements ICommand {
 			return;
 		}
 		
-		DatabaseManager.UserSettings.set(target.getUser().getIdLong(), event.getGuild().getIdLong(), "Warns", "0");
-		DatabaseManager.Warnings.revokeAll(target.getUser().getIdLong(), event.getGuild().getIdLong());
+		Database.UserSettings.set(target.getUser().getIdLong(), event.getGuild().getIdLong(), "Warns", "0");
+		Database.Warnings.revokeAll(target.getUser().getIdLong(), event.getGuild().getIdLong());
 		channel.sendMessage(String.format("%s cleared %s's warns",event.getAuthor(),target)).queue();
 		EmbedBuilder builder = new EmbedBuilder()
 				.setTitle("Infraction Notice")

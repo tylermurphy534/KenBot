@@ -9,7 +9,7 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.tylermurphy.commands.ICommand;
-import net.tylermurphy.database.DatabaseManager;
+import net.tylermurphy.database.Database;
 
 public class SetWebhookName implements ICommand {
 
@@ -30,13 +30,13 @@ public class SetWebhookName implements ICommand {
 			return;
 		}
 		
-		HashMap<String,String> webhook = DatabaseManager.Webhooks.get(event.getGuild().getIdLong(), args.get(0).toLowerCase());
+		HashMap<String,String> webhook = Database.Webhooks.get(event.getGuild().getIdLong(), args.get(0).toLowerCase());
 		if(webhook==null) {
 			channel.sendMessage(":x: Webhook does not exist").queue();
 			return;
 		}
 		String name = String.join(" ", args.subList(1, args.size()));
-		DatabaseManager.Webhooks.set(event.getGuild().getIdLong(), webhook.get("AvatarURL"), name, args.get(0));
+		Database.Webhooks.set(event.getGuild().getIdLong(), webhook.get("AvatarURL"), name, args.get(0));
 		
 		EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
 				.setDescription("Set webhook name with prefix "+args.get(0)+" to\n`"+name+"`");

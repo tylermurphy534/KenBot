@@ -10,13 +10,13 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.tylermurphy.commands.ICommand;
-import net.tylermurphy.database.DatabaseManager;
+import net.tylermurphy.database.Database;
 import net.tylermurphy.managers.LevelManager;
 
 public class Top implements ICommand {
 
 	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
-		String value = DatabaseManager.GuildSettings.get(event.getGuild().getIdLong(),"Leveling");
+		String value = Database.GuildSettings.get(event.getGuild().getIdLong(),"Leveling");
 		if(value != null && value.equals("false")) {
 			EmbedBuilder builder = EmbedUtils.getDefaultEmbed()
 					.setDescription("Leveling is disabled on this server");
@@ -24,7 +24,7 @@ public class Top implements ICommand {
 			return;
 		}
 		TextChannel channel = event.getChannel();
-		List<String> data = DatabaseManager.UserSettings.getAll(event.getGuild().getIdLong(), "XP");
+		List<String> data = Database.UserSettings.getAll(event.getGuild().getIdLong(), "XP");
 		List<String> ids = new ArrayList<String>();
 		List<Integer> xps = new ArrayList<Integer>();
 		for(String s : data) {
