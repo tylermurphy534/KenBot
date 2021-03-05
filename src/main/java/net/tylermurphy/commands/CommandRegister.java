@@ -17,6 +17,7 @@ import net.tylermurphy.commands.relationship.*;
 import net.tylermurphy.commands.social.*;
 import net.tylermurphy.commands.webhooks.*;
 import net.tylermurphy.commands.xp.*;
+import net.tylermurphy.commands.twitch.*;
 
 public class CommandRegister {
 	
@@ -110,6 +111,7 @@ public class CommandRegister {
 		register(new Stats());
 		register(new SetPrefix());
 		register(new SetPrefixWithSpace());
+		register(new BroadcastWhenLive());
 	}
 	
 	private static void register(ICommand command) {

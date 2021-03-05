@@ -25,6 +25,9 @@ public class Config {
 			PREFIX = (String) jsonObject.get("DEFAULT_PREFIX");
 			NSFW = (boolean) jsonObject.get("NSFW");
 			DEBUG = (boolean) jsonObject.get("DEBUG");
+			TWITCH_CLIENT_ID = (String) jsonObject.get("TWITCH_CLIENT_ID");
+			TWITCH_CLIENT_SECRET = (String) jsonObject.get("TWITCH_CLIENT_SECRET");
+			TWITCH_CALLBACK_URL = (String) jsonObject.get("TWITCH_CALLBACK_URL");
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.exit(0);
@@ -45,7 +48,7 @@ public class Config {
 	public static boolean DEBUG;
 	public static String TWITCH_CLIENT_ID;
 	public static String TWITCH_CLIENT_SECRET;
-	public static String REST_API_ENDPOINT_URL;
+	public static String TWITCH_CALLBACK_URL;
 	
 }
  

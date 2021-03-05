@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import me.duncte123.botcommons.messaging.EmbedUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
@@ -32,6 +33,8 @@ import net.tylermurphy.managers.WelcomeManager;
 import net.tylermurphy.music.BotLeaveListener;
 
 public class Bot {
+	
+	public static JDA JDA;
 
 	private Bot() throws LoginException, InterruptedException, SQLException, SecurityException {
         
@@ -44,7 +47,7 @@ public class Bot {
                 	.setColor(Color.MAGENTA)
         );
 			
-		JDABuilder.createDefault(Config.TOKEN)
+		JDA jda = JDABuilder.createDefault(Config.TOKEN)
 			.setChunkingFilter(ChunkingFilter.ALL)
 			.setMemberCachePolicy(MemberCachePolicy.ALL)
 			.enableIntents((GatewayIntent.GUILD_MEMBERS))
@@ -64,6 +67,8 @@ public class Bot {
 		    		new WelcomeManager())
 		    .build()
 		   	.awaitReady();
+		
+		JDA = jda;
 		
 		SpringBoot.init();
 		

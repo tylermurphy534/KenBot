@@ -14,8 +14,14 @@ public class TwitchAPI extends API {
 
 	private static String AppAccessToken = "";
 	
-	public boolean setupBroadcastSubscription(TextChannel channel, String name) {
+	public static int SUCCESS = 0;
+	public static int FALIURE = 1;
+	public static int DUPLICATE = 2;
+	public static int NOT_FOUND = 4;
+	
+	public static int setupBroadcastSubscription(TextChannel channel, String name) {
 		JSONObject user = getUser(name);
+		if(user == null) return NOT_FOUND;
 		long guildId = channel.getGuild().getIdLong();
 		try {
 			JSONObject userData = (JSONObject) user.getJSONArray("data").get(0);
@@ -34,26 +40,51 @@ public class TwitchAPI extends API {
 					+ "},"
 					+ "\"transport\": {"
 					+ "\"method\": \"webhook\","
-					+ "\"callback\": \""+Config.REST_API_ENDPOINT_URL+"\","
+					+ "\"callback\": \""+Config.TWITCH_CALLBACK_URL+"\","
 					+ "\"secret\": \"fs938hdfws3\""
 					+ "}"
 					+ "}";
 
 			JSONObject json = getJson("POST",url,body,headers);
-			if(invalidResponse(json)) {
-				generateNewAppAccessToken();
-				return setupBroadcastSubscription(channel, name);
+			try {
+				if(invalidResponse(json)) {
+					generateNewAppAccessToken();
+					return setupBroadcastSubscription(channel, name);
+				}
+			} catch (Exception e) {
+				return FALIURE;
 			}
 			JSONObject data = (JSONObject) json.getJSONArray("data").get(0);
 			if(data.getString("status").equals("webhook_callback_verification_pending")) {
 				Database.GuildSettings.set(guildId, "twitchId", id+"");
 				Database.GuildSettings.set(guildId, "twitchChannel", channel.getId());
-				return true;
+				Database.GuildSettings.set(guildId, "twitchStatus", "pending");
+				return SUCCESS;
 			}
-			return false;
+			return FALIURE;
 			
 		}catch(Exception e) {
-			return false;
+			e.printStackTrace();
+			return FALIURE;
+		}
+	}
+	
+	public static int deleteBroadcastSubscription(long guildId) {
+		String id = Database.GuildSettings.get(guildId, "twitchId");
+		if(id == null) return NOT_FOUND;
+		String url = "https://api.twitch.tv/helix/eventsub/subscriptions?id="+id;
+		String[] headers = {
+				"Client-ID", Config.TWITCH_CLIENT_ID,
+				"Authorization", "Bearer "+AppAccessToken,
+		};
+		JSONObject json = getJson("DELETE ",url,headers);
+		try {
+			if(invalidResponse(json)) {
+				generateNewAppAccessToken();
+				return deleteBroadcastSubscription(guildId);
+			}
+		} catch (Exception e) {
+			return FALIURE;
 		}
 	}
 	
@@ -70,7 +101,9 @@ public class TwitchAPI extends API {
 				throw new NullPointerException("Twitch did not return an access token upon requeset, please check your client id and secret.");
 			}
 			AppAccessToken = token;
-		} catch (JSONException | IOException ignored) {}
+		} catch (Exception ignored) {
+			throw new NullPointerException("Twitch did not return an access token upon requeset, please check your client id and secret.");
+		}
 	}
  
 	private static JSONObject getUser(String name) {
@@ -85,17 +118,24 @@ public class TwitchAPI extends API {
 		try {
 			JSONObject json = getJson("GET",url,headers);
 			if(invalidResponse(json)) {
-				generateNewAppAccessToken();
 				return getUser(name);
 			}
+			// if fails the user didnt send
+			json.getJSONArray("data").get(0);
 			return json;
-		} catch (JSONException | IOException ignored) {}
-		return null;
+		} catch (JSONException | IOException ignored) {
+			return null;
+		}
 	}
  
 	private static boolean invalidResponse(JSONObject json) {
 		try {
-			if(json.getInt("status") == 400) {
+			if(Integer.parseInt(json.getString("status")) == 401) {
+				generateNewAppAccessToken();
+				return true;
+			} else if(Integer.parseInt(json.getString("status")) == 409) { 
+				throw new Exception("Subscription already exists");
+			} else if(Integer.parseInt(json.getString("status")) >= 400) {
 				return true;
 			}
 			return false;

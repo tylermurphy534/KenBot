@@ -27,13 +27,14 @@ public abstract class API{
         try {
             return Parser.parseJson(connection.getInputStream());
         } catch (Exception ignored) {
-        	ignored.printStackTrace();
+        	System.out.println(connection.getResponseCode() + " " + connection.getResponseMessage());
+    		JSONObject j = new JSONObject("{\"status\":\""+connection.getResponseCode()+"\"}");
+    		return j;
         } finally {
             if (connection != null) {
                 connection.disconnect();
             }
         }
-        return new JSONObject("");
     }
 	
 	protected static Document getXML(String requestMeathod, String url, String... headers) throws IOException, JSONException {
@@ -52,13 +53,12 @@ public abstract class API{
         try {
             return Parser.parseXML(connection.getInputStream());
         } catch (Exception ignored) {
-        	ignored.printStackTrace();
+        	return null;
         } finally {
             if (connection != null) {
                 connection.disconnect();
             }
         }
-        return null;
     }
 	
 	private static HttpURLConnection getConnection(String requestMeathod, String url, String body, String... headers) {
@@ -78,18 +78,10 @@ public abstract class API{
 	            try(OutputStream os = connection.getOutputStream()) {
 	                byte[] input = body.getBytes("utf-8");
 	                os.write(input, 0, input.length);		
-	                os.flush();
-	                os.close();
 	            } catch (Exception e) {
 	            	throw new Exception("Error writing body to HTTP connection.\n"+e.getMessage());
 	            }
-            }
-            
-//            int statusCode = connection.getResponseCode();
-//            if (statusCode != HttpURLConnection.HTTP_OK && statusCode != HttpURLConnection.HTTP_CREATED) {
-//                String error = String.format("HTTP Code: '%1$s' from '%2$s'", statusCode, url);
-//                throw new ConnectException(error);
-//            }            
+            }           
             
             return connection;
         } catch (Exception e) { 
