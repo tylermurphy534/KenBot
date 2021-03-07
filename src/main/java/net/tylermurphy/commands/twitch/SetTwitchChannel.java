@@ -47,11 +47,11 @@ public class SetTwitchChannel implements ICommand {
 	}
 
 	public String getInvoke() {
-		return "SetTwitchRole";
+		return "SetTwitchChannel";
 	}
 
 	public String getUsage() {
-		return "SetTwitchRole <#Channel>";
+		return "SetTwitchChannel <#Channel>";
 	}
 
 	public String getDescription() {
