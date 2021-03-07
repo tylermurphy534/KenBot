@@ -34,7 +34,7 @@ public class SetTwitchChannel implements ICommand {
 		List<TextChannel> channels = event.getMessage().getMentionedChannels();
 		
 		TextChannel mentionedChannel = channels.get(0);
-		if(mentionedChannel.canTalk()) {
+		if(!mentionedChannel.canTalk()) {
 			channel.sendMessage(":x: I cant speak in that channel.").queue();
 			return;
 		}
