@@ -108,13 +108,6 @@ public class MariaDBConnection {
 		}
 		
 		try(final Statement statement = getConnection().createStatement()){
-			statement.execute("DROP TABLE Twitch;");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		
-		try(final Statement statement = getConnection().createStatement()){
 			statement.execute("CREATE TABLE IF NOT EXISTS Twitch (" +
 					"GuildId VARCHAR(20) NOT NULL,"+
 					"Status VARCHAR(60) NOT NULL,"+
