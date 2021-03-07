@@ -9,7 +9,6 @@ import me.duncte123.botcommons.messaging.EmbedUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.tylermurphy.Bot;
 import net.tylermurphy.Config;
 import net.tylermurphy.database.Database;
 import net.tylermurphy.managers.AutoModManager;

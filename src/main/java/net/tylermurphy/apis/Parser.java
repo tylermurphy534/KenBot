@@ -17,9 +17,10 @@ import org.xml.sax.SAXException;
 
 public class Parser {
 
-	public static Document parseXML(InputStream stream) throws ParserConfigurationException, SAXException {
+	public static Document parseXML(InputStream is) throws ParserConfigurationException, SAXException {
+		BufferedInputStream stream = null;
         try {
-            stream = new BufferedInputStream(stream);
+            stream = new BufferedInputStream(is);
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(stream);
@@ -38,12 +39,13 @@ public class Parser {
 	}
     
 	@SuppressWarnings("resource")
-	public static JSONObject parseJson(InputStream stream) throws JSONException {
+	public static JSONObject parseJson(InputStream is) throws JSONException {
 		InputStreamReader reader = null;
+		BufferedInputStream stream = null;
         char[] buffer = new char[1024 * 4];
         int n;
         try {
-            stream = new BufferedInputStream(stream);
+            stream = new BufferedInputStream(is);
             reader = new InputStreamReader(stream, "UTF-8");
             StringWriter writer = new StringWriter();
             while (-1 != (n = reader.read(buffer))) {
@@ -65,5 +67,36 @@ public class Parser {
         }
         return new JSONObject("");
     }
+	
+	public static String parseText(InputStream is) throws JSONException {
+		InputStreamReader reader = null;
+		BufferedInputStream stream = null;
+        char[] buffer = new char[1024 * 4];
+        int n;
+        try {
+            stream = new BufferedInputStream(stream);
+            reader = new InputStreamReader(stream, "UTF-8");
+            StringWriter writer = new StringWriter();
+            while (-1 != (n = reader.read(buffer))) {
+                writer.write(buffer, 0, n);
+            }
+            return writer.toString();
+        } catch (IOException ignored) {
+        } finally {
+        	if (stream != null) {
+                try {
+                    stream.close();
+                } catch (IOException ignored) {}
+            }
+        	if (reader != null) {
+                try {
+                	reader.close();
+                } catch (IOException ignored) {}
+            }
+        }
+        return null;
+    }
+	
+	
 	
 }

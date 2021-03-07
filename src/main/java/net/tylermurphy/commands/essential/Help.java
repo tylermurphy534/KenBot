@@ -53,6 +53,10 @@ public class Help implements ICommand {
 					"`xp`,`level`,`top`,`toggleLeveling`",
 					false);
 			embed.addField(
+					":signal_strength: Twitch Intergration",
+					"`broadcastWhenLive`,`removeTwitchBroadcast`,`setTwitchChannel`,`setTwitchRole`",
+					false);
+			embed.addField(
 					":robot: Webhook Commands (Send messages with a diffrent name and pfp)",
 					"`createWebhook`,`deleteWebhook`,`setWebhookName`,`setWebhookAvatar`",
 					false);

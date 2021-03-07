@@ -9,5 +9,6 @@ public class Database {
 	public static Webhooks Webhooks = new Webhooks();
 	public static WarnActions WarnActions = new WarnActions();
 	public static Warnings Warnings = new Warnings();
+	public static Twitch Twitch = new Twitch();
 	
 }

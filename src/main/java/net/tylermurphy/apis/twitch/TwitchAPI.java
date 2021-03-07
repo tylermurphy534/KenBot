@@ -1,8 +1,9 @@
 package net.tylermurphy.apis.twitch;
 
-import java.io.IOException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -13,11 +14,6 @@ import net.tylermurphy.database.Database;
 public class TwitchAPI extends API {
 
 	private static String AppAccessToken = "";
-	
-	public static int SUCCESS = 0;
-	public static int FALIURE = 1;
-	public static int DUPLICATE = 2;
-	public static int NOT_FOUND = 4;
 	
 	public static int setupBroadcastSubscription(TextChannel channel, String name) {
 		JSONObject user = getUser(name);
@@ -46,19 +42,28 @@ public class TwitchAPI extends API {
 					+ "}";
 
 			JSONObject json = getJson("POST",url,body,headers);
+			
 			try {
 				if(invalidResponse(json)) {
-					generateNewAppAccessToken();
 					return setupBroadcastSubscription(channel, name);
 				}
+			} catch (DuplicateWebhookException e) {
+				return DUPLICATE;
 			} catch (Exception e) {
 				return FALIURE;
 			}
+			
 			JSONObject data = (JSONObject) json.getJSONArray("data").get(0);
 			if(data.getString("status").equals("webhook_callback_verification_pending")) {
-				Database.GuildSettings.set(guildId, "twitchId", id+"");
-				Database.GuildSettings.set(guildId, "twitchChannel", channel.getId());
-				Database.GuildSettings.set(guildId, "twitchStatus", "pending");
+				Map<String,String> map = new HashMap<String,String>();
+				map.put("GuildId", guildId+"");
+				map.put("Status", new Date().getTime()+"");
+				map.put("WebhookId", "");
+				map.put("Login", name);
+				map.put("UserId", id+"");
+				map.put("ChannelId", channel.getId());
+				map.put("RoleId", "0");
+				Database.Twitch.set(map);
 				return SUCCESS;
 			}
 			return FALIURE;
@@ -70,19 +75,20 @@ public class TwitchAPI extends API {
 	}
 	
 	public static int deleteBroadcastSubscription(long guildId) {
-		String id = Database.GuildSettings.get(guildId, "twitchId");
+		String id = Database.Twitch.get(guildId, "WebhookId");
 		if(id == null) return NOT_FOUND;
 		String url = "https://api.twitch.tv/helix/eventsub/subscriptions?id="+id;
 		String[] headers = {
 				"Client-ID", Config.TWITCH_CLIENT_ID,
 				"Authorization", "Bearer "+AppAccessToken,
 		};
-		JSONObject json = getJson("DELETE ",url,headers);
 		try {
-			if(invalidResponse(json)) {
+			String response = getResponse("DELETE ",url,headers);
+			if(invalidResponse(response)) {
 				generateNewAppAccessToken();
 				return deleteBroadcastSubscription(guildId);
 			}
+			return SUCCESS;
 		} catch (Exception e) {
 			return FALIURE;
 		}
@@ -123,25 +129,54 @@ public class TwitchAPI extends API {
 			// if fails the user didnt send
 			json.getJSONArray("data").get(0);
 			return json;
-		} catch (JSONException | IOException ignored) {
+		} catch (Exception ignored) {
+			ignored.printStackTrace();
 			return null;
 		}
 	}
  
-	private static boolean invalidResponse(JSONObject json) {
+	private static boolean invalidResponse(JSONObject json) throws DuplicateWebhookException {
+		String status = null;
 		try {
-			if(Integer.parseInt(json.getString("status")) == 401) {
+			status = json.getString("status");
+		} catch (Exception e) {
+			return false;
+		}
+		try {
+			if(status.contains("401")) {
 				generateNewAppAccessToken();
 				return true;
-			} else if(Integer.parseInt(json.getString("status")) == 409) { 
-				throw new Exception("Subscription already exists");
-			} else if(Integer.parseInt(json.getString("status")) >= 400) {
+			} else if(status.contains("409")) {
+				throw new DuplicateWebhookException("Subscription already exists");
+			} else if(status.contains("400")) {
 				return true;
+			} else {
+				return false;
 			}
+		} catch (DuplicateWebhookException e) {
+			throw new DuplicateWebhookException(e.getMessage());
+		} catch (Exception e) {
 			return false;
+		}
+	}
+	
+	private static boolean invalidResponse(String response) {
+		try {
+			if(response.equals("1"))
+				return false;
+			else
+				return true;
 		} catch (Exception e) {
 			return false;
 		}
 	}
 
+}
+
+
+@SuppressWarnings("serial")
+class DuplicateWebhookException extends RuntimeException {
+	public DuplicateWebhookException(String message) {
+		super(message);
+	}
 }

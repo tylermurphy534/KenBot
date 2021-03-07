@@ -10,6 +10,29 @@ import org.json.JSONObject;
 import org.w3c.dom.Document;
 
 public abstract class API{
+	
+	public static int SUCCESS = 0;
+	public static int FALIURE = 1;
+	public static int DUPLICATE = 2;
+	public static int NOT_FOUND = 4;
+	
+	protected static String getResponse(String requestMeathod, String url, String... headers) throws IOException, JSONException {
+		return getResponse(requestMeathod, url, null, headers);
+	}
+	
+	protected static String getResponse(String requestMeathod, String url, String body, String... headers) throws IOException, JSONException {
+        
+		HttpURLConnection connection = getConnection(requestMeathod, url, body, headers);
+        try {
+            return Parser.parseText(connection.getInputStream());
+        } catch (Exception ignored) {
+    		return connection.getResponseCode()+"";
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+    }
 
 	protected static JSONObject getJson(String requestMeathod, String url, String... headers) throws IOException, JSONException {
         return getJson(requestMeathod, url, null, headers);

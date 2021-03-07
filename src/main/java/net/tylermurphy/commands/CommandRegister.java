@@ -112,6 +112,9 @@ public class CommandRegister {
 		register(new SetPrefix());
 		register(new SetPrefixWithSpace());
 		register(new BroadcastWhenLive());
+		register(new RemoveTwitchBroadcast());
+		register(new SetTwitchChannel());
+		register(new SetTwitchRole());
 	}
 	
 	private static void register(ICommand command) {

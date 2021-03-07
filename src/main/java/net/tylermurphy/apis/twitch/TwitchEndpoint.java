@@ -12,12 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.tylermurphy.Bot;
 import net.tylermurphy.database.Database;
 
 @RestController
-public class RESTController {
+public class TwitchEndpoint {
 
 	@RequestMapping(value="/subscribe")
     public String callback(@RequestBody String body, @RequestHeader Map<String, String> headers) throws BadRequest, ServerError {
@@ -29,28 +31,46 @@ public class RESTController {
 			JSONObject subscription = json.getJSONObject("subscription");
 			String status = subscription.getString("status");
 			if(status.equals("webhook_callback_verification_pending")) {
-				System.out.println("New Webhook Subscribed");
-				List<String> data = Database.GuildSettings.getAllWithValue("twitchId", subscription.getString("id"));
-				for(String s : data) {
-					String state = Database.GuildSettings.get(Long.parseLong(s), "twitchStatus");
-					if(!state.equals("pending")) continue;
-					Database.GuildSettings.set(Long.parseLong(s), "twitchStatus", "complete");
-					Database.GuildSettings.set(Long.parseLong(s), "twitchWebhookId", subscription.getString("id"));
-					String channelid = Database.GuildSettings.get(Long.parseLong(s), "twitchChannel");
-					Bot.JDA.getTextChannelById(channelid);
+				List<Map<String,String>> store = Database.Twitch.getAllWithUserId(subscription.getJSONObject("condition").getString("broadcaster_user_id"));
+				System.out.println(subscription.getString("id"));
+				for(Map<String,String> map : store) {
+					System.out.print(map.toString());
+					if(map.get("Status").equals("complete")) continue;
+					map.put("Status", "complete");
+					map.put("WebhookId", subscription.getString("id"));
+					Database.Twitch.set(map);
+					TextChannel channel = Bot.JDA.getTextChannelById(map.get("ChannelId"));
+					channel.sendMessage(String.format(
+							":white_check_mark: Sucessfully set channel %s to recieve messages for user %s",
+							channel,
+							map.get("Login")
+						)).queue();
 				}
 				return json.getString("challenge");
 			}
 			String id = subscription.getJSONObject("condition").getString("broadcaster_user_id");
-			List<String> data = Database.GuildSettings.getAllWithValue("twitchId", id);
-			for(String s : data) {
-				String channelid = Database.GuildSettings.get(Long.parseLong(s), "twitchChannel");
-				TextChannel channel = (TextChannel) Bot.JDA.getTextChannelById(channelid);
+			List<Map<String,String>> store = Database.Twitch.getAllWithUserId(id);
+			for(Map<String,String> map : store) {
+				TextChannel channel = (TextChannel) Bot.JDA.getTextChannelById(map.get("ChannelId"));
+				
+				String roleId = map.get("RoleId");
+				Guild guild = Bot.JDA.getGuildById(map.get("GuildId"));
+				Role role = null;
+				if(roleId.equals("0")) {
+					role = guild.getPublicRole();
+				} else {
+					role = Bot.JDA.getRoleById(roleId);
+				}
+				if(role == null || !role.isMentionable()) {
+					role = guild.getPublicRole();
+				}
+				
 				JSONObject event = json.getJSONObject("event");
 				String message = String.format(
-						"%s is live at https://www.twitch.tv/%s", 
+						"%s is live at https://www.twitch.tv/%s\n%s", 
 						event.getString("broadcaster_user_name"),
-						event.getString("broadcaster_user_login")
+						event.getString("broadcaster_user_login"),
+						role
 					);
 				channel.sendMessage(message).queue();
 			}
