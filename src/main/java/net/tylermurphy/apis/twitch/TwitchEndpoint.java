@@ -41,7 +41,10 @@ public class TwitchEndpoint {
 					Database.Twitch.set(map);
 					TextChannel channel = Bot.JDA.getTextChannelById(map.get("ChannelId"));
 					channel.sendMessage(String.format(
-							":white_check_mark: Sucessfully set channel %s to recieve messages for user %s",
+							":white_check_mark: Sucessfully set channel %s to recieve messages for user %s\n"+
+							"Use `Ken setTwitchChannel <#channel>` to set the broadcast channel\n"+
+							"Use `Ken setTwitchRole <@Role>` to set the role to be pinged\n"+
+							"Use `Ken removeTwitchBroadcast` to disable broadcast",
 							channel,
 							map.get("Login")
 						)).queue();

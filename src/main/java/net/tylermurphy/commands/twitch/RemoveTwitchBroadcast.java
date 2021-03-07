@@ -34,15 +34,15 @@ public class RemoveTwitchBroadcast implements ICommand {
 	
 
 	public String getInvoke() {
-		return "broadcastWhenLive";
+		return "removeTwitchBroadcast";
 	}
 
 	public String getUsage() {
-		return "BroadcastWhenLive <TwitchChannelName>";
+		return "removeTwitchBroadcast";
 	}
 
 	public String getDescription() {
-		return "Setup a channel in your server to broadcase a message when a twitch streamer goes live. (You can only have 1 per server)";
+		return "Removes the twitch broadcast in your server";
 	}
 
 	public Permission requiredPermission() {
