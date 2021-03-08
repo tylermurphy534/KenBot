@@ -26,9 +26,9 @@ public class RemoveTwitchBroadcast implements ICommand {
 		Database.Twitch.remove(event.getGuild().getIdLong());
 		channel.sendMessage(":white_check_mark: Removed TwitchAPI broadcast from this server.").queue();
 		
-		int count = Database.Twitch.getCountWithWebhookId(webhookId);
+		int count = Database.Twitch.getAllWithSetting(webhookId, "WebhookId").size();
 		if(count < 1) {
-			TwitchAPI.deleteBroadcastSubscription(event.getGuild().getIdLong());
+			TwitchAPI.deleteBroadcastSubscription(webhookId);
 		}
 	}
 	

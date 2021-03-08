@@ -2,6 +2,7 @@ package net.tylermurphy.commands.twitch;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import me.duncte123.botcommons.messaging.EmbedUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -38,6 +39,25 @@ public class BroadcastWhenLive implements ICommand {
 			return;
 		}
 		
+		List<Map<String,String>> store = Database.Twitch.getAllWithSetting(args.get(0), "Login");
+		if(store.size() > 0) {
+			Map<String,String> data = store.get(0);
+			data.put("ChannelId", event.getChannel().getId());
+			data.put("GuildId", event.getGuild().getId());
+			data.put("RoleId", "0");
+			data.put("Status", "complete");
+			Database.Twitch.set(data);
+			channel.sendMessage(String.format(
+					":white_check_mark: Sucessfully set channel %s to recieve messages for user %s\n"+
+					"Use `Ken setTwitchChannel <#channel>` to set the broadcast channel\n"+
+					"Use `Ken setTwitchRole <@Role>` to set the role to be pinged\n"+
+					"Use `Ken removeTwitchBroadcast` to disable broadcast",
+					channel,
+					data.get("Login")
+				)).queue();
+			return;
+		}
+		
 		int result = TwitchAPI.setupBroadcastSubscription(channel, args.get(0));
 		if(result == API.SUCCESS) {
 			channel.sendMessage(":wrench: Sent request to twitch to create webhook for user: "+args.get(0)).queue();
@@ -47,7 +67,8 @@ public class BroadcastWhenLive implements ICommand {
 			channel.sendMessage(":x: There was no user on twitch found with the username: "+args.get(0)).queue();
 		} else if(result == API.DUPLICATE) {
 			//first how did it get here, what shit had to happen for this to get to here
-			channel.sendMessage(":x: If you are seeing this error, i dont know what you did, but how?!").queue();
+			//why didnt the meathod above find a webhook? WHY?
+			channel.sendMessage(":x: If you are seeing this error, i dont know what you did, but something just went ucky fuwky!").queue();
 		}
 	}
 

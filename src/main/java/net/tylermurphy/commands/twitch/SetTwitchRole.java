@@ -38,7 +38,7 @@ public class SetTwitchRole implements ICommand {
 		map.put("RoleId", role.getId());
 		Database.Twitch.set(map);
 		
-		channel.sendMessage(":white_check_mark: Set Twitch Broadcast Role to `"+role.getName()+"`.").queue();
+		channel.sendMessage(":white_check_mark: Set Twitch Broadcast Role to "+role.getName()+".").queue();
 	}
 
 	public String getInvoke() {

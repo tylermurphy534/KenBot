@@ -18,10 +18,12 @@ public class WelcomeManager extends ListenerAdapter {
 		if(channel == null) return;
 		byte[] img = ImageFactory.WelcomeImage(event.getMember().getUser(), event.getGuild());
 		 
-		channel
-			.sendMessageFormat(":tada:**| Weclome %s#%s** to %s!", event.getMember().getEffectiveName(), event.getMember().getUser().getDiscriminator(), event.getGuild().getName())
-			.addFile(img, "welcome.png")
-			.queue();
+		try {
+			channel
+				.sendMessageFormat(":tada:**| Weclome %s#%s** to %s!", event.getMember().getEffectiveName(), event.getMember().getUser().getDiscriminator(), event.getGuild().getName())
+				.addFile(img, "welcome.png")
+				.queue();
+		} catch(Exception ignored) {}
 	}
 	
 	public void onGuildMessageReceived(GuildMessageReceivedEvent event) {

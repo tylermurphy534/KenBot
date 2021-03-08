@@ -43,7 +43,7 @@ public class SetTwitchChannel implements ICommand {
 		map.put("ChannelId", mentionedChannel.getId());
 		Database.Twitch.set(map);
 		
-		channel.sendMessage(":white_check_mark: Set Twitch Broadcast Channel to `"+mentionedChannel+"`.").queue();
+		channel.sendMessage(":white_check_mark: Set Twitch Broadcast Channel to "+mentionedChannel+".").queue();
 	}
 
 	public String getInvoke() {

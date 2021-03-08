@@ -55,15 +55,14 @@ public class Twitch {
 		return null;
 	}
 	
-	public List<Map<String,String>> getAllWithUserId(String channelId) {
-		String sql = "SELECT * FROM Twitch WHERE UserId = ?";
+	public List<Map<String,String>> getAllWithSetting(String channelId, String setting) {
+		String sql = "SELECT * FROM Twitch WHERE "+setting+" = ?";
 		try( Connection connection = MariaDBConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ){
 			statement.setString(1, channelId);
 			try(final ResultSet resultSet = statement.executeQuery()){
 				connection.commit();
 				List<Map<String,String>> store = new ArrayList<Map<String,String>>();
 				while(resultSet.next()) {
-					System.out.println("t");
 					Map<String, String> data = new HashMap<String, String>();
 					data.put("GuildId",resultSet.getString("GuildId"));
 					data.put("Status",resultSet.getString("Status"));
@@ -80,24 +79,6 @@ public class Twitch {
 			e.printStackTrace();
 		}
 		return null;
-	}
-	
-	public int getCountWithWebhookId(String webhookId) {
-		String sql = "SELECT * FROM Twitch WHERE WebhookId = ?";
-		try( Connection connection = MariaDBConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ){
-			statement.setString(1, webhookId);
-			try(final ResultSet resultSet = statement.executeQuery()){
-				connection.commit();
-				int count = 0;
-				while(resultSet.next()) {
-					count++;
-    			}
-				return count;
-    		}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return 0;
 	}
 	
 	public void set(Map<String,String> map) {

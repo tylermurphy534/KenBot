@@ -74,9 +74,7 @@ public class TwitchAPI extends API {
 		}
 	}
 	
-	public static int deleteBroadcastSubscription(long guildId) {
-		String id = Database.Twitch.get(guildId, "WebhookId");
-		if(id == null) return NOT_FOUND;
+	public static int deleteBroadcastSubscription(String id) {
 		String url = "https://api.twitch.tv/helix/eventsub/subscriptions?id="+id;
 		String[] headers = {
 				"Client-ID", Config.TWITCH_CLIENT_ID,
@@ -86,7 +84,7 @@ public class TwitchAPI extends API {
 			String response = getResponse("DELETE ",url,headers);
 			if(invalidResponse(response)) {
 				generateNewAppAccessToken();
-				return deleteBroadcastSubscription(guildId);
+				return deleteBroadcastSubscription(id);
 			}
 			return SUCCESS;
 		} catch (Exception e) {
@@ -112,7 +110,7 @@ public class TwitchAPI extends API {
 		}
 	}
  
-	private static JSONObject getUser(String name) {
+	public static JSONObject getUser(String name) {
 		final String url = String.format(
 				"https://api.twitch.tv/helix/users?login=%s",
 				name
@@ -125,6 +123,29 @@ public class TwitchAPI extends API {
 			JSONObject json = getJson("GET",url,headers);
 			if(invalidResponse(json)) {
 				return getUser(name);
+			}
+			// if fails the user didnt send
+			json.getJSONArray("data").get(0);
+			return json;
+		} catch (Exception ignored) {
+			ignored.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static JSONObject getStream(String id) {
+		final String url = String.format(
+				"https://api.twitch.tv/helix/streams?user_id=%s",
+				id
+				);
+		String[] headers = {
+				"Client-ID", Config.TWITCH_CLIENT_ID,
+				"Authorization", "Bearer "+AppAccessToken
+		};
+		try {
+			JSONObject json = getJson("GET",url,headers);
+			if(invalidResponse(json)) {
+				return getStream(id);
 			}
 			// if fails the user didnt send
 			json.getJSONArray("data").get(0);
