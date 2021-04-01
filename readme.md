@@ -10,52 +10,96 @@ Setup
 
 You have to create a bot_config.json file and put the required data in the following format. To fully fill this table you need a discord bot token, a youtube api key from the google devloper console, a tennor api key from the tennor gif website, and a mariadb database specifying the connection and login information.
 
->{
->	"TOKEN": "",
->	"YOUTUBE_API_KEY": "",
->	"OWNER_USER_ID": 0,
->	"TENNOR_API_KEY": "",
->	"DEFAULT_PREFIX": "Ken ",
->	"DATABASE_HOST": "",
->	"DATABASE_PORT": "",
->	"DATABASE_USER": "",
->	"DATABASE_PASSWORD": "",
->	"DATABASE_NAME": "",
->	"NSFW: false,
->	"DEBUG": false
->}
+```
+{
+	"General": {
+		"Bot_Token": "***************************",
+		"Owner_User_Id": "1234567890123456",
+		"Default_Prefix": "Ken ",
+		"Debug": false,
+		"Bot_Name": "Ken",
+		"Support_Server": "ChFRPDF",
+		"Welcome_Messaging": true,
+		"Level_Messaging": true,
+		"Accent_Color_Red": 250,
+		"Accent_Color_Green": 0,
+		"Accent_Color_Blue": 250
+	},
+	"Database": {
+		"Host": "localhost",
+		"Port": "3306",
+		"Username": "root",
+		"Password": "password",
+		"Database_Name": "database"
+	},
+	"Youtube": {
+		"ENABLED": true,
+		"Api_Key": "*************************************"
+	},
+	"Spotify": {
+		"ENABLED": false,
+		"Client_Id": "********************************",
+		"Client_Secret": "**********************************"
+	},
+	"NSFW": {
+		"ENABLED": true
+	},
+	"Tennor": {
+		"ENABLED": false,
+		"Api_Key": "**********"
+	},
+	"Twitch": {
+		"ENABLED": true,
+		"Client_Id": "******************************",
+		"Client_Secret": "****************************",
+		"Callback_URL": "https://somecallback.botthing.xyz/subscribe"
+	}
+}
+```
 
-#### Token
+# General Configuration
+###### Token
 This is where you place your discord bot token that you get on the discord devloper portal. Create an application and add a bot to that application. Copy the bots token and add it here. Make sure to never release this token EVER, or anyone can control your discord bot how ever they like.
+###### Owner User ID
+This is where you would place the the discord user id of the owner of the bot. Who ever is set to owner will be able to use 'Ken shutdown' to turn off the bot from discord.
+###### Default Prefix
+This is the prefix that is set by default for all servers the bot is in.
+###### Debug
+Currently has no function, will be added in the futures
+###### Bot Name
+The name of the bot to be displayed when needed
+###### Support Server
+The random generated part of discord.gg/******, this is the link to the support server for your bot in the help message.
+###### Welcome Messaging
+true/false if you want the bot to ever welcome people when they join a server (can be disabled by servers manually)
+###### Level Messaging
+true/false if you want the bot to ever tell people they leveled up (leveling can be disabled entirely by servers manually)
+###### Accent Color
+This is the RGB color value the bot uses when sending embeds.
 
-#### Youtube Api Key
-Ken bot has built in music futures, and with that comes searching for a video on youtube if they only put in a search term. So you will need to get a youtube api key on the google devloper console for APIs.
+# Database Configuations
+###### Host
+This is the hostname where the **mariadb** database server is run. Yes you must be running mariadb or anything else that is compatiable. 
+###### Port
+Usally 3306 by debault unless you changed it
+###### Username / Password
+This is the login information for your database
+###### Databse Name
+This is the name of the Database inside of mariada that kenbot will use
 
-#### Owner User ID,
-This is where you put your discord user id. All this value does, is when you run the shutdown command, it checks the user who sent it, with the owner user id. If there is a match, the bot will turn off. Thats the only use for this feild, so it isnt needed. If you want to not use it, make sure to atleast put a 0 or it will error.
+# API Configurations
 
-#### Tennor API Key
-Ken bot uses the tennor gif api for certin commands. So you will need to get a tennor api key to use with the bot.
+#Youtube
+You can enable or disable using the youtube api for searching music. API Key from Google Devloper Console is required if you want to use the youtube api. Learn more [here](https://developers.google.com/youtube/v3/getting-started).
+#Spotify
+Not yet implemented, so feel free to disable it
+#NSFW
+true/false if you ever want the bot to ever be using NSFW commands and their respective APIs that they use.
+#Tennor
+You can enable / disable this to disalba the gif command. Tennor Api key required. Learn more [here](https://tenor.com/gifapi/documentation).
+#Twitch
+If you want your bot to be able to notify a server when someone is live on twitch, you will need to set this up. You first will need a twitch Clinet Id and Secret from its devloper page. Then for twitch callbacks, kenbot uses Springboot to create a REST API. The bot runs Springboot on its default port of 8080, so you will need to create a domain name that points directly to the server where the bot is running to port 8080. For example, somerandomdomainname.net could point to server_external_ip:8080. Or, you can setup a reverse proxy if that works better for you.
 
-#### Default Prefix
-This is where you place the default prefix you want to use for your bot. Make sure that if you want a space after the prefix, that you place a space in the json file.
+# Deployment
 
-#### Database_XXXXX
-Ken bot requires a MySQL or MariaDB database to function. This is where it stores all its information for guild, users, and everything else. So you will need a database for the bot to work. 
-For **DATABASE_HOST**, put in the ip or url for where the server is hosted. For example, if its hosted on the same machine, it would be localhost, if its hosted on the same LAN network, it would be that machines local ip, and if its hosted outside the bot location (Not Recomended), its the outbound ip for the server. The ip is that long string of numbers that its formated like xxx.xxx.xxx.xxx. 
-For **DATABASE_PORT_**, put in the port the server is listening on. By default, MySQL and MariaDB databased will listen on port 3306, but if you are using a diffrent port, place the correct one here.
-For **DATABASE_USER**, put in the username for connecting to the server. You could use root (Not Recommended), or you could use a user that you created on the database.
-For **DATABASE_PASSWORD**, put in the password for the user you listed in DATABASE_USER.
-For **DATABASE_NAME** put the name for the database you created.
-
-#### NSFW
-If you dont want the NSFW features on the bot, disable them here by putting **false**, or if you want them, put **true**.
-
-#### DEBUG
-The name debug is a litle misleading, because right now, all it does is it forces the use of the default prefix in all servers. The main reason for this is if you were hosting a clone of the bot for devlopment pourposes. You most likily will not be needing this ever, so leave it at false.
-
-
-Deployment
----
-To build the bot go to the bot source code directory and run ./gradlew build in a lunix or powershell terminal or run gradlew.bat in windows command prompt. You will then have a runnable jar file in the ./build/libs/ directory. Copy that jar to where ever you want and run in a commandline java -jar "nameOfJar.jar". Make sure that the bot_config.json (Must be named that exactly) file you created is in the same directory as the jar file otherwise the bot will not work.
-
+Kenbot uses gradle to build its project. So run the gradle script with the build command. Then in the /build/libs folder, there will be a bot.jar file. To run the bot, you must run that jar file with the bot_config.json file in the same directory, thats all.

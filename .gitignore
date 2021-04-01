@@ -6,3 +6,8 @@ build
 bin
 # Ignore private data
 bot_config.json
+kenbot.log
+.project
+.classpath
+.settings
+
