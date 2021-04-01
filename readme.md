@@ -89,15 +89,15 @@ This is the name of the Database inside of mariada that kenbot will use
 
 # API Configurations
 
-# Youtube
+###### Youtube
 You can enable or disable using the youtube api for searching music. API Key from Google Devloper Console is required if you want to use the youtube api. Learn more [here](https://developers.google.com/youtube/v3/getting-started).
-# Spotify
+###### Spotify
 Not yet implemented, so feel free to disable it
-# NSFW
+###### NSFW
 true/false if you ever want the bot to ever be using NSFW commands and their respective APIs that they use.
-# Tennor
+###### Tennor
 You can enable / disable this to disalba the gif command. Tennor Api key required. Learn more [here](https://tenor.com/gifapi/documentation).
-# Twitch
+###### Twitch
 If you want your bot to be able to notify a server when someone is live on twitch, you will need to set this up. You first will need a twitch Clinet Id and Secret from its devloper page. Then for twitch callbacks, kenbot uses Springboot to create a REST API. The bot runs Springboot on its default port of 8080, so you will need to create a domain name that points directly to the server where the bot is running to port 8080. For example, somerandomdomainname.net could point to server_external_ip:8080. Or, you can setup a reverse proxy if that works better for you.
 
 # Deployment
