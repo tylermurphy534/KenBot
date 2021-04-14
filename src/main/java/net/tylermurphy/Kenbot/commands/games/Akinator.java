@@ -5,8 +5,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
 import com.markozajc.akiwrapper.Akiwrapper;
 import com.markozajc.akiwrapper.Akiwrapper.Answer;
 import com.markozajc.akiwrapper.AkiwrapperBuilder;
@@ -55,6 +53,7 @@ public class Akinator extends ListenerAdapter implements ICommand  {
 			game.CHANNELID = event.getChannel().getIdLong();
 			game.next();
 			games.put(id, game);
+			event.getChannel().sendMessage("Loading akinator, one moment please ...").queue();
 		} catch (ServerNotFoundException e) {
 			event.getChannel().sendMessage(":x: An unexpected error occoured, try again later.");
 		}
@@ -213,6 +212,7 @@ class AkinatorGame {
 		for(Guess guess : wrapper.getGuessesAboveProbability(.85)) {
 			if(guess.getProbability() > .85) {
 				if(bestGuess == null || bestGuess.getProbability() < guess.getProbability()) {
+					if(Sequence.contains(guess)) continue;
 					bestGuess = guess;
 				}
 			}
