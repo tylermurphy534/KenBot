@@ -43,7 +43,7 @@ public class Help implements ICommand {
 					false);
 			embed.addField(
 					":game_die: Game Commands",
-					"`battle`,`blackjack`,`coinflip`,`dice`,`8ball`,`multiDice`,`nunchi`",
+					"`akinator`,`battle`,`blackjack`,`coinflip`,`dice`,`8ball`,`multiDice`,`nunchi`",
 					false);
 			embed.addField(
 					":musical_note: Music Commands",

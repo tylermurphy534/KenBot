@@ -86,6 +86,7 @@ public class CommandRegister {
 		register(new Battle());
 		register(new MultiDice());
 		register(new EightBall());
+		register(new Akinator());
 		
 		// MODERATION
 		
