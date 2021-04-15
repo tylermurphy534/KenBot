@@ -29,19 +29,23 @@ public class CommandRegister {
 		
 		// MUSIC
 		
-		register(new Leave());
-		register(new Play());
-		register(new Stop());
-		register(new Queue());
-		register(new Skip());
-		register(new NowPlaying());
-		register(new Pause());
-		register(new Resume());
-		register(new Loop());
-		register(new Join());
-		register(new LoopQueue());
-		register(new Remove());
-		register(new ForceSkip());
+		if(Config.YOUTUBE_ENABLED) {
+		
+			register(new Leave());
+			register(new Play());
+			register(new Stop());
+			register(new Queue());
+			register(new Skip());
+			register(new NowPlaying());
+			register(new Pause());
+			register(new Resume());
+			register(new Loop());
+			register(new Join());
+			register(new LoopQueue());
+			register(new Remove());
+			register(new ForceSkip());
+		
+		}
 		
 		//ADMIN
 		

@@ -66,16 +66,6 @@ public class Config {
 		YOUTUBE_API_KEY = (String) YOUTUBE.get("Api_Key");
 		LOG.info("\tYOUTUBE_API_KEY: "+YOUTUBE_API_KEY);
 		
-		JSONObject SPOTIFY = (JSONObject) json.get("Spotify");
-		
-		LOG.info("Spotify Configurations");
-		SPOTIFY_ENABLED = (Boolean) SPOTIFY.get("ENABLED");
-		LOG.info("\tSPOTIFY_ENABLED: "+SPOTIFY_ENABLED);
-		SPOTIFY_CLIENT_ID = (String) SPOTIFY.get("Client_Id");
-		LOG.info("\tSPOTIFY_CLIENT_ID: "+SPOTIFY_CLIENT_ID);
-		SPOTIFY_CLIENT_SECRET = (String) SPOTIFY.get("Client_Secret");
-		LOG.info("\tSPOTIFY_CLIENT_SECRET: "+SPOTIFY_CLIENT_SECRET);
-		
 		JSONObject NSFW = (JSONObject) json.get("NSFW");
 		
 		LOG.info("NSFW Configurations");
@@ -123,10 +113,6 @@ public class Config {
 	
 	public static boolean YOUTUBE_ENABLED;
 	public static String YOUTUBE_API_KEY;
-	
-	public static boolean SPOTIFY_ENABLED;
-	public static String SPOTIFY_CLIENT_ID;
-	public static String SPOTIFY_CLIENT_SECRET;
 	
 	public static boolean NSFW_ENABLED;
 	

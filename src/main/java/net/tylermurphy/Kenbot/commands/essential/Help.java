@@ -45,7 +45,7 @@ public class Help implements ICommand {
 					":game_die: Game Commands",
 					"`akinator`,`battle`,`blackjack`,`coinflip`,`dice`,`8ball`,`multiDice`,`nunchi`",
 					false);
-			embed.addField(
+			if(Config.YOUTUBE_ENABLED) embed.addField(
 					":musical_note: Music Commands",
 					"`join`,`leave`,`loop`,`loopQueue`,`np`,`pause`,`play`,`queue`,`remove`,`resume`,`skip`,`stop`",
 					false);

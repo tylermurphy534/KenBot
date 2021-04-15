@@ -22,6 +22,9 @@ import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.tylermurphy.Kenbot.commands.CommandRegister;
 import net.tylermurphy.Kenbot.commands.CommandResponder;
 import net.tylermurphy.Kenbot.database.MariaDBConnection;
+import net.tylermurphy.Kenbot.managers.LevelManager;
+import net.tylermurphy.Kenbot.managers.WelcomeManager;
+import net.tylermurphy.Kenbot.music.BotLeaveListener;
 
 public class Bot {
 	
@@ -79,8 +82,11 @@ public class Bot {
 		LOG.info("Loading Commands");
 		CommandRegister.registerCommands();
 		
-		LOG.info("Starting Listener");
+		LOG.info("Starting Listeners");
 		new CommandResponder();
+		new LevelManager();
+		if(Config.YOUTUBE_ENABLED) new BotLeaveListener();
+		if(Config.WELCOME_MESSAGING) new WelcomeManager();
 		
 		if(Config.TWITCH_ENABLED) {
 			LOG.info("Starting Springboot");

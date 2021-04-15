@@ -3,6 +3,8 @@ package net.tylermurphy.Kenbot.commands;
 import java.util.Arrays;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.regex.Pattern;
 
 import me.duncte123.botcommons.messaging.EmbedUtils;
@@ -20,16 +22,27 @@ public class CommandResponder extends ListenerAdapter {
     private final LevelManager levelManager;
     private final AutoModManager autoModManager;
     private final WebhookManager webhookManger;
+	private final ExecutorService executerService;
 	
 	public CommandResponder() {
         this.levelManager = new LevelManager();
         this.autoModManager = new AutoModManager();
         this.webhookManger = new WebhookManager();
         Bot.JDA.addEventListener(this);
+        executerService = Executors.newCachedThreadPool(); 
 	}
 	
 	public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 		
+		Thread executerThread = new Thread(() -> {
+			handleMessage(event);
+		});
+		
+		executerService.execute(executerThread);
+		
+    }
+	
+	private void handleMessage(GuildMessageReceivedEvent event) {
 		if(!event.getChannel().canTalk(event.getGuild().getSelfMember())) {
 			return;
 		}
@@ -71,6 +84,7 @@ public class CommandResponder extends ListenerAdapter {
             }
         	
         }
+        
         if(!event.getAuthor().isBot() && !event.getMessage().isWebhookMessage()) {
         	
         	levelManager.handleMessage(event);
@@ -78,6 +92,6 @@ public class CommandResponder extends ListenerAdapter {
         	webhookManger.handleMessage(event);
         	
         }
-    }
+	}
 	
 }

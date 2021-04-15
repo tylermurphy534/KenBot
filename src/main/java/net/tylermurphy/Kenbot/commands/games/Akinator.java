@@ -46,6 +46,7 @@ public class Akinator extends ListenerAdapter implements ICommand  {
 			return;
 		}
 		try {
+			event.getChannel().sendMessage("Loading akinator, one moment please ...").queue();
 			Akiwrapper wrapper = new AkiwrapperBuilder().build();
 			AkinatorGame game = new AkinatorGame();
 			game.wrapper = wrapper;
@@ -53,7 +54,7 @@ public class Akinator extends ListenerAdapter implements ICommand  {
 			game.CHANNELID = event.getChannel().getIdLong();
 			game.next();
 			games.put(id, game);
-			event.getChannel().sendMessage("Loading akinator, one moment please ...").queue();
+			
 		} catch (ServerNotFoundException e) {
 			event.getChannel().sendMessage(":x: An unexpected error occoured, try again later.");
 		}
