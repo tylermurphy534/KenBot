@@ -70,7 +70,7 @@ public class UserSettings {
 		}
 	}
 	
-	public String getUserFromValue(long guildId, String settingName, String settingValue) {
+	public String getFirstUserWithValue(long guildId, String settingName, String settingValue) {
 		String sql = "SELECT * FROM UserSettings WHERE GuildId = ? AND SettingName = ? AND SettingValue = ?";
 		try( Connection connection = MariaDBConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ){
 			statement.setString(1, String.valueOf(guildId));

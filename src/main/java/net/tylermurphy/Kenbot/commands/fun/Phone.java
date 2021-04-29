@@ -10,7 +10,6 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.tylermurphy.Kenbot.Bot;
 import net.tylermurphy.Kenbot.commands.ICommand;
 
 public class Phone extends ListenerAdapter implements ICommand {

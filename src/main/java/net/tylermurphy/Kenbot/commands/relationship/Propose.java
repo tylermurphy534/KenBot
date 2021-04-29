@@ -37,8 +37,8 @@ public class Propose implements ICommand {
 			channel.sendMessage(embed.build()).queue();
 			return;
 		}
-		String testId = Database.UserSettings.getUserFromValue(0L, "LoveId", mentionedMembers.get(0).getId());
-		if(testId != null) {
+		String test = Database.UserSettings.getFirstUserWithValue(0L, "LoveId", mentionedMembers.get(0).getId());
+		if(test != null) {
 			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
 					.setDescription(String.format("%s is already in a relationship or has already been proposed to.\n Wait for them to leave their relationship to try again.", mentionedMembers.get(0)));
 			channel.sendMessage(embed.build()).queue();

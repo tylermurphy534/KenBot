@@ -13,7 +13,6 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
 import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionRemoveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.tylermurphy.Kenbot.Bot;
 import net.tylermurphy.Kenbot.commands.ICommand;
 import net.tylermurphy.Kenbot.commands.Timeout;
 

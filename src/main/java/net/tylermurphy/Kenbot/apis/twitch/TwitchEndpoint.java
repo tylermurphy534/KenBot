@@ -57,9 +57,6 @@ public class TwitchEndpoint {
 			String id = subscription.getJSONObject("condition").getString("broadcaster_user_id");
 			List<Map<String,String>> store = Database.Twitch.getAllWithSetting(id, "UserId");
 			
-			System.out.println("A----------------");
-			System.out.println(store.size());
-			
 			JSONObject user = null;
 			JSONObject stream = null;
 			
@@ -67,17 +64,11 @@ public class TwitchEndpoint {
 				TextChannel channel = (TextChannel) Bot.JDA.getTextChannelById(map.get("ChannelId"));
 				
 				if(user == null) {
-					System.out.println("B---------------------");
-					System.out.println(map.get("Login"));
 					user = (JSONObject) TwitchAPI.getUser(map.get("Login")).getJSONArray("data").get(0);
-					System.out.println(user.toString());
 				}
 				
 				if(stream == null) {
-					System.out.println("C---------------------");
-					System.out.println(map.get("UserId"));
 					stream = (JSONObject) TwitchAPI.getStream(map.get("UserId")).getJSONArray("data").get(0);
-					System.out.println(stream.toString());
 				}
 
 				String roleId = map.get("RoleId");
@@ -115,18 +106,11 @@ public class TwitchEndpoint {
 				embed.setThumbnail(profile_image_url);
 				embed.setImage(thumbnail_url);
 				embed.setColor(new Color(147,112,219));
-				
-				channel.sendMessageFormat("Hey %s, %s is live at %s", role, user_name, stream_url).queue(message -> {
+
+				channel.sendMessageFormat("Hey %s, %s is now live on twitch!", role, user_name, stream_url).queue(message -> {
 					message.editMessage(embed.build()).queue();
 				});
-//				
-//				String message = String.format(
-//						"%s is live at https://www.twitch.tv/%s\n%s", 
-//						event.getString("broadcaster_user_name"),
-//						event.getString("broadcaster_user_login"),
-//						role
-//					);
-//				channel.sendMessage(message).queue();
+				
 			}
 			return "Sucess";
 		} catch(JSONException e) {

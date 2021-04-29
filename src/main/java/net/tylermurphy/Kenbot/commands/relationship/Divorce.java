@@ -16,13 +16,20 @@ public class Divorce implements ICommand {
 		TextChannel channel = event.getChannel();
 		long userId = event.getAuthor().getIdLong();
 		String testId = Database.UserSettings.get(userId, 0, "LoveId");
+		String proposedId = Database.UserSettings.getFirstUserWithValue(0, "LoveId", String.valueOf(userId));
+		if(proposedId != null) {
+			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
+					.setDescription("Someone has proposed to you. Run `acceptProposal` or `rejectProposal` before you run anything else.");
+			channel.sendMessage(embed.build()).queue();
+			return;
+		}
 		if(testId == null || testId.equals("")) {
 			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
 					.setDescription("You are currently not in a relationship.");
 			channel.sendMessage(embed.build()).queue();
 			return;
 		}
-		String otherId = Database.UserSettings.getUserFromValue(0, "LoveId", String.valueOf(userId));
+		String otherId = Database.UserSettings.getFirstUserWithValue(0, "LoveId", String.valueOf(testId));
 		if(!testId.equals(otherId)) {
 			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
 					.setDescription("You canceled your proposal.");

@@ -17,7 +17,7 @@ public class AcceptProposal implements ICommand {
 	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		TextChannel channel = event.getChannel();
 		long userId = event.getAuthor().getIdLong();
-		String otherId = Database.UserSettings.getUserFromValue(0L, "LoveId", String.valueOf(userId));
+		String otherId = Database.UserSettings.getFirstUserWithValue(0L, "LoveId", String.valueOf(userId));
 		if(otherId == null) {
 			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
 					.setDescription("There is no proposal for you to accept");
