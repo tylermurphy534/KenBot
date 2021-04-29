@@ -32,6 +32,10 @@ public class Precent implements ICommand {
 			channel.sendMessage(":x: Please mention one server member").queue();
 			return;
 		}
+		if(args.get(2).startsWith("<@")){
+			channel.sendMessage(":x: Invalid first argument").queue();
+			return;
+		}
 		int percent;
 		HashMap<String, Integer> userPercents = percents.get(event.getMessage().getMentionedMembers().get(0));
 		if(userPercents == null) userPercents = new HashMap<String,Integer>();

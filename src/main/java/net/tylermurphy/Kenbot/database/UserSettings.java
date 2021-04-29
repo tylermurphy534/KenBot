@@ -77,11 +77,9 @@ public class UserSettings {
 			statement.setString(2, settingName);
 			statement.setString(3, settingValue);
 			try(final ResultSet resultSet = statement.executeQuery()){
-    			while(resultSet.next()) {
-    				if(resultSet.next()) {
-    					return resultSet.getString("UserId");
-    				}
-    			}
+				if(resultSet.next()) {
+					return resultSet.getString("UserId");
+				}
     		}
 		} catch (SQLException e) {
 			e.printStackTrace();

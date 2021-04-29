@@ -31,6 +31,7 @@ dependencies {
 	compile group: 'org.jdom', name: 'jdom', version: '2.0.0'
 	compile group: 'log4j', name: 'log4j', version: '1.2.17'
 	compile group: 'com.github.markozajc', name: 'akiwrapper', version: '1.5.1.1'
+	compile group: 'org.reflections', name: 'reflections', version: '0.9.12'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testCompile('org.springframework.boot:spring-boot-starter-test'){
         exclude group: "com.vaadin.external.google", module:"android-json"

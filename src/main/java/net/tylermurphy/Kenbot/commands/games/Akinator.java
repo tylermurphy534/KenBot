@@ -143,6 +143,7 @@ class AkinatorGame {
 	long CHANNELID;
 	int QUESTION_NUMBER = 0;
 	ArrayList<Identifiable> Sequence = new ArrayList<Identifiable>();
+	ArrayList<String> Guesses = new ArrayList<String>();
 	int CURRENT_SEQUENCE_INDEX = -1;
 	String NAME;
 	
@@ -157,15 +158,19 @@ class AkinatorGame {
 	public void goBack() {
 		try {
 			if(CURRENT_SEQUENCE_INDEX < 1) return;
-			if(getPrevious() instanceof Guess) {
+			Object previous = getPrevious();
+			if(previous instanceof Guess) {
 				STATUS = "GUESS";
 				CURRENT_SEQUENCE_INDEX--;
+				Sequence.remove(previous);
+				Guesses.remove(Guesses.size()-1);
 				sendGuessEmbed((Guess)getCurrent());
-			} else if(getPrevious() instanceof Question) {
+			} else if(previous instanceof Question) {
 				wrapper.undoAnswer();
 				STATUS = "QUESTION";
 				CURRENT_SEQUENCE_INDEX--;
 				QUESTION_NUMBER--;
+				Sequence.remove(previous);
 				sendQuestionEmbed();
 			}
 		} catch(Exception e) {
@@ -213,12 +218,13 @@ class AkinatorGame {
 		for(Guess guess : wrapper.getGuessesAboveProbability(.85)) {
 			if(guess.getProbability() > .85) {
 				if(bestGuess == null || bestGuess.getProbability() < guess.getProbability()) {
-					if(Sequence.contains(guess)) continue;
+					if(Guesses.contains(guess.getName()+":"+guess.getDescription())) continue;
 					bestGuess = guess;
 				}
 			}
 		}
 		if(bestGuess != null) {
+			Guesses.add(bestGuess.getName()+":"+bestGuess.getDescription());
 			return bestGuess;
 		}
 		return null;
@@ -226,28 +232,17 @@ class AkinatorGame {
 	
 	public void next() {
 		CURRENT_SEQUENCE_INDEX++;
-		if(QUESTION_NUMBER > 20) {
-			Guess guess = attemptAGuess();
-			if(guess == null) {
-				STATUS = "QUESTION";
-				QUESTION_NUMBER++;
-				Question question = wrapper.getCurrentQuestion();
-				if(CURRENT_SEQUENCE_INDEX > Sequence.size()-1) 
-					Sequence.add(question);
-				sendQuestionEmbed();
-			} else {
-				STATUS = "GUESS";
-				if(CURRENT_SEQUENCE_INDEX > Sequence.size()-1) 
-					Sequence.add(guess);
-				sendGuessEmbed(guess);
-			}
-		} else {
+		Guess guess = attemptAGuess();
+		if(guess == null) {
 			STATUS = "QUESTION";
 			QUESTION_NUMBER++;
 			Question question = wrapper.getCurrentQuestion();
-			if(CURRENT_SEQUENCE_INDEX > Sequence.size()-1) 
-				Sequence.add(question);
+			Sequence.add(question);
 			sendQuestionEmbed();
+		} else {
+			STATUS = "GUESS";
+			Sequence.add(guess);
+			sendGuessEmbed(guess);
 		}
 	}
 	

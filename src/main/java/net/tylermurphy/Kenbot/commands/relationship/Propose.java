@@ -33,7 +33,7 @@ public class Propose implements ICommand {
 		}
 		if(loveId != null && !loveId.equals("")) {
 			EmbedBuilder embed = EmbedUtils.getDefaultEmbed()
-					.setDescription(String.format("You currently are already in a relationship or have already proposed to someone.\n Run `Ken divorce` before you propose to anyone else.", mentionedMembers.get(0)));
+					.setDescription("You currently are already in a relationship or have already proposed to someone.\n Run `Ken divorce` before you propose to anyone else.");
 			channel.sendMessage(embed.build()).queue();
 			return;
 		}

@@ -3,13 +3,8 @@ package net.tylermurphy.Kenbot.music;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.tylermurphy.Kenbot.Bot;
 
 public class BotLeaveListener extends ListenerAdapter {
-
-	public BotLeaveListener() {
-		Bot.JDA.addEventListener(this);
-	}
 	
 	public void onGuildVoiceLeave(GuildVoiceLeaveEvent event) {
 		

@@ -3,16 +3,11 @@ package net.tylermurphy.Kenbot.managers;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.tylermurphy.Kenbot.Bot;
 import net.tylermurphy.Kenbot.Config;
 import net.tylermurphy.Kenbot.database.Database;
 import net.tylermurphy.Kenbot.image.ImageFactory;
 
 public class WelcomeManager extends ListenerAdapter {
-	
-	public WelcomeManager() {
-		Bot.JDA.addEventListener(this);
-	}
 
 	public void onGuildMemberJoin(GuildMemberJoinEvent event) {
 		if(!Config.WELCOME_MESSAGING) return;

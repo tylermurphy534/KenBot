@@ -152,6 +152,7 @@ public class Battle extends ListenerAdapter implements ICommand {
 	    				.appendDescription("Select your defense stat, min 1, max "+max+"\n")
 	    				.appendDescription("You have "+stats.point+" skill points left.");
 	    		channel.sendMessage(embed.build()).queue();
+	    		match.timeout.refreshTimeout();
 	    		break;
 	    	case 2:
 	    		stats.point -= response;
@@ -162,6 +163,7 @@ public class Battle extends ListenerAdapter implements ICommand {
 	    				.appendDescription("Select your speed stat, min 1, max "+max+"\n")
 	    				.appendDescription("You have "+stats.point+" skill points left.");
 	    		channel.sendMessage(embed2.build()).queue();
+	    		match.timeout.refreshTimeout();
 	    		break;
 	    	case 3:
 	    		stats.point -= response;
@@ -172,6 +174,7 @@ public class Battle extends ListenerAdapter implements ICommand {
 	    				.appendDescription("Select your attack stat, min 1, max "+max+"\n")
 	    				.appendDescription("You have "+stats.point+" skill points left.");
 	    		channel.sendMessage(embed3.build()).queue();
+	    		match.timeout.refreshTimeout();
 	    		break;
 	    	case 4:
 	    		stats.point -= response;
@@ -182,6 +185,7 @@ public class Battle extends ListenerAdapter implements ICommand {
 	    		EmbedBuilder embed4 = EmbedUtils.getDefaultEmbed()
 	    				.setDescription(stats.user.getName()+" has inputed their stats.");
 	    		match.channel.sendMessage(embed4.build()).queue();
+	    		match.timeout.refreshTimeout();
 	    		switch(p) {
 	    			case 1:
 	    				match.user1 = stats;

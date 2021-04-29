@@ -49,14 +49,9 @@ import net.dv8tion.jda.api.events.role.RoleDeleteEvent;
 import net.dv8tion.jda.api.events.role.update.RoleUpdateColorEvent;
 import net.dv8tion.jda.api.events.role.update.RoleUpdateNameEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.tylermurphy.Kenbot.Bot;
 import net.tylermurphy.Kenbot.database.Database;
 
 public class LogManager extends ListenerAdapter {
-	
-	public LogManager() {
-		Bot.JDA.addEventListener(this);
-	}
 	
     public void onGuildMessageUpdate(@Nonnull GuildMessageUpdateEvent event) {
     	String id = Database.GuildSettings.get(event.getGuild().getIdLong(), "logChannel");

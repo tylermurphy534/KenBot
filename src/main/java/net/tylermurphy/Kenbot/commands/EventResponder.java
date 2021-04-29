@@ -11,24 +11,22 @@ import me.duncte123.botcommons.messaging.EmbedUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.tylermurphy.Kenbot.Bot;
 import net.tylermurphy.Kenbot.Config;
 import net.tylermurphy.Kenbot.managers.AutoModManager;
 import net.tylermurphy.Kenbot.managers.LevelManager;
 import net.tylermurphy.Kenbot.managers.WebhookManager;
 
-public class CommandResponder extends ListenerAdapter {
+public class EventResponder extends ListenerAdapter {
 
     private final LevelManager levelManager;
     private final AutoModManager autoModManager;
     private final WebhookManager webhookManger;
 	private final ExecutorService executerService;
 	
-	public CommandResponder() {
+	public EventResponder() {
         this.levelManager = new LevelManager();
         this.autoModManager = new AutoModManager();
         this.webhookManger = new WebhookManager();
-        Bot.JDA.addEventListener(this);
         executerService = Executors.newCachedThreadPool(); 
 	}
 	

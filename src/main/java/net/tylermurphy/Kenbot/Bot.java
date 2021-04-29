@@ -1,8 +1,7 @@
 package net.tylermurphy.Kenbot;
 
 import java.awt.Color;
-
-
+import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 
 import javax.security.auth.login.LoginException;
@@ -20,9 +19,9 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.tylermurphy.Kenbot.commands.CommandRegister;
-import net.tylermurphy.Kenbot.commands.CommandResponder;
+import net.tylermurphy.Kenbot.commands.EventResponder;
 import net.tylermurphy.Kenbot.database.MariaDBConnection;
-import net.tylermurphy.Kenbot.managers.LevelManager;
+import net.tylermurphy.Kenbot.managers.LogManager;
 import net.tylermurphy.Kenbot.managers.WelcomeManager;
 import net.tylermurphy.Kenbot.music.BotLeaveListener;
 
@@ -32,7 +31,7 @@ public class Bot {
 	
 	private static Logger LOG = Logger.getLogger(Bot.class.getName());
 			
-	private Bot() throws LoginException, InterruptedException, SQLException, SecurityException {
+	private Bot() throws LoginException, InterruptedException, SQLException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException {
 		
 		LOG.info("Loading bot_config.json");
 		
@@ -83,10 +82,11 @@ public class Bot {
 		CommandRegister.registerCommands();
 		
 		LOG.info("Starting Listeners");
-		new CommandResponder();
-		new LevelManager();
-		if(Config.YOUTUBE_ENABLED) new BotLeaveListener();
-		if(Config.WELCOME_MESSAGING) new WelcomeManager();
+		
+		JDA.addEventListener(new EventResponder());
+		JDA.addEventListener(new LogManager());
+		if(Config.YOUTUBE_ENABLED) JDA.addEventListener(new BotLeaveListener());
+		if(Config.WELCOME_MESSAGING) JDA.addEventListener(new WelcomeManager());
 		
 		if(Config.TWITCH_ENABLED) {
 			LOG.info("Starting Springboot");
@@ -106,7 +106,7 @@ public class Bot {
 		
 	}
 	
-	public static void main(String[] args) throws LoginException, InterruptedException, SQLException, SecurityException {
+	public static void main(String[] args) throws LoginException, InterruptedException, SQLException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException {
 		new Bot();
     }
 }
