@@ -61,8 +61,9 @@ public class ImageFactory {
 					getImageFromURL("https://i.pinimg.com/originals/69/e9/3c/69e93ced914a9230dcf2b9ba160f129f.jpg"),
 				300
 			);
+			String avatarURL = u.getAvatarUrl() != null ? u.getAvatarUrl() : "https://img.17qq.com/images/qraswsrhhhx.jpeg";
 			avatar = makeRoundedCorner(
-					getImageFromURL(u.getAvatarUrl()),
+					getImageFromURL(avatarURL),
 				100
 			);
 			

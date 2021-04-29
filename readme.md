@@ -95,4 +95,4 @@ If you want your bot to be able to notify a server when someone is live on twitc
 
 # Deployment
 
-Kenbot uses gradle to build its project. So run the gradle script with the build command. Then in the /build/libs folder, there will be a bot.jar file. To run the bot, you must run that jar file with the bot_config.json file in the same directory. Final note, JAVA 13 or later is required or the program will refuse to run due to it being a later compile version. That is everything, I hope you enjoy!
+Kenbot uses gradle to build its project. So run the gradle script with the build command. Then in the /build/libs folder, there will be a bot.jar file. To run the bot, you must run that jar file with the bot_config.json file in the same directory. Final note, JAVA 11 or later is required or the program will refuse to run due to it being a later compile version. That is everything, I hope you enjoy!
