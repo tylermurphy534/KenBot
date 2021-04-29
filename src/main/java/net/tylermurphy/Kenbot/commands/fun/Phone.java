@@ -15,10 +15,6 @@ import net.tylermurphy.Kenbot.commands.ICommand;
 
 public class Phone extends ListenerAdapter implements ICommand {
 	
-	public Phone() {
-		Bot.JDA.addEventListener(this);
-	}
-	
 	private static List<TextChannel> waitingCalls = new ArrayList<TextChannel>(); 
 	private static HashMap<TextChannel,TextChannel> currentCalls = new HashMap<TextChannel,TextChannel>();
 	

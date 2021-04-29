@@ -28,10 +28,6 @@ public class Akinator extends ListenerAdapter implements ICommand  {
 	private final List<String> VALID = Arrays.asList("yes","y","no","n","probably","p","probably not","pn","idk","i","back","b");
 	
 	private HashMap<String,AkinatorGame> games = new HashMap<String,AkinatorGame>();
-
-	public Akinator() {
-		Bot.JDA.addEventListener(this);
-	}
 	
 	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		String id = event.getMember().getId() + event.getChannel().getId();
@@ -42,7 +38,7 @@ public class Akinator extends ListenerAdapter implements ICommand  {
 				games.remove(id);
 				return;
 			}
-			event.getChannel().sendMessage(":x: You currently have a akinator game in progress, type "+Config.DEFAULT_PREFIX+" akinator cancel to end the game.");
+			event.getChannel().sendMessage(":x: You currently have a akinator game in progress, type "+Config.DEFAULT_PREFIX+" akinator cancel to end the game.").queue();
 			return;
 		}
 		try {
@@ -61,6 +57,7 @@ public class Akinator extends ListenerAdapter implements ICommand  {
 	}
 	
 	public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
+		if(event.getAuthor().isBot()) return;
 		String id = event.getMember().getId() + event.getChannel().getId();
 		String raw = event.getMessage().getContentRaw();
 		AkinatorGame game = games.get(id);
@@ -164,7 +161,7 @@ class AkinatorGame {
 				CURRENT_SEQUENCE_INDEX--;
 				Sequence.remove(previous);
 				Guesses.remove(Guesses.size()-1);
-				sendGuessEmbed((Guess)getCurrent());
+				sendGuessEmbed((Guess)previous);
 			} else if(previous instanceof Question) {
 				wrapper.undoAnswer();
 				STATUS = "QUESTION";

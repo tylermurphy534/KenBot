@@ -22,10 +22,6 @@ import net.tylermurphy.Kenbot.commands.Timeout;
 
 public class Battle extends ListenerAdapter implements ICommand {
 	
-	public Battle() {
-		Bot.JDA.addEventListener(this);
-	}
-
 	private static List<Match> matches = new ArrayList<Match>();
 	
 	public void invoke(List<String> args, GuildMessageReceivedEvent event) {

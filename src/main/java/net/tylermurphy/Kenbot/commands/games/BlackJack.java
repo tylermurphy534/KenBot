@@ -19,10 +19,6 @@ import net.tylermurphy.Kenbot.commands.ICommand;
 import net.tylermurphy.Kenbot.commands.Timeout;
 
 public class BlackJack extends ListenerAdapter implements ICommand {
-	
-	public BlackJack() {
-		Bot.JDA.addEventListener(this);
-	}
 
 	private static HashMap<String,BlackJackGame> games = new HashMap<String,BlackJackGame>();
 	

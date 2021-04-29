@@ -22,10 +22,6 @@ import net.tylermurphy.Kenbot.commands.ICommand;
 import net.tylermurphy.Kenbot.database.Database;
 
 public class SelfRole extends ListenerAdapter implements ICommand {
-	
-	public SelfRole() {
-		Bot.JDA.addEventListener(this);
-	}
 
 	public void invoke(List<String> args, GuildMessageReceivedEvent event) {
 		TextChannel channel = event.getChannel();

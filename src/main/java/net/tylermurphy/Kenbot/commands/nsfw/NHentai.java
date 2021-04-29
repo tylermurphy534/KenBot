@@ -13,16 +13,11 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.tylermurphy.Kenbot.Bot;
 import net.tylermurphy.Kenbot.apis.nhentai.Comic;
 import net.tylermurphy.Kenbot.apis.nhentai.NHentaiAPI;
 import net.tylermurphy.Kenbot.commands.ICommand;
 
 public class NHentai extends ListenerAdapter implements ICommand {
-	
-	public NHentai() {
-		Bot.JDA.addEventListener(this);
-	}
 	
 	private static final Map<String, Comic> comics = new HashMap<String,Comic>();
 	

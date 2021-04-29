@@ -18,10 +18,6 @@ import net.tylermurphy.Kenbot.commands.ICommand;
 import net.tylermurphy.Kenbot.commands.Timeout;
 
 public class Nunchi extends ListenerAdapter implements ICommand {
-	
-	public Nunchi() {
-		Bot.JDA.addEventListener(this);
-	}
 
 	private static List<NunchiGame> games = new ArrayList<NunchiGame>();
 	
