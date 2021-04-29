@@ -3,7 +3,7 @@ Ken Discord Bot
 
 Description
 ---
-A multipurpose discord bot. It can play youtube videos and bandicamp urls, and it also includes DJ permessions so all users dont have permission to mess with the bot when music is playing. Also, users can play many advanced games such as nunchi, blackjack, and they can also battle each other. The bot also has moderation tools including, kick, ban, tempmute, and others. It also has social commands such as kiss, tickle, boop, slap, punch, lick, hug, pat, The bot also allows users to ship each other. Ken also has a leveling XP system for how much each user chats!
+A multipurpose discord bot. It can play youtube videos, includes DJ permessions so all users dont have permission to mess with the bot when music is playing. Also, users can play many advanced games such as nunchi, blackjack, and they can also battle each other. The bot also has moderation tools including, kick, ban, tempmute, and others. It has social commands such as kiss, tickle, boop, slap, punch, lick, hug, pat, The bot also allows users to ship each other. Ken also has a leveling XP system for how much each user chats! Much more is also included.
 
 Setup
 ---
@@ -35,11 +35,6 @@ You have to create a bot_config.json file and put the required data in the follo
 	"Youtube": {
 		"ENABLED": true,
 		"Api_Key": "*************************************"
-	},
-	"Spotify": {
-		"ENABLED": false,
-		"Client_Id": "********************************",
-		"Client_Secret": "**********************************"
 	},
 	"NSFW": {
 		"ENABLED": true
@@ -77,11 +72,11 @@ true/false if you want the bot to ever tell people they leveled up (leveling can
 ###### Accent Color
 This is the RGB color value the bot uses when sending embeds.
 
-# Database Configuations
+# Database Configurations
 ###### Host
-This is the hostname where the **mariadb** database server is run. Yes you must be running mariadb or anything else that is compatiable. 
+This is the hostname where the **mariadb** database server is run. Yes you must be running mariadb or anything else that is compatible. 
 ###### Port
-Usally 3306 by debault unless you changed it
+Usually 3306 by default unless you changed it
 ###### Username / Password
 This is the login information for your database
 ###### Databse Name
@@ -91,15 +86,13 @@ This is the name of the Database inside of mariada that kenbot will use
 
 ###### Youtube
 You can enable or disable using the youtube api for searching music. API Key from Google Devloper Console is required if you want to use the youtube api. Learn more [here](https://developers.google.com/youtube/v3/getting-started).
-###### Spotify
-Not yet implemented, so feel free to disable it
 ###### NSFW
 true/false if you ever want the bot to ever be using NSFW commands and their respective APIs that they use.
 ###### Tennor
-You can enable / disable this to disalba the gif command. Tennor Api key required. Learn more [here](https://tenor.com/gifapi/documentation).
+You can enable / disable this to disabled the gif command. Tennor Api key required. Learn more [here](https://tenor.com/gifapi/documentation).
 ###### Twitch
 If you want your bot to be able to notify a server when someone is live on twitch, you will need to set this up. You first will need a twitch Clinet Id and Secret from its devloper page. Then for twitch callbacks, kenbot uses Springboot to create a REST API. The bot runs Springboot on its default port of 8080, so you will need to create a domain name that points directly to the server where the bot is running to port 8080. For example, somerandomdomainname.net could point to server_external_ip:8080. Or, you can setup a reverse proxy if that works better for you.
 
 # Deployment
 
-Kenbot uses gradle to build its project. So run the gradle script with the build command. Then in the /build/libs folder, there will be a bot.jar file. To run the bot, you must run that jar file with the bot_config.json file in the same directory, thats all.
+Kenbot uses gradle to build its project. So run the gradle script with the build command. Then in the /build/libs folder, there will be a bot.jar file. To run the bot, you must run that jar file with the bot_config.json file in the same directory. Final note, JAVA 13 or later is required or the program will refuse to run due to it being a later compile version. That is everything, I hope you enjoy!
